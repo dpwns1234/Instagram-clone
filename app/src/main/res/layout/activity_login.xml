@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_password"
-        tools:text="로그인" />
+        android:text="로그인" />
 
     <Button
         android:id="@+id/button_help"
@@ -67,12 +67,12 @@
         app:layout_constraintTop_toBottomOf="@id/button_login" />
 
 
-    <ImageButton
-        android:id="@+id/ib_facebook_login"
+    <Button
+        android:id="@+id/button_facebook_login"
         android:layout_width="350dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/btn_signin_facebook"
+        android:background="@drawable/btn_signin_facebook"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button_help" />

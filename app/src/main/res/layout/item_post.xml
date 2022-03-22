@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="writer"
+            type="com.instagram.model.Feed" />
+
+        <variable
+            name="post"
+            type="com.instagram.model.Post" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_profile_image"
+                imageUrl="@{writer.imageUrl}"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/Circle"
+                tools:src="@drawable/welove" />
+
+            <TextView
+                android:id="@+id/tv_profile_name"
+                style="@style/Size16.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@{writer.userName}"
+                tools:text="naver.shoppinglive" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager_post_image"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/layout_profile"
+            tools:listitem="@layout/item_post_image" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_post_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/viewpager_post_image">
+
+            <Button
+                android:id="@+id/button_heart"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/heart" />
+
+            <Button
+                android:id="@+id/button_comment"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/comment" />
+
+            <Button
+                android:id="@+id/button_message"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/message" />
+
+            <Button
+                android:id="@+id/button_bookmark"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="217dp"
+                android:background="@drawable/bookmark" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <Button
+            android:id="@+id/button_like"
+            style="@style/Size16.Black.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@color/transparent"
+            android:text="좋아요 706개"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_post_status" />
+
+        <Button
+            android:id="@+id/button_writer"
+            style="@style/Size10.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@color/transparent"
+            android:maxLines="1"
+            android:text="naver.shoppinglive"
+            app:layout_constraintStart_toStartOf="@id/button_like"
+            app:layout_constraintTop_toBottomOf="@id/button_like" />
+
+        <Button
+            android:id="@+id/button_introduce"
+            style="@style/Size10.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="4dp"
+            android:background="@color/transparent"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="이번주 놓치면 안될 라이브 추천 ! 3월 4주차 최대 혜택 라이브를 소개합니다\n"
+            app:layout_constraintStart_toEndOf="@id/button_writer"
+            app:layout_constraintTop_toTopOf="@id/button_writer" />
+
+        <TextView
+            android:id="@+id/tv_created_date"
+            style="@style/Size10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{post.createdAt.toString()}"
+            app:layout_constraintStart_toStartOf="@id/button_writer"
+            app:layout_constraintTop_toBottomOf="@id/button_introduce"
+            tools:text="3일전" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

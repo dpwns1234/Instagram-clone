@@ -1,19 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#0B8DF4"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <variable
+            name="feed"
+            type="com.instagram.model.Feed" />
+
+        <variable
+            name="post"
+            type="com.instagram.model.Post" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_logo_title"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:src="@drawable/logo_title" />
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/message" />
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/heart" />
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end"
+                android:background="@drawable/plus" />
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nv_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+<!--            여기서 추가 안하고 adapter로 연결하는 걸로 가능한가?? 함 해보기 -->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_main_post"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:listitem="@layout/item_post" />
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</layout>
