@@ -15,32 +15,32 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_feed_image"
             android:layout_width="90dp"
             android:layout_height="90dp"
+            android:layout_margin="8dp"
             android:scaleType="centerCrop"
             android:src="@drawable/welove"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/Circle"
-            android:id="@+id/iv_feed_image"
-            android:layout_margin="8dp"
-            tools:src="@{feed.imageUrl}" />
+            app:shapeAppearanceOverlay="@style/Circle" />
+<!--                    imageUrl="@{feed.user.imageUrl}"-->
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@{feed.user.nickname}"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/iv_feed_image"
+            app:layout_constraintStart_toStartOf="@id/iv_feed_image"
             app:layout_constraintTop_toBottomOf="@id/iv_feed_image"
             tools:text="taeyeon_chef"
-            android:maxLines="1"
-            app:layout_constraintStart_toStartOf="@id/iv_feed_image"
-            app:layout_constraintEnd_toEndOf="@id/iv_feed_image"
-            android:ellipsize="end"
-            android:textSize="14sp"
-            android:gravity="center"
 
             />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
