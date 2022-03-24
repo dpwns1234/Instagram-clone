@@ -43,11 +43,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="asdsadasdd"
+                android:text="@{writer.nickname}"
                 tools:text="naver.shoppinglive" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <!--                android:text="@{writer.nickname}"-->
         <FrameLayout
             android:id="@+id/layout_post_image"
             android:layout_width="match_parent"

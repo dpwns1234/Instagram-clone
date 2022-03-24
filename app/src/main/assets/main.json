@@ -44,6 +44,8 @@
         "like_status": true,
         "comment_status": true,
         "bookmark_status": true,
+        "comment_count": 3,
+        "like_count": 5,
         "comments": [
           "예준이?!?!",
           "아자아자~~~",

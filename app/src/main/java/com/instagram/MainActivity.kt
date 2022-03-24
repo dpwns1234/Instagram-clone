@@ -19,20 +19,22 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-
+        setContentView(binding.root)
 
         // 어댑터 연결
-        // 이 부분은 compat? 그걸로 feed랑 post랑 어댑터 연결하기. 일단은 post만 만들어보자구.
+        // 이 부분은 category_detail_fragment처럼 어댑터 여러개 합치는 거 따라하기.
         val itemPostAdapter = ItemPostAdapter()
-        binding.rvMainPost.adapter = itemPostAdapter
+        binding.rvMain.adapter = itemPostAdapter
 
-        viewModel.main.observe(this, Observer {
-            itemPostAdapter.submitList(it.post)
+        // TODO. 공부: 이거 왜 해야하는지, 어떻게 해야하는 지 공뿌
+        binding.lifecycleOwner = this
+
+        viewModel.post.observe(this, Observer {
+            itemPostAdapter.submitList(it)
         })
 
 
-        setContentView(view)
+
     }
 
 

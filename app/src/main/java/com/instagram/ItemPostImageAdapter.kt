@@ -14,6 +14,7 @@ class ItemPostImageAdapter: ListAdapter<Image, ItemPostImageAdapter.ItemPostImag
         fun bind(image: Image) {
             // TODO. bind 공부! -> bind함수가 발생하는 경우가 스크롤을 내려서 새로운 item이 발견되었을 때인가?
             binding.image = image
+            binding.executePendingBindings()
         }
     }
 
