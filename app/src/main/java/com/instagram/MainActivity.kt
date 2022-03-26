@@ -13,7 +13,7 @@ import com.instagram.databinding.ActivityMainBinding
 import com.instagram.model.Post
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels() { ViewModelFactory(this)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,9 +33,6 @@ class MainActivity : AppCompatActivity() {
             itemPostAdapter.submitList(it)
         })
 
-
-
     }
-
 
 }
