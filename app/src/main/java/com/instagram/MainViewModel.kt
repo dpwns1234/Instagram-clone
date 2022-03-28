@@ -25,8 +25,10 @@ class MainViewModel(private val repository: MainRepository): ViewModel() {
 
     private fun loadMain() {
         // Main Repository에서 data 받기.
-        _main.value = repository.getAssetData()
         val mainData = repository.getAssetData()
-        _post.value = mainData?.post
+        mainData?.let {
+            _post.value = it.post
+            _feed.value = it.feed
+        }
     }
 }

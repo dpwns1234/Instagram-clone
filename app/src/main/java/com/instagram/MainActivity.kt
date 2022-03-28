@@ -1,16 +1,13 @@
 package com.instagram
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
-import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import com.instagram.databinding.ActivityMainBinding
-import com.instagram.model.Post
+import com.instagram.model.Feed
+import com.instagram.model.Main
+import com.instagram.model.User
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -23,15 +20,17 @@ class MainActivity : AppCompatActivity() {
 
         // 어댑터 연결
         // 이 부분은 category_detail_fragment처럼 어댑터 여러개 합치는 거 따라하기.
-        val itemPostAdapter = ItemPostAdapter()
-        binding.rvMain.adapter = itemPostAdapter
+        val mainAdapter = MainAdapter()
+        binding.rvMain.adapter = mainAdapter
 
         // TODO. 공부: 이거 왜 해야하는지, 어떻게 해야하는 지 공뿌
         binding.lifecycleOwner = this
 
-        viewModel.post.observe(this, Observer {
-            itemPostAdapter.submitList(it)
-        })
+        // observe, submitList 제대로 공부 (submitList 는 어떤걸 호출하는거지??)
+        viewModel.post.observe(this) {
+            mainAdapter.submitList(it)
+        }
+
 
     }
 

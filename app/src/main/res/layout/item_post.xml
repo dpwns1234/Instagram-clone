@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="writer"
             type="com.instagram.model.User" />
@@ -12,6 +11,10 @@
         <variable
             name="post"
             type="com.instagram.model.Post" />
+
+        <variable
+            name="main"
+            type="com.instagram.model.Main" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,28 +50,19 @@
                 tools:text="naver.shoppinglive" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <FrameLayout
-            android:id="@+id/layout_post_image"
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            app:layout_constraintTop_toBottomOf="@id/layout_profile">
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewpager_post_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/layout_profile"
-                tools:listitem="@layout/item_post_image" />
-
-        </FrameLayout>
+            android:id="@+id/iv_post_image"
+            app:layout_constraintTop_toBottomOf="@id/layout_profile"
+            imageUrl="@{post.postImage}" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/layout_post_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/layout_post_image">
+            app:layout_constraintTop_toBottomOf="@id/iv_post_image">
 
             <Button
                 android:id="@+id/button_heart"

@@ -5,7 +5,6 @@
     tools:context=".MainActivity">
 
     <data>
-
         <variable
             name="feed"
             type="com.instagram.model.Feed" />
