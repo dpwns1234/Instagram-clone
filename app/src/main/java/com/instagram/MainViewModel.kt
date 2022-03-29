@@ -28,6 +28,7 @@ class MainViewModel(private val repository: MainRepository): ViewModel() {
         val mainData = repository.getAssetData()
         mainData?.let {
             _post.value = it.post
+            _feed.value = it.feed
         }
     }
 }

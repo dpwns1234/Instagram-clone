@@ -9,7 +9,7 @@ import com.instagram.databinding.ItemPostBinding
 import com.instagram.model.Feed
 import com.instagram.model.Post
 
-class MainAdapter(): ListAdapter<Post?, MainAdapter.MainViewHolder>(MainDiffUtil()) {
+class MainAdapter(): ListAdapter<Post, MainAdapter.MainViewHolder>(MainDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val binding = ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MainViewHolder(binding)
@@ -20,14 +20,14 @@ class MainAdapter(): ListAdapter<Post?, MainAdapter.MainViewHolder>(MainDiffUtil
     }
 
     class MainViewHolder(private val binding: ItemPostBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(post: Post?) {
+        fun bind(post: Post) {
             binding.post = post
             binding.executePendingBindings()
         }
     }
 }
 
-class MainDiffUtil: DiffUtil.ItemCallback<Post?>() {
+class MainDiffUtil: DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem.postIdx == newItem.postIdx
     }
