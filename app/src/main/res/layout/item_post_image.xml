@@ -5,7 +5,7 @@
     <data>
         <variable
             name="image"
-            type="com.instagram.model.Image" />
+            type="com.instagram.model.Post" />
     </data>
 
     <FrameLayout
@@ -16,7 +16,6 @@
             android:id="@+id/iv_post_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            imageUrl="@{image.imageUrl}"
             android:scaleType="fitXY"
             tools:src="@drawable/gamsung"
             />

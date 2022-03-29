@@ -27,11 +27,10 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         // observe, submitList 제대로 공부 (submitList 는 어떤걸 호출하는거지??)
+        // 처음에 null이기 때문에 오류가 발생하는 것 아닐까?? 블로그 찾아보기
         viewModel.post.observe(this) {
             mainAdapter.submitList(it)
         }
-
-
     }
 
 }
