@@ -5,14 +5,21 @@
 
     <data>
         <variable
+            name="writer"
+            type="com.instagram.model.User" />
+
+        <variable
             name="post"
             type="com.instagram.model.Post" />
 
+        <variable
+            name="main"
+            type="com.instagram.model.Main" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/layout_profile"
@@ -23,7 +30,7 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_profile_image"
-                imageUrl="@{post.writer.imageUrl}"
+                imageUrl="@{writer.imageUrl}"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_margin="8dp"
@@ -39,18 +46,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@{post.writer.nickname}"
+                android:text="@{writer.nickname}"
                 tools:text="naver.shoppinglive" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="400dp"
             android:id="@+id/iv_post_image"
-            android:scaleType="fitXY"
             app:layout_constraintTop_toBottomOf="@id/layout_profile"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             imageUrl="@{post.postImage}" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -101,28 +105,24 @@
             android:id="@+id/button_writer"
             style="@style/Size10.Bold"
             android:layout_width="wrap_content"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:background="@color/transparent"
             android:maxLines="1"
-            android:text="@{post.writer.nickname}"
+            android:text="@{writer.nickname}"
             app:layout_constraintStart_toStartOf="@id/button_like"
             app:layout_constraintTop_toBottomOf="@id/button_like"
-            tools:text="naver.shopping" />
+            tools:text="naver.shoppinglive" />
 
         <Button
             android:id="@+id/button_introduce"
             style="@style/Size10.Black"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="4dp"
             android:background="@color/transparent"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{post.postIntroduce}"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/button_writer"
             app:layout_constraintTop_toTopOf="@id/button_writer"
             tools:text="이번주 놓치면 안될 라이브 추천 ! 3월 4주차 최대 혜택 라이브를 소개합니다\n" />

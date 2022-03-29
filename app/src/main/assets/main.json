@@ -22,7 +22,7 @@
         "nickname": "welove",
         "image_url": "https://user-images.githubusercontent.com/52391722/159455432-4ffd9ed9-4712-4eb4-8b2f-792f6ffbe1f7.jpg"
       },
-      "post_image": "https://user-images.githubusercontent.com/52391722/159456180-185e553e-f28e-4429-97db-2d6c9f747858.jpg",
+      "post_image": "https://user-images.githubusercontent.com/52391722/159456180-185e553e-f28e-4429-97db-2d6c9f747858.jpg"
       "post_introduce": "안녕하세요 welove입니다. 저희가 이번에 새로운 찬양을 준비하였는데요,\n 많은 사랑 부탁드리고 이번에 저희와 함께 하게 된 예준 형제에게도 많은 관심 부탁드립니다!",
       "like_status": true,
       "comment_status": true,
@@ -40,11 +40,11 @@
     {
       "post_idx": 2,
       "writer": {
-        "nickname": "yejun02",
-        "image_url": "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg"
+        "user_nickname": "yejun02",
+        "user_image": "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg"
       },
       "post_image": "https://user-images.githubusercontent.com/52391722/159456318-3795360d-efd1-49ee-a871-572c2cbc8c68.jpg",
-      "post_introduce": "안녕하세요 예준이에요. 제가 이번에 새로운 찬양을 준비하였는데요,\n 많은 사랑 부탁드리고 이번에 welove와 같이 찬양을 준비했습니다. 잘 부탁드립니다!",
+      "introduce": "안녕하세요 예준이에요. 제가 이번에 새로운 찬양을 준비하였는데요,\n 많은 사랑 부탁드리고 이번에 welove와 같이 찬양을 준비했습니다. 잘 부탁드립니다!",
       "like_status": false,
       "comment_status": false,
       "bookmark_status": false,
