@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.instagram.databinding.ItemPostBinding
+import com.instagram.model.Feed
 import com.instagram.model.Post
 
 class MainAdapter(): ListAdapter<Post, MainAdapter.MainViewHolder>(MainDiffUtil()) {

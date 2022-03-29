@@ -5,9 +5,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.instagram.databinding.ActivityMainBinding
-import com.instagram.model.Feed
-import com.instagram.model.Main
-import com.instagram.model.User
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
