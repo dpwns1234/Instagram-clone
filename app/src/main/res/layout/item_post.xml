@@ -5,16 +5,9 @@
 
     <data>
         <variable
-            name="writer"
-            type="com.instagram.model.User" />
-
-        <variable
             name="post"
             type="com.instagram.model.Post" />
 
-        <variable
-            name="main"
-            type="com.instagram.model.Main" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +23,7 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_profile_image"
-                imageUrl="@{writer.imageUrl}"
+                android:src="@drawable/welove"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_margin="8dp"
@@ -46,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@{writer.nickname}"
+                android:text="naver.shoppinglive"
                 tools:text="naver.shoppinglive" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -108,7 +101,7 @@
             android:layout_height="30dp"
             android:background="@color/transparent"
             android:maxLines="1"
-            android:text="@{writer.nickname}"
+            android:text="naver.shoppinglive"
             app:layout_constraintStart_toStartOf="@id/button_like"
             app:layout_constraintTop_toBottomOf="@id/button_like"
             tools:text="naver.shoppinglive" />
@@ -132,7 +125,7 @@
             style="@style/Size10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{post.createdAt.toString()}"
+            android:text="3일전"
             app:layout_constraintStart_toStartOf="@id/button_writer"
             app:layout_constraintTop_toBottomOf="@id/button_introduce"
             tools:text="3일전" />

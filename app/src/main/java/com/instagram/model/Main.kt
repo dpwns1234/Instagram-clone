@@ -1,6 +1,8 @@
 package com.instagram.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Main(
-    val feed: List<Feed>,
     val post: List<Post>
 )
+
