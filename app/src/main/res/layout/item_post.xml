@@ -42,23 +42,50 @@
                 android:text="@{post.writer.nickname}"
                 tools:text="naver.shoppinglive" />
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <ImageView
+        
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="400dp"
-            android:id="@+id/iv_post_image"
-            android:scaleType="fitXY"
             app:layout_constraintTop_toBottomOf="@id/layout_profile"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            imageUrl="@{post.postImage}" />
+            android:id="@+id/layout_viewpager"
+            >
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/viewpager_post_image"
+                />
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/viewpager_post_image_indicator"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewpager_post_image"
+                app:tabBackground="@drawable/selector_viewpager_indicator"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp" />
+
+
+        </FrameLayout>
+        
+<!--        <ImageView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="400dp"-->
+<!--            android:id="@+id/iv_post_image"-->
+<!--            android:scaleType="fitXY"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/layout_profile"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            imageUrl="@{post.postImage}" />-->
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/layout_post_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/iv_post_image">
+            app:layout_constraintTop_toBottomOf="@id/layout_viewpager">
 
             <Button
                 android:id="@+id/button_heart"
@@ -76,7 +103,7 @@
                 android:id="@+id/button_message"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/message" />
+                android:background="@drawable/home_vector" />
 
             <Button
                 android:id="@+id/button_bookmark"

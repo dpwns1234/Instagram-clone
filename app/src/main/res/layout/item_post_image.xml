@@ -5,6 +5,9 @@
     <data>
         <variable
             name="image"
+            type="com.instagram.model.Image" />
+        <variable
+            name="post"
             type="com.instagram.model.Post" />
     </data>
 
@@ -17,6 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
+            imageUrl="@{image.imageUrl}"
+            android:src="@{post.postImages.}"
             tools:src="@drawable/gamsung"
             />
 

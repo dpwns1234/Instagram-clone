@@ -16,10 +16,12 @@ fun loadImage(view: ImageView, imageUrl: String?) {
 }
 
 @BindingAdapter("imageUrlList")
-fun loadImageList(view: ImageView, imageUrlList: List<String>) {
-    for (url in imageUrlList) {
-        Glide.with(view)
-            .load(url)
-            .into(view)
+fun loadImageList(view: ImageView, imageUrlList: List<String?>?) {
+    if (!imageUrlList.isNullOrEmpty()) {
+        for (url in imageUrlList) {
+            Glide.with(view)
+                .load(url)
+                .into(view)
+        }
     }
 }
