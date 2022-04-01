@@ -11,7 +11,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var postBinding: ItemPostBinding
 
-    private val viewModel: MainViewModel by viewModels() { ViewModelFactory(this)}
+    private val viewModel: MainViewModel by viewModels() { ViewModelFactory(this) }
+    private val postViewModel: ItemPostViewModel by viewModels() { ViewModelFactory(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,10 +22,11 @@ class MainActivity : AppCompatActivity() {
         
         // 어댑터 연결
         // 이 부분은 category_detail_fragment처럼 어댑터 여러개 합치는 거 따라하기.
-        val mainAdapter = MainAdapter()
+        val mainAdapter = MainAdapter(viewModel)
         binding.rvMain.adapter = mainAdapter
         // TODO. 공부: 이거 왜 해야하는지, 어떻게 해야하는 지 공뿌
         binding.lifecycleOwner = this
+        postBinding.lifecycleOwner = this
         
         
         // observe, submitList 제대로 공부 (submitList 는 어떤걸 호출하는거지??)
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             adapter = postAdapter
 
             // 아마 이건 맞지 않을까??
-            viewModel.postImages.observe(this@MainActivity) { image ->
+            postViewModel.postImages.observe(this@MainActivity) { image ->
                 postAdapter.submitList(image)
             }
             // indicator 설정

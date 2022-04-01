@@ -29,9 +29,6 @@ class MainViewModel(private val repository: MainRepository): ViewModel() {
         loadMain()
     }
 
-    fun loadPostImages(index: Int): List<Image>? {
-        return _post.value?.get(index)?.postImages
-    }
 
     private fun loadMain() {
         // Main Repository에서 data 받기.
@@ -39,19 +36,6 @@ class MainViewModel(private val repository: MainRepository): ViewModel() {
         mainData?.let {
             _post.value = it.post
             _feed.value = it.feed
-
-//            val postList = it.post
-//            for (post in postList) {
-//                _postImages.value = post.postImages
-//            }
-
-//            _postImages.value = it.post.component1().postImages
-//                post.value?.component1()?.postImages
-
-            var value: Post
-            for (index in 0 until it.post.size) {
-                value = post.value?.get(index)!!
-            }
         }
     }
 }

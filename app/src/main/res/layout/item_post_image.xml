@@ -21,7 +21,6 @@
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             imageUrl="@{image.imageUrl}"
-            android:src="@{post.postImages.}"
             tools:src="@drawable/gamsung"
             />
 
