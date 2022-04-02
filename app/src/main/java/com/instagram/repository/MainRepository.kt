@@ -15,18 +15,11 @@ class MainRepository(private val mainAssetData: MainAssetDataSource) {
         val mainData = getAssetData()
         val images = mutableListOf<Image>()
         mainData?.let {
-            for(posts in it.post) {
-                images.addAll(posts.postImages)
+            for(post in it.post) {
+                images.addAll(post.postImages)
             }
         }
-        Log.d("ImagesData", images.toString())
-        Log.d("ImagesData", "안녕-----------------------------------")
-        println(images.toString())
         return images
     }
 
-    fun getAssetPostData(): Post {
-        val mainData = getAssetData()
-        mainData.post
-    }
 }

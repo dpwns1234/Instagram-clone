@@ -1,5 +1,6 @@
 package com.instagram
 
+import android.util.Log
 import androidx.core.graphics.component1
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,16 +20,9 @@ class MainViewModel(private val repository: MainRepository): ViewModel() {
     private val _feed = MutableLiveData<List<Feed>>()
     var feed: LiveData<List<Feed>> = _feed
 
-    private val _main = MutableLiveData<Main>()
-    var main: LiveData<Main> = _main
-
-    private val _postImages = MutableLiveData<List<Image>>()
-    var postImages: LiveData<List<Image>> = _postImages
-
     init {
         loadMain()
     }
-
 
     private fun loadMain() {
         // Main Repository에서 data 받기.
