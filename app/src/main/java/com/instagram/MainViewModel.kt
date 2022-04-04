@@ -20,6 +20,9 @@ class MainViewModel(private val repository: MainRepository): ViewModel() {
     private val _feed = MutableLiveData<List<Feed>>()
     var feed: LiveData<List<Feed>> = _feed
 
+    private val _postImages = MutableLiveData<List<Image>>()
+    var postImages: LiveData<List<Image>> = _postImages
+
     init {
         loadMain()
     }
@@ -30,6 +33,12 @@ class MainViewModel(private val repository: MainRepository): ViewModel() {
         mainData?.let {
             _post.value = it.post
             _feed.value = it.feed
+
+            // for viewpager
+            for(post in it.post) {
+                _postImages.value = post.postImages
+            }
         }
+
     }
 }

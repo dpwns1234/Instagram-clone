@@ -1,5 +1,6 @@
 package com.instagram
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -23,7 +24,7 @@ class ItemPostAdapter: ListAdapter<Image, ItemPostAdapter.ItemPostViewHolder>(It
         fun bind(image: Image) {
             // TODO. bind함수가 발생하는 경우가 스크롤을 내려서 새로운 item이 발견되었을 때인가? -> 아마 그럴걸?
             binding.image = image
-            binding.executePendingBindings()
+            Log.d("Image", image.imageUrl)
         }
     }
 }

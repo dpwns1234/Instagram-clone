@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
@@ -19,7 +20,7 @@ import com.instagram.model.Feed
 import com.instagram.model.Image
 import com.instagram.model.Post
 
-class MainAdapter(private val context: AppCompatActivity): ListAdapter<Post, MainAdapter.MainViewHolder>(MainDiffUtil()) {
+class MainAdapter(private val context: LifecycleOwner): ListAdapter<Post, MainAdapter.MainViewHolder>(MainDiffUtil()) {
     lateinit var postViewModel: ItemPostViewModel
     val postAdapter = ItemPostAdapter()
 
@@ -37,13 +38,16 @@ class MainAdapter(private val context: AppCompatActivity): ListAdapter<Post, Mai
     inner class MainViewHolder(private val binding: ItemPostBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
             binding.post = post
-            binding.executePendingBindings()
             postImage(post.postImages)
+            binding.executePendingBindings()
         }
 
-        fun postImage(postImages: List<Image>) {
+        private fun postImage(postImages: List<Image>) {
+
+            binding.viewpagerPostImage.adapter = postAdapter
             postViewModel = ItemPostViewModel(postImages)
 
+            binding.lifecycleOwner = context
             postViewModel.postImages.observe(context) { images ->
                 postAdapter.submitList(images)
             }

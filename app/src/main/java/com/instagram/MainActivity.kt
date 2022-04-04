@@ -26,24 +26,9 @@ class MainActivity : AppCompatActivity() {
         binding.rvMain.adapter = mainAdapter
         // TODO. 공부: 이거 왜 해야하는지, 어떻게 해야하는 지 공뿌
         binding.lifecycleOwner = this
-        postBinding.lifecycleOwner = this
 
-        // observe, submitList 제대로 공부 (submitList 는 어떤걸 호출하는거지??)
-        // 처음에 null이기 때문에 오류가 발생하는 것 아닐까?? 블로그 찾아보기
         viewModel.post.observe(this) { post ->
             mainAdapter.submitList(post)
-        }
-
-        // viewpager 연결
-        val postAdapter = ItemPostAdapter()
-        with(postBinding.viewpagerPostImage) {
-            Log.d("ImagesData", "adapter연결 이게 좀 빨라야함")
-            adapter = postAdapter
-
-            // indicator 설정
-            TabLayoutMediator(postBinding.viewpagerPostImageIndicator, this) { tab, position ->
-
-            }.attach()
         }
 
     }
