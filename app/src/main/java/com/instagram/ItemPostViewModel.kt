@@ -20,7 +20,6 @@ class ItemPostViewModel(private val imagesData: List<Image>): ViewModel() {
     private fun loadPostImages() {
         imagesData.let { images ->
             _postImages.value = images
-            Log.d("ImagesData", "PostViewModel의 " + images[0].imageUrl )
         }
     }
 }

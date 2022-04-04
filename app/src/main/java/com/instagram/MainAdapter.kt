@@ -14,6 +14,7 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayoutMediator
 import com.instagram.databinding.ItemPostBinding
 import com.instagram.databinding.ItemPostImageBinding
 import com.instagram.model.Feed
@@ -43,13 +44,15 @@ class MainAdapter(private val context: LifecycleOwner): ListAdapter<Post, MainAd
         }
 
         private fun postImage(postImages: List<Image>) {
-
             binding.viewpagerPostImage.adapter = postAdapter
             postViewModel = ItemPostViewModel(postImages)
 
             binding.lifecycleOwner = context
             postViewModel.postImages.observe(context) { images ->
                 postAdapter.submitList(images)
+                TabLayoutMediator(binding.viewpagerPostImageIndicator, binding.viewpagerPostImage) { tab, position ->
+
+                }.attach()
             }
         }
 

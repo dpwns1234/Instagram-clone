@@ -10,7 +10,6 @@ import com.instagram.databinding.ItemPostBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var postBinding: ItemPostBinding
 
     private val viewModel: MainViewModel by viewModels() { ViewModelFactory(this) }
 
@@ -18,7 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        postBinding = ItemPostBinding.inflate(layoutInflater)
         
         // 어댑터 연결
         // 이 부분은 category_detail_fragment처럼 어댑터 여러개 합치는 거 따라하기.

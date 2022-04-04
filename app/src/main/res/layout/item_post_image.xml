@@ -11,10 +11,6 @@
             type="com.instagram.model.Post" />
     </data>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="400dp">
-
         <ImageView
             android:id="@+id/iv_post_image"
             android:layout_width="match_parent"
@@ -24,5 +20,4 @@
             tools:src="@drawable/gamsung"
             />
 
-    </FrameLayout>
 </layout>
