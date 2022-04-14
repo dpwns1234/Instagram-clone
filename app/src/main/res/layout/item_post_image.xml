@@ -6,9 +6,6 @@
         <variable
             name="image"
             type="com.instagram.model.Image" />
-        <variable
-            name="post"
-            type="com.instagram.model.Post" />
     </data>
 
         <ImageView

@@ -21,7 +21,7 @@ data class Post(
 data class Comment(
     val user: User,
     val comment: String,
-    val createdAt: Date,
+    val createdAt: String,
     val likeList: List<Like>
 )
 

@@ -23,7 +23,7 @@ import com.instagram.model.Post
 
 class MainAdapter(private val context: LifecycleOwner): ListAdapter<Post, MainAdapter.MainViewHolder>(MainDiffUtil()) {
     lateinit var postViewModel: ItemPostViewModel
-    val postAdapter = ItemPostAdapter()
+    lateinit var postAdapter: ItemPostAdapter
 
     // onCreateViewHolder = 새 ViewHolder를 만든다. TODO. Udacity 3-12
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
@@ -38,18 +38,19 @@ class MainAdapter(private val context: LifecycleOwner): ListAdapter<Post, MainAd
 
     inner class MainViewHolder(private val binding: ItemPostBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
-            binding.post = post
             postImage(post.postImages)
+            binding.post = post
             binding.executePendingBindings()
         }
 
         private fun postImage(postImages: List<Image>) {
-            binding.viewpagerPostImage.adapter = postAdapter
             postViewModel = ItemPostViewModel(postImages)
-
-            binding.lifecycleOwner = context
-            postViewModel.postImages.observe(context) { images ->
+            postAdapter = ItemPostAdapter()
+            binding.viewpagerPostImage.adapter = postAdapter
+            postViewModel.postImages.observe(this@MainAdapter.context) { images ->
                 postAdapter.submitList(images)
+
+                // indicator
                 TabLayoutMediator(binding.viewpagerPostImageIndicator, binding.viewpagerPostImage) { tab, position ->
 
                 }.attach()
