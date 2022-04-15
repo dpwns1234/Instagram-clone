@@ -30,7 +30,7 @@ class SignUpDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         auth = Firebase.auth
         // TODO. firebase 회원가입 기본 조건이 있나?? 비밀번호 개수 제한이나 찾아보기
-        
+
         binding.buttonSignUp.setOnClickListener {
             signUp(binding.etId.text.toString(), binding.etPassword.text.toString())
         }

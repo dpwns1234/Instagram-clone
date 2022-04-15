@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/sign_up_fragment">
+
+    <fragment
+        android:id="@+id/sign_up_fragment"
+        android:name="com.instagram.ui.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUp_to_signUpDetail"
+            app:destination="@id/sign_up_detail_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sign_up_detail_fragment"
+        android:name="com.instagram.ui.SignUpDetailFragment"
+        android:label="fragment_sign_up_detail"
+        tools:layout="@layout/fragment_sign_up_detail" />
+
+
+</navigation>

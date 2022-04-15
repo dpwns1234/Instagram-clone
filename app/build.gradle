@@ -83,4 +83,7 @@ dependencies {
     // firebase
     implementation platform('com.google.firebase:firebase-bom:29.3.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // bottom navigation
+    implementation 'com.google.android.material:material:1.5.0'
 }
