@@ -3,7 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="loginActivity"
+            type="com.instagram.LoginActivity" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/nav_host_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".LoginActivity">
@@ -24,11 +33,11 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="@string/hint_id"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_logo_title"
-            android:hint="@string/hint_id" />
+            app:layout_constraintTop_toBottomOf="@id/iv_logo_title" />
 
 
         <EditText
@@ -37,11 +46,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
+            android:hint="@string/hint_password"
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_id"
-            android:hint="@string/hint_password" />
+            app:layout_constraintTop_toBottomOf="@id/et_id" />
 
         <Button
             android:id="@+id/button_login"
@@ -50,10 +59,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_login_button"
+            android:text="로그인"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_password"
-            android:text="로그인" />
+            app:layout_constraintTop_toBottomOf="@id/et_password" />
 
         <Button
             android:id="@+id/button_help"

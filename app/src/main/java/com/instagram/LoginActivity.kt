@@ -2,17 +2,16 @@ package com.instagram
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.instagram.databinding.ActivityLoginBinding
+import com.instagram.ui.SignUpActivity
+import com.instagram.ui.SignUpFragment
 
 class LoginActivity : AppCompatActivity() {
     private var auth: FirebaseAuth? = null
@@ -25,6 +24,11 @@ class LoginActivity : AppCompatActivity() {
         val signInBtn = binding.buttonLogin
         signInBtn.setOnClickListener{
             signIn(binding.etId.text.toString(), binding.etPassword.text.toString())
+        }
+
+        val signUpBtn = binding.buttonSignUp
+        signUpBtn.setOnClickListener {
+            moveSignUpPage()
         }
     }
 
@@ -48,6 +52,11 @@ class LoginActivity : AppCompatActivity() {
         }
         else {
             // TODO user가 null일 경우 (근데 NULL일 수가 있나?)
+
         }
+    }
+
+    fun moveSignUpPage() {
+        startActivity(Intent(this, SignUpActivity::class.java))
     }
 }
