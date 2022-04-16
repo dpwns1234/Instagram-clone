@@ -1,19 +1,13 @@
-package com.instagram
+package com.instagram.ui.home
 
-import android.util.Log
-import androidx.core.graphics.component1
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.instagram.databinding.ItemPostImageBinding
 import com.instagram.model.Feed
-import com.instagram.model.Image
-import com.instagram.model.Main
 import com.instagram.model.Post
 import com.instagram.repository.MainRepository
 
-class MainViewModel(private val repository: MainRepository): ViewModel() {
+class HomeViewModel(private val repository: MainRepository): ViewModel() {
     private val _post = MutableLiveData<List<Post>>()
     var post: LiveData<List<Post>> = _post
 

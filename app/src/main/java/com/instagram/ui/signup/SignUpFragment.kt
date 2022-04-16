@@ -1,4 +1,4 @@
-package com.instagram.ui
+package com.instagram.ui.signup
 
 import android.content.Intent
 import android.os.Bundle

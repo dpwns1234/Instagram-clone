@@ -1,27 +1,21 @@
-package com.instagram
+package com.instagram.ui.home
 
-import android.app.Activity
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayoutMediator
+import com.instagram.ItemPostAdapter
+import com.instagram.ItemPostViewModel
 import com.instagram.databinding.ItemPostBinding
-import com.instagram.databinding.ItemPostImageBinding
-import com.instagram.model.Feed
 import com.instagram.model.Image
 import com.instagram.model.Post
 
-class MainAdapter(private val context: LifecycleOwner): ListAdapter<Post, MainAdapter.MainViewHolder>(MainDiffUtil()) {
+class MainAdapter(private val context: LifecycleOwner): ListAdapter<Post, MainAdapter.MainViewHolder>(
+    MainDiffUtil()
+) {
     lateinit var postViewModel: ItemPostViewModel
     lateinit var postAdapter: ItemPostAdapter
 

@@ -4,14 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.instagram.databinding.ActivityLoginBinding
-import com.instagram.ui.SignUpActivity
-import com.instagram.ui.SignUpFragment
+import com.instagram.ui.home.HomeFragment
+import com.instagram.ui.signup.SignUpActivity
 
 class LoginActivity : AppCompatActivity() {
     private var auth: FirebaseAuth? = null
@@ -48,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
     }
     private fun moveMainPage(user: FirebaseUser?) {
         if(user != null) {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, HomeFragment::class.java))
         }
         else {
             // TODO user가 null일 경우 (근데 NULL일 수가 있나?)

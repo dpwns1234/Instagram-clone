@@ -1,14 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.home.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+        <variable
+            name="feed"
+            type="com.instagram.model.Feed" />
+
+        <variable
+            name="post"
+            type="com.instagram.model.Post" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
 
-</FrameLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_logo_title"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:src="@drawable/logo_title" />
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/message" />
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/heart" />
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end"
+                android:background="@drawable/plus" />
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nv_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_post" />
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </LinearLayout>
+
+</layout>

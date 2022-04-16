@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/sign_up_fragment"
-        android:name="com.instagram.ui.SignUpFragment"
+        android:name="com.instagram.ui.signup.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/sign_up_detail_fragment"
-        android:name="com.instagram.ui.SignUpDetailFragment"
+        android:name="com.instagram.ui.signup.SignUpDetailFragment"
         android:label="fragment_sign_up_detail"
         tools:layout="@layout/fragment_sign_up_detail" />
 
