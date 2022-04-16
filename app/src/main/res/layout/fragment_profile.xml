@@ -58,6 +58,7 @@
             android:layout_height="120dp"
             android:layout_marginTop="20dp"
             android:scaleType="centerCrop"
+            android:layout_marginStart="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar_profile"
             app:shapeAppearanceOverlay="@style/Circle"
@@ -186,7 +187,10 @@
             android:id="@+id/layout_introduce"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginTop="10dp"
+
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/layout_total_status"
             tools:layout_editor_absoluteX="10dp">
@@ -207,16 +211,20 @@
                 tools:text="안녕하세요 이건 소개입니다."
 
                 />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_profile_edit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/button_round"
+                android:text="프로필 편집"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_introduce" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_profile_edit"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/transparent"
-            android:text="프로필 편집"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/layout_introduce" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/indicator_profile"
@@ -224,19 +232,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_profile_edit"
+            app:layout_constraintTop_toBottomOf="@id/layout_introduce"
             app:tabGravity="center" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/viewpager_post_image_indicator"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_profile_edit"
-            app:tabBackground="@drawable/selector_viewpager_indicator"
-            app:tabGravity="center"
-            app:tabIndicatorHeight="0dp" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager_profile"
