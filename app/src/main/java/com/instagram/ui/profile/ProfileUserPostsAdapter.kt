@@ -11,10 +11,8 @@ import com.instagram.model.PreviewPost
 
 class ProfileUserPostsAdapter:ListAdapter<PreviewPost, ProfileUserPostsAdapter.ProfileUserPostViewHolder>(ProfileUserPostDiffUtil()) {
 
-    lateinit var binding: ItemProfileUserImagesBinding
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileUserPostViewHolder {
-        binding = ItemProfileUserImagesBinding.inflate(LayoutInflater.from(parent.context))
+        val binding = ItemProfileUserImagesBinding.inflate(LayoutInflater.from(parent.context))
         return ProfileUserPostViewHolder(binding)
     }
 
@@ -22,7 +20,7 @@ class ProfileUserPostsAdapter:ListAdapter<PreviewPost, ProfileUserPostsAdapter.P
         holder.bind(getItem(position))
     }
 
-    inner class ProfileUserPostViewHolder(binding: ItemProfileUserImagesBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class ProfileUserPostViewHolder(private val binding: ItemProfileUserImagesBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(previewPost: PreviewPost) {
             binding.previewPost = previewPost
             binding.executePendingBindings()

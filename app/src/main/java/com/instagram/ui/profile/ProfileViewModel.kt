@@ -1,6 +1,7 @@
 package com.instagram.ui.profile
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,6 +18,9 @@ class ProfileViewModel(private val context: Context): ViewModel() {
     private val _profilePosts = MutableLiveData<List<PreviewPost>>()
     var profilePosts: LiveData<List<PreviewPost>> = _profilePosts
 
+    private val _profileUserPosts = MutableLiveData<List<PreviewPost>>()
+    var profileUserPosts: LiveData<List<PreviewPost>> = _profileUserPosts
+
 
     init{
         loadProfile()
@@ -30,6 +34,8 @@ class ProfileViewModel(private val context: Context): ViewModel() {
         val profileData = gson.fromJson(jsonData, Profile::class.java)
 
         _profile.value = profileData
-        _profilePosts.value = profile.value?.posts
+        _profilePosts.value = profileData.posts
+        _profileUserPosts.value = profileData.userPosts
+        Log.d("play?", "처음이요")
     }
 }

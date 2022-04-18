@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.instagram.databinding.FragmentProfilePostsBinding
+import com.instagram.model.PreviewPost
 
-class ProfilePostsFragment: Fragment() {
+class ProfilePostsFragment(): Fragment() {
     lateinit var binding: FragmentProfilePostsBinding
 
     override fun onCreateView(
@@ -22,6 +23,14 @@ class ProfilePostsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvPost.adapter = ProfilePostsAdapter()
+
+        val viewModel = ProfileViewModel(requireContext())
+        val postsAdapter = ProfilePostsAdapter()
+        binding.rvPost.adapter = postsAdapter
+
+        viewModel.profilePosts.observe(viewLifecycleOwner) { posts ->
+            postsAdapter.submitList(posts)
+        }
+
     }
 }

@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class ProfileViewpagerAdapter(fragmentActivity: FragmentActivity): FragmentStateAdapter(fragmentActivity){
 
-    private val fragments: ArrayList<Fragment> = ArrayList()
+    private val fragments = listOf(ProfilePostsFragment(), ProfileUserPostsFragment())
 
     override fun getItemCount(): Int {
         return fragments.size
@@ -16,13 +16,13 @@ class ProfileViewpagerAdapter(fragmentActivity: FragmentActivity): FragmentState
         return fragments[position]
     }
 
-    fun addFragment(fragment: Fragment) {
-        fragments.add(fragment)
-        notifyItemInserted(fragments.size -1)
-    }
-
-    fun removeFragment() {
-        fragments.removeLast()
-        notifyItemRemoved(fragments.size)
-    }
+//    fun addFragment(fragment: Fragment) {
+//        fragments.add(fragment)
+//        notifyItemInserted(fragments.size -1)
+//    }
+//
+//    fun removeFragment() {
+//        fragments.removeLast()
+//        notifyItemRemoved(fragments.size)
+//    }
 }
