@@ -1,0 +1,27 @@
+package com.instagram.ui.profile
+
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.instagram.databinding.FragmentProfilePostsBinding
+
+class ProfilePostsFragment: Fragment() {
+    lateinit var binding: FragmentProfilePostsBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentProfilePostsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.rvPost.adapter = ProfilePostsAdapter()
+    }
+}

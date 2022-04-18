@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--  bottom navigation style  -->
+    <style name="BottomNavigation">
+        <item name="android:background">@color/white</item>
+        <item name="itemIconTint">@color/skyBlue</item>
+        <item name="itemTextColor">@color/black</item>
+    </style>
     
     <!--  Image style  -->
     <style name="Circle">
@@ -8,6 +15,17 @@
     
     
     <!--  font style  -->
+
+    <style name="Size24">
+        <item name="android:textSize">24sp</item>
+    </style>
+    <style name="Size24.Black">
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="Size24.Black.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Size16">
         <item name="android:textSize">16sp</item>
     </style>

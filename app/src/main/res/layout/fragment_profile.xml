@@ -5,12 +5,15 @@
 
     <data>
 
+        <variable
+            name="profile"
+            type="com.instagram.model.Profile" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.ProfileFragment">
+        tools:context=".ui.profile.ProfileFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_profile"
@@ -23,10 +26,10 @@
                 android:id="@+id/tv_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{profile.nickname}"
                 android:textColor="@color/black"
                 android:textSize="26sp"
                 android:textStyle="bold"
-                android:text="yj000222"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="yj000222" />
@@ -36,29 +39,30 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="end"
+                android:background="@drawable/menu_dots"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_nickname"
-                tools:background="@drawable/menu_dots" />
+                app:layout_constraintTop_toTopOf="@id/tv_nickname" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_plus"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="end"
+                android:background="@drawable/plus"
                 app:layout_constraintEnd_toStartOf="@id/button_menu"
-                app:layout_constraintTop_toTopOf="@id/tv_nickname"
-                tools:background="@drawable/plus" />
+                app:layout_constraintTop_toTopOf="@id/tv_nickname" />
 
 
         </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_profile_image"
+            imageUrl="@{profile.profileImage}"
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:scaleType="centerCrop"
-            android:layout_marginStart="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar_profile"
             app:shapeAppearanceOverlay="@style/Circle"
@@ -85,13 +89,12 @@
 
                 <TextView
                     android:id="@+id/tv_post_count"
+                    style="@style/Size24.Black.Bold"
+                    calculatingCount="@{profile.postCount}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="26sp"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -99,15 +102,14 @@
 
                 <TextView
                     android:id="@+id/tv_post_text"
+                    style="@style/Size16.Black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:text="@string/string_post"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_post_count"
-                    tools:text="게시물" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_post_count" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -121,13 +123,12 @@
 
                 <TextView
                     android:id="@+id/tv_follower_count"
+                    style="@style/Size24.Black.Bold"
+                    calculatingCount="@{profile.followerCount}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="26sp"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -135,15 +136,14 @@
 
                 <TextView
                     android:id="@+id/tv_follower_text"
+                    style="@style/Size16.Black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:text="@string/string_follower"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_follower_count"
-                    tools:text="팔로워" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_follower_count" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -157,13 +157,12 @@
 
                 <TextView
                     android:id="@+id/tv_following_count"
+                    style="@style/Size24.Black.Bold"
+                    calculatingCount="@{profile.followingCount}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="26sp"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -171,15 +170,14 @@
 
                 <TextView
                     android:id="@+id/tv_following_text"
+                    style="@style/Size16.Black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:text="@string/string_following"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_following_count"
-                    tools:text="팔로잉" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_following_count" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -188,9 +186,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             android:layout_marginTop="10dp"
-
+            android:layout_marginEnd="10dp"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/layout_total_status"
             tools:layout_editor_absoluteX="10dp">
@@ -199,16 +196,16 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{profile.name}"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                tools:text="김예준" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_introduce"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{profile.introduce}"
                 android:textColor="@color/black"
-                tools:text="안녕하세요 이건 소개입니다."
 
                 />
 
@@ -217,7 +214,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/button_round"
-                android:text="프로필 편집"
+                android:text="@string/string_edit_profile"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -231,31 +228,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_introduce"
-            app:tabGravity="center" />
+             />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/indicator_profile"/>
-
-<!--        따로 .xml 만들어야 할 듯 ViewPager2 does not support direct child views-->
-<!--            <androidx.core.widget.NestedScrollView-->
-<!--                android:id="@+id/nv_profile_post"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content">-->
-
-<!--                <androidx.recyclerview.widget.RecyclerView-->
-<!--                    android:id="@+id/rv_profile_post"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
-
-<!--                    />-->
-
-<!--            </androidx.core.widget.NestedScrollView>-->
+            app:layout_constraintTop_toBottomOf="@id/indicator_profile" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

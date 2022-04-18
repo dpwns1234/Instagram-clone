@@ -5,7 +5,7 @@
     app:startDestination="@id/navigation_home">
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.instagram.ui.ProfileFragment"
+        android:name="com.instagram.ui.profile.ProfileFragment"
         android:label="ProfileFragment" />
     <fragment
         android:id="@+id/navigation_home"

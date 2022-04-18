@@ -62,4 +62,9 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="string_following">팔로워</string>
+    <string name="string_follower">팔로워</string>
+    <string name="string_post">게시물</string>
+    <string name="calculate_count">%d만</string>
+    <string name="string_edit_profile">프로필 편집</string>
 </resources>

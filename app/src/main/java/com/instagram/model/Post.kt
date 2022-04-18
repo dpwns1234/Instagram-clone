@@ -5,7 +5,7 @@ import java.sql.Date
 
 data class Post(
     @SerializedName("post_idx") val postIdx: Int,
-    val writer: User,
+    val writer: User?,
     @SerializedName("post_images") val postImages: List<Image>,
     @SerializedName("post_introduce") val postIntroduce: String,
     @SerializedName("like_status") val likeStatus: Boolean,
