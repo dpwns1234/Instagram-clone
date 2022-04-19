@@ -16,6 +16,8 @@ class ProfileViewpagerAdapter(fragmentActivity: FragmentActivity): FragmentState
         return fragments[position]
     }
 
+
+
 //    fun addFragment(fragment: Fragment) {
 //        fragments.add(fragment)
 //        notifyItemInserted(fragments.size -1)
