@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_produce_post"
+        android:enabled="true"
+        android:icon="@drawable/gallery"
+        android:title="게시물"
+        />
+    <item
+        android:id="@+id/navigation_produce_feed"
+        android:enabled="true"
+        android:icon="@drawable/plus"
+        android:title="스토리"
+        />
+    <item
+        android:id="@+id/navigation_produce_shorts"
+        android:enabled="true"
+        android:icon="@drawable/shorts"
+        android:title="릴스"
+        />
+    <item
+        android:id="@+id/navigation_produce_live"
+        android:enabled="true"
+        android:icon="@drawable/live"
+        android:title="라이브 방송"
+        />
+</menu>

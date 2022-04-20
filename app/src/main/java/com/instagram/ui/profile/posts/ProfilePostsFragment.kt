@@ -1,13 +1,12 @@
-package com.instagram.ui.profile
+package com.instagram.ui.profile.posts
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.instagram.databinding.FragmentProfilePostsBinding
-import com.instagram.model.PreviewPost
+import com.instagram.ui.profile.ProfileViewModel
 
 class ProfilePostsFragment(): Fragment() {
     lateinit var binding: FragmentProfilePostsBinding

@@ -7,7 +7,7 @@
 
         <variable
             name="loginActivity"
-            type="com.instagram.LoginActivity" />
+            type="com.instagram.ui.login.LoginActivity" />
 
     </data>
 
@@ -15,7 +15,7 @@
         android:id="@+id/nav_host_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoginActivity">
+        tools:context=".ui.login.LoginActivity">
 
         <ImageView
             android:id="@+id/iv_logo_title"

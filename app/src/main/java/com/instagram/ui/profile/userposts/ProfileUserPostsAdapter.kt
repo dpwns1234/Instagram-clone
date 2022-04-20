@@ -1,15 +1,16 @@
-package com.instagram.ui.profile
+package com.instagram.ui.profile.userposts
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.instagram.databinding.ItemProfileImagesBinding
 import com.instagram.databinding.ItemProfileUserImagesBinding
 import com.instagram.model.PreviewPost
 
-class ProfileUserPostsAdapter:ListAdapter<PreviewPost, ProfileUserPostsAdapter.ProfileUserPostViewHolder>(ProfileUserPostDiffUtil()) {
+class ProfileUserPostsAdapter:ListAdapter<PreviewPost, ProfileUserPostsAdapter.ProfileUserPostViewHolder>(
+    ProfileUserPostDiffUtil()
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileUserPostViewHolder {
         val binding = ItemProfileUserImagesBinding.inflate(LayoutInflater.from(parent.context))

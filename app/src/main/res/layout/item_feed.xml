@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="feed"
             type="com.instagram.model.Feed" />
@@ -14,18 +13,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.imageview.ShapeableImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_feed_image"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_margin="8dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/welove"
+            tools:src="@drawable/welove"
+            android:padding="4dp"
+            circleImageUrl="@{feed.user.imageUrl}"
+            isSeen="@{feed.isSeen}"
+            android:background="@drawable/background_circle_gradient"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/Circle" />
-<!--                    imageUrl="@{feed.user.imageUrl}"-->
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:layout_width="0dp"

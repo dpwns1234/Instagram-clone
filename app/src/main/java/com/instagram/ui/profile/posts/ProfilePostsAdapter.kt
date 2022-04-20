@@ -1,6 +1,5 @@
-package com.instagram.ui.profile
+package com.instagram.ui.profile.posts
 
-import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.instagram.databinding.ItemProfileImagesBinding
 import com.instagram.model.PreviewPost
 
-class ProfilePostsAdapter: ListAdapter<PreviewPost, ProfilePostsAdapter.ProfilePostViewHolder>(ProfilePostDiffUtil()) {
+class ProfilePostsAdapter: ListAdapter<PreviewPost, ProfilePostsAdapter.ProfilePostViewHolder>(
+    ProfilePostDiffUtil()
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfilePostViewHolder {
         val binding = ItemProfileImagesBinding.inflate(LayoutInflater.from(parent.context))
