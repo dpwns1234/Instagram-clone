@@ -1,12 +1,15 @@
 package com.instagram
 
 import android.net.Uri
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import org.w3c.dom.Text
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.net.URI
 import java.net.URL
@@ -54,5 +57,10 @@ class NetworkUtils {
 
     fun getResponseFromHttpUrl(url: URL): String {
         return "hi"
+        val retrofit = Retrofit.Builder()
+            .baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        retrofit.create(Retrofit::class.java)
     }
 }
