@@ -34,8 +34,8 @@ class ProfileViewModel(private val context: Context): ViewModel() {
         val profileData = gson.fromJson(jsonData, Profile::class.java)
 
         _profile.value = profileData
-        _profilePosts.value = profileData.posts
-        _profileUserPosts.value = profileData.userPosts
+        _profilePosts.value = profileData.posts!!
+        _profileUserPosts.value = profileData.userPosts!!
         Log.d("play?", "처음이요")
     }
 }

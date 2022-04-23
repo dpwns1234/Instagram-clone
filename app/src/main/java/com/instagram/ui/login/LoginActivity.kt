@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
 
         val signInBtn = binding.buttonLogin
         signInBtn.setOnClickListener{
-            createUser()
+            //createUser()
             signIn(binding.etId.text.toString(), binding.etPassword.text.toString())
         }
 
@@ -60,6 +60,21 @@ class LoginActivity : AppCompatActivity() {
                 }
         }
     }
+
+    // 자동 로그인 - 로그아웃 구현 전까지 주석
+//    override fun onStart() {
+//        super.onStart()
+//        val user = Firebase.auth.currentUser
+//        if(user != null) {
+//            moveMainPage(user)
+//        }
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        finish()
+//    }
+
     private fun moveMainPage(user: FirebaseUser?) {
         if(user != null) {
             startActivity(Intent(this, MainActivity::class.java))
@@ -69,37 +84,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun moveSignUpPage() {
+    private fun moveSignUpPage() {
         startActivity(Intent(this, SignUpActivity::class.java))
     }
 
-    fun createUser() {
-        val databaseRef = Firebase.database("https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/").reference
-        val key = databaseRef.child("users").push().key
-        if (key == null) {
-            Log.w("hihi", "Faild")
-            return
-        }
-
-        val user = User("dpwns1234",
-            "yejun",
-            "yj",
-            "https://user-images.githubusercontent.com/52391722/159455432-4ffd9ed9-4712-4eb4-8b2f-792f6ffbe1f7.jpg",
-            "hi, I'm yejun")
-        val userValue = user.toMap()
-
-        val childUpdates = hashMapOf<String, Any>(
-            "users/$key" to userValue,
-            "users/dpwns1234/$key" to userValue
-        )
-
-        databaseRef.updateChildren(childUpdates)
-        databaseRef.child("users").child("dpwns1234").setValue(user)
-            .addOnSuccessListener {
-                Log.d("hihi", "Success!!")
-            }
-            .addOnFailureListener {
-                Log.d("hihi", "Failed!!!")
-            }
-    }
 }

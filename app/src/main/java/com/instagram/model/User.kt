@@ -18,7 +18,7 @@ data class User(
             "id" to id,
             "name" to name,
             "nickname" to nickname,
-            "imageUrl" to imageUrl,
+            "image_url" to imageUrl,
             "introduce" to introduce
         )
     }

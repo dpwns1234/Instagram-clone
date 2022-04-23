@@ -30,19 +30,30 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 어댑터 연결
-        // 이 부분은 category_detail_fragment처럼 어댑터 여러개 합치는 거 따라하기.
-        // TODO. 그냥 따로 따로 adapter 연결하면 되지 않나??
+        setData()
+        setPopupMenu()
+    }
+
+    private fun setData() {
         val feedAdapter = FeedAdapter()
         val homeAdapter = HomeAdapter(this)
-
         binding.rvFeed.adapter = feedAdapter
         binding.rvHome.adapter = homeAdapter
         // TODO. 공부: 이거 왜 해야하는지, 어떻게 해야하는 지 공뿌
         binding.lifecycleOwner = viewLifecycleOwner
 
-        setData(feedAdapter, homeAdapter)
+        with(viewModel) {
+            feed.observe(viewLifecycleOwner) { feed ->
+                feedAdapter.submitList(feed)
+            }
 
+            post.observe(viewLifecycleOwner) { post ->
+                homeAdapter.submitList(post)
+            }
+        }
+    }
+
+    private fun setPopupMenu() {
         binding.buttonPlus.setOnClickListener {
             val plusMenu = PopupMenu(context, it)
             plusMenu.menuInflater.inflate(R.menu.plus_menu, plusMenu.menu)
@@ -65,21 +76,6 @@ class HomeFragment : Fragment() {
                 return@setOnMenuItemClickListener false
             }
             plusMenu.show()
-        }
-    }
-
-    private fun setData(
-        feedAdapter: FeedAdapter,
-        homeAdapter: HomeAdapter
-    ) {
-        with(viewModel) {
-            feed.observe(viewLifecycleOwner) { feed ->
-                feedAdapter.submitList(feed)
-            }
-
-            post.observe(viewLifecycleOwner) { post ->
-                homeAdapter.submitList(post)
-            }
         }
     }
 }
