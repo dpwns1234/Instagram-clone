@@ -48,6 +48,7 @@ class ProfileViewModel(private val context: Context): ViewModel() {
         _profileUserPosts.value = profileData.userPosts!!   // TODO. 근데 생각해보니까 데이터 할당하는건 따로 할 필요는 없지 않나?? 데이터를 따로 만드는건 괜찮아도.
     }
 
+    // TODO. 마지막. posts, userPosts database로 load하기
     private fun loadProfileFromFirebase() {
         val auth = Firebase.auth
         val database = Firebase.database(firebaseUrl).reference
@@ -63,7 +64,6 @@ class ProfileViewModel(private val context: Context): ViewModel() {
                     // TODO. 해당 위치에 저장된 데이터가 없음을 뜻함.
                 } else {
                     _profile.postValue(profile!!)
-                    Log.d("who", "follower: ${profile.followerCount}, following: ${profile.followingCount}")
                     //_profilePosts.value = profile.posts!!
                     //_profileUserPosts.value = profile.userPosts!!
                 }

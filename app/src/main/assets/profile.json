@@ -55,11 +55,11 @@
   "user_posts": [
     {
       "post_idx": 1,
-      "post_image": "https://user-images.githubusercontent.com/52391722/159455432-4ffd9ed9-4712-4eb4-8b2f-792f6ffbe1f7.jpg"
+      "post_image": "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg"
     },
     {
       "post_idx": 2,
-      "post_image": "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee"
+      "post_image": "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg"
     },
     {
       "post_idx": 3,
@@ -67,7 +67,7 @@
     },
     {
       "post_idx": 4,
-      "post_image": "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee"
+      "post_image": "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg"
     }
   ]
 }

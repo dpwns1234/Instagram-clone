@@ -1,6 +1,7 @@
 package com.instagram.ui.profile.userposts
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,7 @@ class ProfileUserPostsFragment(): Fragment() {
         val viewModel = ProfileViewModel(requireContext())
         val userPostsAdapter = ProfileUserPostsAdapter()
         binding.rvUserPosts.adapter = userPostsAdapter
+
         viewModel.profileUserPosts.observe(viewLifecycleOwner) { userPosts ->
             userPostsAdapter.submitList(userPosts)
         }

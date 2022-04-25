@@ -18,6 +18,7 @@
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/activity_test.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/fragment_login.xml" value="0.2390625" />
+        <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/fragment_produce_post.xml" value="0.2" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/fragment_profile.xml" value="0.2174969623329283" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/fragment_profile_images.xml" value="0.11666666666666667" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/fragment_profile_posts.xml" value="0.16799999999999998" />
@@ -35,7 +36,7 @@
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/item_post_image.xml" value="0.11197916666666667" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/item_post_introduce.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/item_post_section.xml" value="0.27249683143219267" />
-        <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/item_profile_images.xml" value="0.23448275862068965" />
+        <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/item_profile_images.xml" value="0.1" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/item_profile_user_images.xml" value="0.11666666666666667" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/item_test.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/menu/main_menu.xml" value="0.2" />

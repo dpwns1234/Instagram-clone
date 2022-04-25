@@ -3,24 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_user_posts"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3"
+            tools:listitem="@layout/item_profile_user_images" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_user_posts"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:listitem="@layout/item_profile_user_images"
-                app:spanCount="3"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
-
-        </androidx.core.widget.NestedScrollView>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </RelativeLayout>
 </layout>
