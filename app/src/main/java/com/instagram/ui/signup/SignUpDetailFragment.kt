@@ -59,9 +59,9 @@ class SignUpDetailFragment : Fragment() {
 
     private fun initUserProfile(uid: String?) {
         database = Firebase.database(firebaseUrl).reference
-        val profile = Profile("yj20", profileImage = null,
+        val profile = Profile("yj20", profileImage = "",
             0, 0, 0,
-            "예준", introduce = null, posts = null, userPosts = null)
+            "예준", introduce = "", posts = null, userPosts = null)
         val profileValue = profile.toMap()
 
         if (uid != null) {

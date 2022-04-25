@@ -19,21 +19,23 @@ import com.instagram.model.Profile
 
 class ProfileFragment : Fragment() {
     lateinit var binding: FragmentProfileBinding
-
+    lateinit var profileViewModel: ProfileViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
+        profileViewModel = ProfileViewModel(requireContext())
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val profileViewModel = ProfileViewModel(requireContext())
-        binding.profile = profileViewModel.profile.value
+        profileViewModel.profile.observe(viewLifecycleOwner) {
+            binding.profile = it
+        }
         binding.lifecycleOwner = viewLifecycleOwner
 
         setViewpager()
