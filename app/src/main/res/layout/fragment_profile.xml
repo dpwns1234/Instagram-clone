@@ -218,7 +218,7 @@
                         />
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/button_profile_edit"
+                        android:id="@+id/button_edit_profile"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="6dp"

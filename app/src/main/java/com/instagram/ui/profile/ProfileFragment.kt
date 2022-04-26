@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.green
 import com.google.android.material.tabs.TabLayoutMediator
@@ -41,10 +42,7 @@ class ProfileFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         setViewpager()
-
-        binding.buttonProfileEdit.setOnClickListener {
-            startActivity(Intent(activity, EditProfileActivity::class.java))
-        }
+        setEditProfileButton()
     }
 
     private fun setViewpager() {
@@ -60,6 +58,16 @@ class ProfileFragment : Fragment() {
                 )
 
             }.attach()
+        }
+    }
+
+    private fun setEditProfileButton() {
+        binding.buttonEditProfile.setOnClickListener {
+            // button animation
+            val clickAnimation = AlphaAnimation(1F, 0.8F)
+            it.startAnimation(clickAnimation)
+
+            startActivity(Intent(activity, EditProfileActivity::class.java))
         }
     }
 }
