@@ -24,7 +24,7 @@ class ProfileUserPostsFragment(): Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = ProfileViewModel(requireContext())
+        val viewModel = ProfileViewModel()
         val userPostsAdapter = ProfileUserPostsAdapter()
         binding.rvUserPosts.adapter = userPostsAdapter
 

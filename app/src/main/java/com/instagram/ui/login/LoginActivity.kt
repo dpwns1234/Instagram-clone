@@ -62,18 +62,18 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // 자동 로그인 - 로그아웃 구현 전까지 주석
-//    override fun onStart() {
-//        super.onStart()
-//        val user = Firebase.auth.currentUser
-//        if(user != null) {
-//            moveMainPage(user)
-//        }
-//    }
-//
-//    override fun onStop() {
-//        super.onStop()
-//        finish()
-//    }
+    override fun onStart() {
+        super.onStart()
+        val user = Firebase.auth.currentUser
+        if(user != null) {
+            moveMainPage(user)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        finish()
+    }
 
     private fun moveMainPage(user: FirebaseUser?) {
         if(user != null) {

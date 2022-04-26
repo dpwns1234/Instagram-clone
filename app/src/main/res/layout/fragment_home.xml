@@ -23,28 +23,28 @@
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="50dp">
 
             <ImageView
                 android:id="@+id/iv_logo_title"
                 android:layout_width="100dp"
-                android:layout_height="48dp"
+                android:layout_height="match_parent"
                 android:src="@drawable/logo_title" />
 
             <androidx.appcompat.widget.AppCompatImageButton
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="end"
                 android:layout_marginStart="10dp"
                 android:background="@color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/menu" />
+                android:padding="8dp"
+                android:src="@drawable/message" />
 
             <androidx.appcompat.widget.AppCompatImageButton
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="end"
-
                 android:layout_marginStart="10dp"
                 android:background="@color/transparent"
                 android:scaleType="fitCenter"
@@ -52,8 +52,8 @@
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/button_plus"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="end"
                 android:background="@color/transparent"
                 android:scaleType="fitCenter"

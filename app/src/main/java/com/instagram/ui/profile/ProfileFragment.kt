@@ -1,5 +1,6 @@
 package com.instagram.ui.profile
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import com.instagram.R
 import com.instagram.databinding.FragmentProfileBinding
 import com.instagram.databinding.FragmentProfilePostsBinding
 import com.instagram.model.Profile
+import com.instagram.ui.EditProfileActivity
 
 class ProfileFragment : Fragment() {
     lateinit var binding: FragmentProfileBinding
@@ -26,7 +28,7 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
-        profileViewModel = ProfileViewModel(requireContext())
+        profileViewModel = ProfileViewModel()
         return binding.root
     }
 
@@ -39,6 +41,10 @@ class ProfileFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         setViewpager()
+
+        binding.buttonProfileEdit.setOnClickListener {
+            startActivity(Intent(activity, EditProfileActivity::class.java))
+        }
     }
 
     private fun setViewpager() {

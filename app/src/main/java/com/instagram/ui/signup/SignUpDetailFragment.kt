@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.instagram.databinding.FragmentSignUpDetailBinding
+import com.instagram.model.PreviewPost
 import com.instagram.model.Profile
 import com.instagram.ui.MainActivity
 
@@ -59,15 +60,21 @@ class SignUpDetailFragment : Fragment() {
 
     private fun initUserProfile(uid: String?) {
         database = Firebase.database(firebaseUrl).reference
-        val profile = Profile("yj20", profileImage = "",
-            0, 0, 0,
-            "예준", introduce = "", posts = null, userPosts = null)
+        val posts = listOf(PreviewPost(0, "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg"),
+        PreviewPost(1, "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg"))
+        val userPosts = listOf(PreviewPost(0, "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg"),
+            PreviewPost(1, "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg"),
+            PreviewPost(1, "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg"))
+
+        val profile = Profile("nada", profileImage = "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg",
+            3, 1, 3,
+            "예준", introduce = "hihi", posts, userPosts)
         val profileValue = profile.toMap()
 
         if (uid != null) {
-            // [POST] users/profiles/${uid}/
+            // [POST] users/{uid}/profiles/
             try {
-                database.child("users").child("profiles").child(uid).setValue(profileValue)
+                database.child("users").child(uid).child("profiles").setValue(profileValue)
                     .addOnSuccessListener {
                         startActivity(Intent(activity, MainActivity::class.java))
                         activity?.finish()
