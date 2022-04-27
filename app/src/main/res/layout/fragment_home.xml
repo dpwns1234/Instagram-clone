@@ -35,18 +35,19 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="end"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="4dp"
                 android:background="@color/transparent"
-                android:scaleType="fitCenter"
                 android:padding="8dp"
+                android:scaleType="fitCenter"
                 android:src="@drawable/message" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="end"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="4dp"
                 android:background="@color/transparent"
+                android:padding="8dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/heart" />
 

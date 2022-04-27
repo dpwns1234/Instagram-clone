@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayoutMediator
-import com.instagram.ItemPostAdapter
-import com.instagram.ItemPostViewModel
 import com.instagram.databinding.ItemPostBinding
 import com.instagram.model.Image
 import com.instagram.model.Post
+import com.instagram.ui.home.post.ItemPostAdapter
+import com.instagram.ui.home.post.ItemPostViewModel
 
 class HomeAdapter(private val context: LifecycleOwner): ListAdapter<Post, HomeAdapter.HomeViewHolder>(
     HomeDiffUtil()

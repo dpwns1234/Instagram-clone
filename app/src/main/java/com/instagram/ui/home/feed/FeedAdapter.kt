@@ -1,4 +1,4 @@
-package com.instagram.ui
+package com.instagram.ui.home.feed
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

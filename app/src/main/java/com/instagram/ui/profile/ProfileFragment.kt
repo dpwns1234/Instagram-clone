@@ -1,24 +1,16 @@
 package com.instagram.ui.profile
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.green
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.gson.Gson
-import com.instagram.AssetLoader
 import com.instagram.R
 import com.instagram.databinding.FragmentProfileBinding
-import com.instagram.databinding.FragmentProfilePostsBinding
-import com.instagram.model.Profile
-import com.instagram.ui.EditProfileActivity
 
 class ProfileFragment : Fragment() {
     lateinit var binding: FragmentProfileBinding

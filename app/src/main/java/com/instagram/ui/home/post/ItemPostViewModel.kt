@@ -1,11 +1,9 @@
-package com.instagram
+package com.instagram.ui.home.post
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.instagram.model.Image
-import com.instagram.repository.MainRepository
 
 
 class ItemPostViewModel(private val imagesData: List<Image>): ViewModel() {

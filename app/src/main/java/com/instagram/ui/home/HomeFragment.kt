@@ -1,5 +1,6 @@
 package com.instagram.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -12,7 +13,8 @@ import androidx.fragment.app.viewModels
 import com.instagram.R
 import com.instagram.common.ViewModelFactory
 import com.instagram.databinding.FragmentHomeBinding
-import com.instagram.ui.FeedAdapter
+import com.instagram.ui.home.feed.FeedAdapter
+import com.instagram.ui.produce.ProduceActivity
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -36,8 +38,9 @@ class HomeFragment : Fragment() {
 
     private fun setData() {
         val feedAdapter = FeedAdapter()
-        val homeAdapter = HomeAdapter(this)
         binding.rvFeed.adapter = feedAdapter
+
+        val homeAdapter = HomeAdapter(this)
         binding.rvHome.adapter = homeAdapter
         // TODO. 공부: 이거 왜 해야하는지, 어떻게 해야하는 지 공뿌
         binding.lifecycleOwner = viewLifecycleOwner
@@ -61,6 +64,7 @@ class HomeFragment : Fragment() {
                 when (menuItem.itemId) {
                     R.id.navigation_produce_post -> {
                         Toast.makeText(requireContext(), "post 선택", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(activity, ProduceActivity::class.java))
                     }
                     R.id.navigation_produce_feed -> {
                         Toast.makeText(requireContext(), "feed 선택", Toast.LENGTH_SHORT).show()

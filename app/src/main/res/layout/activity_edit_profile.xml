@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.EditProfileActivity">
+        tools:context=".ui.profile.EditProfileActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_edit_appbar"
@@ -44,7 +44,7 @@
                 android:gravity="center_vertical"
                 app:layout_constraintStart_toEndOf="@id/button_close"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="프로필 편집" />
+                android:text="@string/edit_profile" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_check"
@@ -73,9 +73,9 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="14dp"
                 android:background="@drawable/background_circle_border"
-                android:clipToOutline="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/welove"
+                circleImageUrl="@{profile.profileImage}"
+                isSeen="@{false}"
                 tools:src="@drawable/welove" />
             <!--                imageUrl="@{profile.profileImage}"-->
 

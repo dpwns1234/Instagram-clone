@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="post"
             type="com.instagram.model.Post" />
+        <variable
+            name="viewModel"
+            type="com.instagram.ui.home.post.ItemPostViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,9 +99,9 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="@color/transparent"
-                android:paddingTop="2dp"
+                android:padding="8dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/heart"
+                android:src="@drawable/button_heart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

@@ -1,17 +1,12 @@
-package com.instagram.ui
+package com.instagram.ui.profile
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.instagram.R
 import com.instagram.databinding.ActivityEditProfileBinding
-import com.instagram.ui.profile.ProfileViewModel
 
 class EditProfileActivity: AppCompatActivity() {
     private lateinit var binding: ActivityEditProfileBinding

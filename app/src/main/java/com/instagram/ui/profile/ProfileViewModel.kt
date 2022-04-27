@@ -36,23 +36,19 @@ class ProfileViewModel(): ViewModel() {
             .child("profiles")
 
         setProfile(databaseRef)
+        // TODO. 다음에 할 거 -> 하트 눌리고 안눌리고 그거 왜 안되는지 + 노트에 써놓은거
     }
 
     private fun setProfile(databaseRef: DatabaseReference) {
         val profileListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val profile = snapshot.getValue<Profile>()
-                val posts = snapshot.child("posts").getValue<List<PreviewPost>>()
-                val userPosts = snapshot.child("user_posts").getValue<List<PreviewPost>>()
-                if (profile == null) {
-                    // TODO. 해당 위치에 저장된 데이터가 없음을 뜻함.
-                } else {
-                    _profile.value = profile!!
-                    _profilePosts.value = posts!!
-                    _profileUserPosts.value = userPosts!!
+                profile?.let { it ->
+                    _profile.value = it
+                    _profilePosts.value = it.posts!!
+                    _profileUserPosts.value = it.userPosts!!
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.w("ProfileViewModel", "loadProfile:onCancelled")
             }

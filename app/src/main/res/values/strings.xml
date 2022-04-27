@@ -67,4 +67,6 @@
     <string name="string_post">게시물</string>
     <string name="calculate_count">%d만</string>
     <string name="string_edit_profile">프로필 편집</string>
+    <string name="edit_profile">프로필 편집</string>
+    <string name="produce_post">새 게시물</string>
 </resources>
