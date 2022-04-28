@@ -31,6 +31,7 @@ class ProduceActivity: AppCompatActivity() {
             if (result.resultCode == RESULT_OK) {
                 val intent = result.data
                 val uri = intent?.data
+                Log.d("hihi", "uri: ${uri.toString()} and uri: $uri")
                 Glide.with(this)
                     .load(uri)
                     .into(imageView)
