@@ -3,12 +3,12 @@ package com.instagram.model
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 import com.google.firebase.database.PropertyName
-import com.google.gson.annotations.SerializedName
+import kotlin.String
 
 @IgnoreExtraProperties
 data class Profile(
     val nickname: String = "",
-    @get:PropertyName("profile_image") @set:PropertyName("profile_image")  var profileImage: String? = "",
+    @get:PropertyName("profile_image") @set:PropertyName("profile_image") var profileImage: String? = "",
     @get:PropertyName("post_count") @set:PropertyName("post_count")  var postCount: Int = 0,
     @get:PropertyName("follower_count") @set:PropertyName("follower_count")  var followerCount: Int = 0,
     @get:PropertyName("following_count") @set:PropertyName("following_count")  var followingCount: Int = 0,

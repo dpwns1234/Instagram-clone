@@ -24,7 +24,6 @@ class ProfilePostsAdapter: ListAdapter<PreviewPost, ProfilePostsAdapter.ProfileP
 
     inner class ProfilePostViewHolder(private val binding: ItemProfileImagesBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(previewPost: PreviewPost) {
-            Log.d("play?", previewPost.postImage)
             binding.previewPost = previewPost
             binding.executePendingBindings()
         }

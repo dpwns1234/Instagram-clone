@@ -6,30 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".TestActivity">
 
-    <EditText
-        android:id="@+id/et_url"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="github url을 입력하세요"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/iv_storage"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/black"
+        android:scaleType="center"
+        />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_bring"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="가져오기"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_url" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_bring_url"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:background="@color/skyBlue"
-        tools:text="url이 표시되는 곳"
-
+        app:layout_constraintTop_toBottomOf="@id/iv_storage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_bring" />
+        android:id="@+id/iv_database"
+        android:layout_marginTop="20dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

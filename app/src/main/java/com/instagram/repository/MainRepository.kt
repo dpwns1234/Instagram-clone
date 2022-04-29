@@ -1,12 +1,6 @@
 package com.instagram.repository
 
-import android.util.Log
-import com.instagram.model.Image
 import com.instagram.model.Main
-import com.instagram.model.Post
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
 
 // TODO. udemy강의 보기: Repository면 remote데이터도 올 수 있으니까 생성자가 아닌 fun 매개변수로 MainAssetData를 만들어야 하지 않았을까??
 class MainRepository(private val mainAssetData: MainAssetDataSource) {

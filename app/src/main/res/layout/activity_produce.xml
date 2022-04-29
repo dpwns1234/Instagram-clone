@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button_close"
+            android:id="@+id/button_produce_close"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="start"
@@ -33,12 +33,12 @@
             android:layout_marginStart="10dp"
             android:gravity="center_vertical"
             android:text="@string/produce_post"
-            app:layout_constraintStart_toEndOf="@id/button_close"
+            app:layout_constraintStart_toEndOf="@id/button_produce_close"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="새 게시물" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_check"
+            android:id="@+id/button_produce_check"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="end"

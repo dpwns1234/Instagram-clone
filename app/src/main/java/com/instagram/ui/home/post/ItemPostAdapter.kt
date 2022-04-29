@@ -1,5 +1,6 @@
 package com.instagram.ui.home.post
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -23,6 +24,7 @@ class ItemPostAdapter: ListAdapter<Image, ItemPostAdapter.ItemPostViewHolder>(It
         fun bind(image: Image) {
             // TODO. bind함수가 발생하는 경우가 스크롤을 내려서 새로운 item이 발견되었을 때인가? -> 아마 그럴걸?
             binding.image = image
+            Log.d("why", "itemPostAdapter url: ${image.imageUrl}")
         }
     }
 }
@@ -30,7 +32,7 @@ class ItemPostAdapter: ListAdapter<Image, ItemPostAdapter.ItemPostViewHolder>(It
 class ItemPostImageDiffUtil: DiffUtil.ItemCallback<Image>() {
     override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
         // TODO. 나중에 Image에 idx 만들어서 수정하기
-        return oldItem.imageUrl == newItem.imageUrl
+        return oldItem.imageIdx == newItem.imageIdx
     }
     override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean {
         return oldItem == newItem
