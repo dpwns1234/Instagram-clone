@@ -36,23 +36,73 @@ class ProfileViewModel(): ViewModel() {
             .child("profiles")
 
         setProfile(databaseRef)
-        // TODO. 다음에 할 거 -> 하트 눌리고 안눌리고 그거 왜 안되는지 + 노트에 써놓은거
+//        setPosts(databaseRef)
+//        setUserPosts(databaseRef)
+
     }
 
     private fun setProfile(databaseRef: DatabaseReference) {
         val profileListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                Log.d("what", "object : ${snapshot.value}")
                 val profile = snapshot.getValue<Profile>()
                 profile?.let { it ->
                     _profile.value = it
-                    _profilePosts.value = it.posts!!
-                    _profileUserPosts.value = it.userPosts!!
                 }
+                setPosts(snapshot.child("posts"))
+                //setUserPosts(snapshot.child("user_posts"))
             }
             override fun onCancelled(error: DatabaseError) {
-                Log.w("ProfileViewModel", "loadProfile:onCancelled")
+                Log.w("ProfileViewModel", "loadProfile:onCancelled", error.toException())
             }
         }
         databaseRef.addValueEventListener(profileListener)
     }
+
+    private fun setPosts(snapshot: DataSnapshot) {
+        val posts = mutableListOf<PreviewPost>()
+        for (post in snapshot.children) {
+            post.getValue<PreviewPost>()?.let {
+                posts.add(it)
+            }
+        }
+        _profilePosts.value = posts
+    }
+
+    private fun setUserPosts(snapshot: DataSnapshot) {
+        val userPosts = mutableListOf<PreviewPost>()
+        for (post in snapshot.children) {
+            post.getValue<PreviewPost>()?.let {
+                userPosts.add(it)
+            }
+        }
+        _profileUserPosts.value = userPosts
+    }
+
+//    private fun setPosts(databaseRef: DatabaseReference) {
+//        val postsListener = object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//            }
+//            override fun onCancelled(error: DatabaseError) {
+//                Log.w("ProfileViewModel", "loadProfile:onCancelled", error.toException())
+//            }
+//        }
+//        databaseRef.child("posts").addValueEventListener(postsListener)
+//    }
+
+//    private fun setUserPosts(databaseRef: DatabaseReference) {
+//        val userPostsListener = object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                val userPosts = snapshot.getValue<List<PreviewPost>>()
+//                userPosts?.let {
+//                    _profileUserPosts.value = it
+//                }
+//            }
+//            override fun onCancelled(error: DatabaseError) {
+//                Log.w("ProfileViewModel", "loadProfile:onCancelled", error.toException())
+//            }
+//        }
+//        databaseRef.child("user_posts").addValueEventListener(userPostsListener)
+//    }
+
 }

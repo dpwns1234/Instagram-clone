@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
@@ -21,116 +22,80 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.instagram.R
 import com.instagram.TestActivity
+import com.instagram.databinding.ActivityProduceBinding
 import com.instagram.model.Image
 import com.instagram.model.Post
+import com.instagram.model.PreviewPost
 import com.instagram.model.User
 import java.text.SimpleDateFormat
 
 class ProduceActivity : AppCompatActivity() {
-    private val storage = Firebase.storage
-    private val firebaseUrl = "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    private val firebaseUrl =
+        "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
     private val databaseRef = Firebase.database(firebaseUrl).reference
-    private val user = Firebase.auth.currentUser!!
     private val uriList = mutableListOf<Uri>()
+    private lateinit var binding: ActivityProduceBinding
 
-    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_produce)
+        binding = ActivityProduceBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val galleryButton = findViewById<Button>(R.id.button_gallery)
-        val imageView = findViewById<ImageView>(R.id.iv_post_image)
-        val closeButton = findViewById<ImageButton>(R.id.button_produce_close)
-        val checkButton = findViewById<Button>(R.id.button_produce_check)
+        val launcher = activityResultLauncher(binding.ivPostImage)
+        binding.buttonGallery.setOnClickListener {
+            loadGallery(launcher)
+        }
+        binding.buttonProduceClose.setOnClickListener {
+            this.finish()
+        }
+        binding.buttonProduceCheck.setOnClickListener {
+            setCheckButton(binding.etIntroduce)
+        }
 
-        var uri: Uri? = null
+    }
+
+    private fun activityResultLauncher(imageView: ImageView): ActivityResultLauncher<Intent> {
         val launcher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
-                // 사진을 한 장도 선택하지 않았을 때
-                if(result.data == null) {
-                    Toast.makeText(this, "이미지를 선택하지 않았습니다.", Toast.LENGTH_SHORT).show()
-                    this.finish()
-                }
-                // 이미지를 한 장 선택한 경우
-                else if (result.data!!.clipData == null) {
-                    val imageUri: Uri = result.data!!.data!!
-                    uriList.add(imageUri)
-
-                    Glide.with(this)
-                        .load(imageUri)
-                        .into(imageView)
-                }
-                // 이미지를 여러 장 선택한 경우
-                else {
-                    val clipData = result.data!!.clipData
-
-                    // 최대 10장까지만 가능( 근데 그럼 >= 10 해야되는거 아닌가??)
-                    if(clipData!!.itemCount > 10) {
-                        Toast.makeText(this, "최대 10장까지 선택 가능합니다.", Toast.LENGTH_SHORT).show()
+                result.data.let { intent ->
+                    // 1. 사진을 한 장도 선택하지 않았을 때
+                    if (intent == null) {
+                        Toast.makeText(this, "이미지를 선택하지 않았습니다.", Toast.LENGTH_SHORT).show()
+                        this.finish()
                     }
+                    // 2. 이미지를 한 장 선택한 경우
+                    else if (intent.clipData == null) {
+                        val imageUri: Uri = intent.data!!
+                        uriList.add(imageUri)
+                    }
+                    // 3. 이미지를 여러 장 선택한 경우
                     else {
-                        Toast.makeText(this, "여러장을 선택하였습니당", Toast.LENGTH_SHORT).show()
-                        for(i in 0 until clipData.itemCount) {
-                            val imageUri = clipData.getItemAt(i).uri
-                            try {
-                                uriList.add(imageUri)
-                            } catch (e: Exception) {
-                                Log.e("ProduceActivity", "File select error", e)
+                        val clipData = intent.clipData
+                        // 3-1. 최대 10장까지만 가능
+                        if (clipData!!.itemCount > 10) {
+                            Toast.makeText(this, "최대 10장까지 선택 가능합니다.", Toast.LENGTH_SHORT).show()
+                        }
+                        // 3-2. 10장 이하 선택하였을 경우
+                        else {
+                            Toast.makeText(this, "여러장을 선택하였습니당", Toast.LENGTH_SHORT).show()
+                            for (i in 0 until clipData.itemCount) {
+                                val imageUri = clipData.getItemAt(i).uri
+                                try {
+                                    uriList.add(imageUri)
+                                } catch (e: Exception) {
+                                    Log.e("ProduceActivity", "File select error", e)
+                                }
                             }
                         }
                     }
+                    Glide.with(this)
+                        .load(uriList[0])
+                        .into(imageView)
                 }
-
-                val intent = result.data
-                uri = intent?.data
-                Glide.with(this)
-                    .load(uri)
-                    .into(imageView)
-
             }
         }
-
-        galleryButton.setOnClickListener {
-            loadGallery(launcher)
-        }
-        //uploadToStorage()
-
-        closeButton.setOnClickListener {
-            this.finish()
-        }
-        checkButton.setOnClickListener {
-            // database에 저장 root/posts/post_uid(push)
-            val uid = user.uid
-            val postKey = databaseRef.child("posts").push().key
-
-            // TODO. imageValue에서 왜 toMap을 지금까지 해줬을까? 하고 안하고의 차이가 뭘까??
-            // 이미지 객체 생성
-            val imageValueList = mutableListOf<Image>()
-            for(i in 0 until uriList.size) {
-                val image = Image(i, uriList[i].toString())
-                imageValueList.add(image)
-            }
-
-            databaseRef.child("users").get().addOnSuccessListener { snapshot ->
-                val createdAt = System.currentTimeMillis()
-                val dataFormat = SimpleDateFormat("yyyy-MM-dd")
-                val post = Post(postKey, snapshot.child(uid).getValue<User>()!!, imageValueList, "이건 게시물 소개에요", createdAt = dataFormat.format(createdAt))
-                val postValue = post.toMap()
-
-                val childUpdates = hashMapOf<String, Any>(
-                    "posts/$postKey" to postValue,
-                    "users/$uid/profiles/posts/$postKey" to postValue // posts가 리스트로 쌓여야 하는데 그냥 다 지워지고 하나의 객체만 남음. 수정
-                )
-
-                databaseRef.updateChildren(childUpdates)
-            }
-
-            // TODO. 마지막: profile 데이터 못 가져오는거 + 해당 writer 데이터 못 가져오는거(118줄)
-
-            this.finish()
-        }
-
+        return launcher
     }
 
     private fun loadGallery(launcher: ActivityResultLauncher<Intent>) {
@@ -141,5 +106,44 @@ class ProduceActivity : AppCompatActivity() {
         intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI  // 이건 뭐지?
         launcher.launch(intent)
     }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun setCheckButton(introduce: AppCompatEditText) {
+        val userUid = Firebase.auth.currentUser!!.uid
+        val postKey = databaseRef.child("posts").push().key
+
+        // TODO. imageValue에서 왜 toMap을 지금까지 해줬을까? 하고 안 하고의 차이가 뭘까??
+        // 이미지 객체 생성
+        val imageValueList = mutableListOf<Image>()
+        for (i in 0 until uriList.size) {
+            val image = Image(i, uriList[i].toString())
+            imageValueList.add(image)
+        }
+
+        // TODO. 시도해볼 것. User의 id를 uid로 수정하고 sign-up에서 database 구조 잘 수정 + profile 구조에 맞게 잘 수정
+        databaseRef.child("users").get().addOnSuccessListener { snapshot ->
+            val createdAt = System.currentTimeMillis()
+            val dataFormat = SimpleDateFormat("yyyy-MM-dd")
+            val userValue = snapshot.child(userUid).child("profiles").getValue<User>()!!
+            val post = Post(postKey,
+                userValue,
+                imageValueList,
+                introduce.text.toString(),
+                createdAt = dataFormat.format(createdAt))
+            val previewPost =
+                PreviewPost(postKey, imageValueList[0].imageUrl, dataFormat.format(createdAt))
+            val childUpdates = hashMapOf(
+                "posts/$postKey" to post.toMap(),
+                "users/$userUid/profiles/posts/$postKey" to previewPost
+            )
+
+            databaseRef.updateChildren(childUpdates)
+        }
+
+        // TODO. 다음에 할 거 -> 하트 눌리고 안눌리고 그거 왜 안되는지 + 노트에 써놓은거
+
+        this.finish()
+    }
+
 
 }

@@ -56,7 +56,7 @@ class HomeAdapter(private val context: LifecycleOwner): ListAdapter<Post, HomeAd
 
 class HomeDiffUtil: DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
-        return oldItem.postIdx == newItem.postIdx
+        return oldItem.postUid == newItem.postUid
     }
     override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem == newItem

@@ -11,8 +11,8 @@ import com.instagram.R
 
 
 @BindingAdapter("imageUrl")
-fun loadImage(view: ImageView, imageUrl: String?) {
-    if (!imageUrl.isNullOrEmpty()) {
+fun loadImage(view: ImageView, imageUrl: Any?) {
+    if (imageUrl != null) {
         Glide.with(view)
             .load(imageUrl)
             .into(view)

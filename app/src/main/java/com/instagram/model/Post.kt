@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlin.String
 
 data class Post(
-    @SerializedName("post_idx") @get:PropertyName("post_idx") @set:PropertyName("post_idx") var postIdx: String? = null,
+    @SerializedName("post_idx") @get:PropertyName("post_uid") @set:PropertyName("post_uid") var postUid: String? = null,
     val writer: User,
     @SerializedName("post_images") @get:PropertyName("post_images") @set:PropertyName("post_images") var posts: List<Image>,
     @SerializedName("post_introduce") @get:PropertyName("post_introduce") @set:PropertyName("post_introduce") var postIntroduce: String? = null,
@@ -16,7 +16,7 @@ data class Post(
     @SerializedName("created_at") @get:PropertyName("created_at") @set:PropertyName("created_at") var createdAt: String, // 나중에 변수형 바꾸기
 ){
     fun toMap(): Map<String, Any?> {
-        return mapOf("post_idx" to postIdx,
+        return mapOf("post_idx" to postUid,
             "writer" to writer,
             "post_images" to posts,
             "post_introduce" to postIntroduce,

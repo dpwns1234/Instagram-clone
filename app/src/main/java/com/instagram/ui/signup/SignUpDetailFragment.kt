@@ -60,15 +60,9 @@ class SignUpDetailFragment : Fragment() {
 
     private fun initUserProfile(uid: String?) {
         database = Firebase.database(firebaseUrl).reference
-        val posts = listOf(PreviewPost(0, "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg"),
-        PreviewPost(1, "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg"))
-        val userPosts = listOf(PreviewPost(0, "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg"),
-            PreviewPost(1, "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg"),
-            PreviewPost(1, "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg"))
-
         val profile = Profile("nada", profileImage = "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg",
             3, 1, 3,
-            "예준", introduce = "hihi", posts, userPosts)
+            "예준", introduce = "hihi")
         val profileValue = profile.toMap()
 
         if (uid != null) {

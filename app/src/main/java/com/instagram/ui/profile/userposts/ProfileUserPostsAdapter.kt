@@ -32,7 +32,7 @@ class ProfileUserPostsAdapter:ListAdapter<PreviewPost, ProfileUserPostsAdapter.P
 
 class ProfileUserPostDiffUtil: DiffUtil.ItemCallback<PreviewPost>() {
     override fun areItemsTheSame(oldItem: PreviewPost, newItem: PreviewPost): Boolean {
-        return oldItem.postIdx == newItem.postIdx
+        return oldItem.postUid == newItem.postUid
     }
 
     override fun areContentsTheSame(oldItem: PreviewPost, newItem: PreviewPost): Boolean {
