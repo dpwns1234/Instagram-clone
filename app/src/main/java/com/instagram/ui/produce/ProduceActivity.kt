@@ -22,10 +22,13 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.net.toFile
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.instagram.R
 import com.instagram.TestActivity
@@ -77,9 +80,11 @@ class ProduceActivity : AppCompatActivity() {
                     // 2. 이미지를 한 장 선택한 경우
                     else if (intent.clipData == null) {
                         val imageUri: Uri = intent.data!!
-                        createCopyAndReturnRealPath(this, imageUri)?.let { realPathUri ->
-                            uriList.add(realPathUri)
-                        }
+                        fileToHttpUri()
+                        //uriToHttp2(imageUri)
+//                        makeImageFile(this, imageUri)?.let { realPathUri ->
+//                            uriList.add(realPathUri)
+//                        }
                     }
                     // 3. 이미지를 여러 장 선택한 경우
                     else {
@@ -93,19 +98,19 @@ class ProduceActivity : AppCompatActivity() {
                             Toast.makeText(this, "여러장을 선택하였습니당", Toast.LENGTH_SHORT).show()
                             for (i in 0 until clipData.itemCount) {
                                 val imageUri = clipData.getItemAt(i).uri
-                                try {
-                                    createCopyAndReturnRealPath(this, imageUri)?.let { realPathUri ->
-                                        uriList.add(realPathUri)
-                                    }
-                                } catch (e: Exception) {
-                                    Log.e("ProduceActivity", "File select error", e)
-                                }
+//                                try {
+//                                    makeImageFile(this, imageUri)?.let { realPathUri ->
+//                                        uriList.add(realPathUri)
+//                                    }
+//                                } catch (e: Exception) {
+//                                    Log.e("ProduceActivity", "File select error", e)
+//                                }
                             }
                         }
                     }
-                    Glide.with(this)
-                        .load(uriList[0]) // viewpager로 바꾸면 for문 사용
-                        .into(imageView)
+//                    Glide.with(this)
+//                        .load(uriList[0]) // viewpager로 바꾸면 for문 사용
+//                        .into(imageView)
                 }
             }
         }
@@ -157,7 +162,7 @@ class ProduceActivity : AppCompatActivity() {
 
     // TODO. 파일로 바꾼 후 uri로 만드는 방법 말고 다른 방법은 없을까?
     @Nullable
-    fun createCopyAndReturnRealPath(context: Context, uri: Uri): Uri? {
+    fun makeImageFile(context: Context, uri: Uri): File? {
         val contentResolver: ContentResolver = context.contentResolver ?: return null
 
         // 파일 경로를 만듬
@@ -177,53 +182,56 @@ class ProduceActivity : AppCompatActivity() {
         } catch (ignore: IOException) {
             return null
         }
-        return file.absolutePath.toUri()
+        Log.d("file", "file: $file, ${file.path}")
+        return file
+    }
+    
+    // 2가지 방법 중 선택해서 게시물 올리는거 마무리 짓기
+
+    fun fileToHttpUri() {
+        val fireStorage = Firebase.storage("gs://instagram-android-65931.appspot.com/")
+        //val storageRef = fireStorage.reference.child("post_image")
+        val storageRef = fireStorage.reference
+
+        // firebase storage에 파일 올리기
+        
+        // 그 올린 파일 download uri 반환하기
+        storageRef.child("post1.jpg").downloadUrl.addOnSuccessListener { uri ->
+            Log.d("file", "fileToHttpUri = $uri")
+
+        }.addOnFailureListener {
+            Log.w("ProduceActivity", "Fail bring a uri", it.cause)
+        }
+
     }
 
-    private fun getFullPathFromUri(ctx: Context, fileUri: Uri): String? {
-        var fullPath: String? = ""
-        val column = "_data"
-        var cursor: Cursor? = ctx.contentResolver.query(fileUri, null, null, null, null)
+    fun uriToHttp2(uri: Uri) {
+        val user = Firebase.auth.currentUser!!
+        val fireStorage = Firebase.storage("gs://instagram-android-65931.appspot.com/")
+        val storageRef = fireStorage.reference.child("post_image")
+        //val dataFormat = SimpleDateFormat("yyMMss")
+        val fileName = System.currentTimeMillis() / 1000
+        val ref = storageRef.child("${user.uid}/$fileName.jpg")
+        val uploadTask = ref.putFile(uri)
 
-        if (cursor != null) {
-            Log.d("nono", "1. column: ${cursor.columnCount} count: ${cursor.count}")
-            cursor.moveToFirst()
-            var document_id = cursor.getString(0)
-            Log.d("nono", "2. document_id: $document_id")
-            if (document_id == null) {
-                for (i in 0 until cursor.columnCount) {
-                    if (column.equals(cursor.getColumnName(i), ignoreCase = true)) {
-                        fullPath = cursor.getString(i)
-                        break
-                    }
-                }
-            } else {
-                document_id = document_id.substring(document_id.lastIndexOf(":") + 1)
-                Log.d("nono", "10. column: ${cursor.columnCount} count: ${cursor.count}")
-                Log.d("nono", "11. documnet_id: $document_id")
-                cursor.close()
-
-                val projection = arrayOf(column)
-                try {
-                    cursor = ctx.contentResolver.query(
-                        fileUri,
-                        projection,
-                        MediaStore.Images.Media._ID + " = ? ",
-                        arrayOf(document_id),
-                        //null,null,null,
-                        null)
-                    if (cursor != null) {
-                        Log.d("nono", "12. column: ${cursor.columnCount} count: ${cursor.count}")
-                        cursor.moveToFirst()
-                        fullPath = cursor.getString(cursor.getColumnIndexOrThrow(column))
-
-                    }
-                } finally {
-                    cursor.close()
+        val urlTask = uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
                 }
             }
+            ref.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val downloadUri = task.result
+                Log.d("file", "downloadUri = $downloadUri")
+                Log.d("file", "urlTask.result = ${task.result}")
+            } else {
+                // Handle failures
+                // ...
+            }
         }
-        return fullPath
+        //return urlTask.result
     }
 
 }

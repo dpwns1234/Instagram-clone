@@ -11,7 +11,6 @@ import com.instagram.databinding.ActivityEditProfileBinding
 class EditProfileActivity: AppCompatActivity() {
     private lateinit var binding: ActivityEditProfileBinding
     private val firebaseUrl = "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
-    // TODO. 위에 이거 오류인가? 오류 아니면 지워
     private val auth = Firebase.auth
 
     override fun onCreate(savedInstanceState: Bundle? ) {

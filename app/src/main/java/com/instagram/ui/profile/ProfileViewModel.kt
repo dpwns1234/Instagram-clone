@@ -36,8 +36,6 @@ class ProfileViewModel(): ViewModel() {
             .child("profiles")
 
         setProfile(databaseRef)
-//        setPosts(databaseRef)
-//        setUserPosts(databaseRef)
 
     }
 
@@ -50,7 +48,7 @@ class ProfileViewModel(): ViewModel() {
                     _profile.value = it
                 }
                 setPosts(snapshot.child("posts"))
-                //setUserPosts(snapshot.child("user_posts"))
+                setUserPosts(snapshot.child("user_posts"))
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.w("ProfileViewModel", "loadProfile:onCancelled", error.toException())

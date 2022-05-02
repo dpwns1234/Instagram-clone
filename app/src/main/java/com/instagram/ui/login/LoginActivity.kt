@@ -40,11 +40,6 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        moveMainPage(auth?.currentUser)
-//    }
-
     private fun signIn(id: String, password: String) {
         auth = Firebase.auth
         FirebaseAuth.getInstance()
