@@ -25,17 +25,7 @@ class MainActivity:AppCompatActivity() {
         navController?.let {
             bottomNavigationView.setupWithNavController(it)
         }
+        // TODO. Permission Denial: opening provider com.android.providers.media.MediaDocumentsProvider from ProcessRecord{91cf1c1 11539:com.instagram/u0a148} (pid=11539, uid=10148) requires that you obtain access using ACTION_OPEN_DOCUMENT or related APIs
 
-        if (Build.VERSION.SDK_INT < 19) {
-            val intent = Intent();
-            intent.action = Intent.ACTION_GET_CONTENT;
-            intent.type = "*/*";
-            startActivityForResult(intent, KITKAT_VALUE);
-        } else {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.type = "*/*";
-            startActivityForResult(intent, KITKAT_VALUE);
-        }
     }
 }

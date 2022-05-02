@@ -2,17 +2,13 @@ package com.instagram.ui.profile
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.checkSelfPermission
-import androidx.core.content.PermissionChecker.checkSelfPermission
 import com.google.android.material.tabs.TabLayoutMediator
 import com.instagram.R
 import com.instagram.databinding.FragmentProfileBinding

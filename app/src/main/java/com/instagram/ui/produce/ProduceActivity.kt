@@ -1,7 +1,11 @@
 package com.instagram.ui.produce
 
 import android.annotation.SuppressLint
+import android.content.ContentResolver
+import android.content.ContentUris
+import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -12,8 +16,11 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.net.toFile
+import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
@@ -27,8 +34,12 @@ import com.instagram.model.Image
 import com.instagram.model.Post
 import com.instagram.model.PreviewPost
 import com.instagram.model.User
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
 import java.text.SimpleDateFormat
-
+// TODO. 다음에 할 거 -> 하트 눌리고 안눌리고 그거 왜 안되는지 + 노트에 써놓은거
 class ProduceActivity : AppCompatActivity() {
     private val firebaseUrl =
         "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -51,7 +62,6 @@ class ProduceActivity : AppCompatActivity() {
         binding.buttonProduceCheck.setOnClickListener {
             setCheckButton(binding.etIntroduce)
         }
-
     }
 
     private fun activityResultLauncher(imageView: ImageView): ActivityResultLauncher<Intent> {
@@ -67,7 +77,9 @@ class ProduceActivity : AppCompatActivity() {
                     // 2. 이미지를 한 장 선택한 경우
                     else if (intent.clipData == null) {
                         val imageUri: Uri = intent.data!!
-                        uriList.add(imageUri)
+                        createCopyAndReturnRealPath(this, imageUri)?.let { realPathUri ->
+                            uriList.add(realPathUri)
+                        }
                     }
                     // 3. 이미지를 여러 장 선택한 경우
                     else {
@@ -82,7 +94,9 @@ class ProduceActivity : AppCompatActivity() {
                             for (i in 0 until clipData.itemCount) {
                                 val imageUri = clipData.getItemAt(i).uri
                                 try {
-                                    uriList.add(imageUri)
+                                    createCopyAndReturnRealPath(this, imageUri)?.let { realPathUri ->
+                                        uriList.add(realPathUri)
+                                    }
                                 } catch (e: Exception) {
                                     Log.e("ProduceActivity", "File select error", e)
                                 }
@@ -90,7 +104,7 @@ class ProduceActivity : AppCompatActivity() {
                         }
                     }
                     Glide.with(this)
-                        .load(uriList[0])
+                        .load(uriList[0]) // viewpager로 바꾸면 for문 사용
                         .into(imageView)
                 }
             }
@@ -107,7 +121,6 @@ class ProduceActivity : AppCompatActivity() {
         launcher.launch(intent)
     }
 
-    @SuppressLint("SimpleDateFormat")
     private fun setCheckButton(introduce: AppCompatEditText) {
         val userUid = Firebase.auth.currentUser!!.uid
         val postKey = databaseRef.child("posts").push().key
@@ -120,7 +133,7 @@ class ProduceActivity : AppCompatActivity() {
             imageValueList.add(image)
         }
 
-        // TODO. 시도해볼 것. User의 id를 uid로 수정하고 sign-up에서 database 구조 잘 수정 + profile 구조에 맞게 잘 수정
+        // TODO. 해야할 것 User의 id를 uid로 수정하고 sign-up에서 database 구조 잘 수정
         databaseRef.child("users").get().addOnSuccessListener { snapshot ->
             val createdAt = System.currentTimeMillis()
             val dataFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -139,11 +152,78 @@ class ProduceActivity : AppCompatActivity() {
 
             databaseRef.updateChildren(childUpdates)
         }
-
-        // TODO. 다음에 할 거 -> 하트 눌리고 안눌리고 그거 왜 안되는지 + 노트에 써놓은거
-
         this.finish()
     }
 
+    // TODO. 파일로 바꾼 후 uri로 만드는 방법 말고 다른 방법은 없을까?
+    @Nullable
+    fun createCopyAndReturnRealPath(context: Context, uri: Uri): Uri? {
+        val contentResolver: ContentResolver = context.contentResolver ?: return null
+
+        // 파일 경로를 만듬
+        val filePath: String = (context.applicationInfo.dataDir + File.separator
+                + System.currentTimeMillis())
+        val file = File(filePath)
+        try {
+            // 매개변수로 받은 uri 를 통해  이미지에 필요한 데이터를 불러 들인다.
+            val inputStream = contentResolver.openInputStream(uri) ?: return null
+            // 이미지 데이터를 다시 내보내면서 file 객체에  만들었던 경로를 이용한다.
+            val outputStream: OutputStream = FileOutputStream(file)
+            val buf = ByteArray(1024)
+            var len: Int
+            while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
+            outputStream.close()
+            inputStream.close()
+        } catch (ignore: IOException) {
+            return null
+        }
+        return file.absolutePath.toUri()
+    }
+
+    private fun getFullPathFromUri(ctx: Context, fileUri: Uri): String? {
+        var fullPath: String? = ""
+        val column = "_data"
+        var cursor: Cursor? = ctx.contentResolver.query(fileUri, null, null, null, null)
+
+        if (cursor != null) {
+            Log.d("nono", "1. column: ${cursor.columnCount} count: ${cursor.count}")
+            cursor.moveToFirst()
+            var document_id = cursor.getString(0)
+            Log.d("nono", "2. document_id: $document_id")
+            if (document_id == null) {
+                for (i in 0 until cursor.columnCount) {
+                    if (column.equals(cursor.getColumnName(i), ignoreCase = true)) {
+                        fullPath = cursor.getString(i)
+                        break
+                    }
+                }
+            } else {
+                document_id = document_id.substring(document_id.lastIndexOf(":") + 1)
+                Log.d("nono", "10. column: ${cursor.columnCount} count: ${cursor.count}")
+                Log.d("nono", "11. documnet_id: $document_id")
+                cursor.close()
+
+                val projection = arrayOf(column)
+                try {
+                    cursor = ctx.contentResolver.query(
+                        fileUri,
+                        projection,
+                        MediaStore.Images.Media._ID + " = ? ",
+                        arrayOf(document_id),
+                        //null,null,null,
+                        null)
+                    if (cursor != null) {
+                        Log.d("nono", "12. column: ${cursor.columnCount} count: ${cursor.count}")
+                        cursor.moveToFirst()
+                        fullPath = cursor.getString(cursor.getColumnIndexOrThrow(column))
+
+                    }
+                } finally {
+                    cursor.close()
+                }
+            }
+        }
+        return fullPath
+    }
 
 }
