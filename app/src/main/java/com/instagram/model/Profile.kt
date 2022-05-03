@@ -38,7 +38,7 @@ data class Profile(
 data class PreviewPost(
     @get:PropertyName("post_uid") @set:PropertyName("post_uid") var postUid: String? = null,
     @get:PropertyName("post_image") @set:PropertyName("post_image") var postImage: String = "",
-    @get:PropertyName("created_at") @set:PropertyName("created_at") var createdAt: String = "",
+    @get:PropertyName("created_at") @set:PropertyName("created_at") var createdAt: Long = 0,
 ) {
     @Exclude
     fun toMap(): Map<String, Any?> {

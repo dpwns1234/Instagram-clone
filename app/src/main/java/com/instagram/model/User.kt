@@ -7,7 +7,7 @@ import kotlin.String
 
 @IgnoreExtraProperties // 안되면 이거 지우고 ㄱㄱ
 data class User(
-    val id: String = "",
+    val userUid: String = "",
     val name: String? = null,
     val nickname: String = "",
     @SerializedName("image_url") val imageUrl: String? = null,
@@ -16,7 +16,7 @@ data class User(
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
-            "id" to id,
+            "id" to userUid,
             "name" to name,
             "nickname" to nickname,
             "image_url" to imageUrl,

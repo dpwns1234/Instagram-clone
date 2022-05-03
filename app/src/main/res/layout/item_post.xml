@@ -185,7 +185,7 @@
             style="@style/Size10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{post.createdAt.toString()}"
+            createdAt="@{post.createdAt}"
             app:layout_constraintStart_toStartOf="@id/button_writer"
             app:layout_constraintTop_toBottomOf="@id/button_introduce"
             tools:text="3일전" />
