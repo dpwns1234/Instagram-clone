@@ -117,12 +117,6 @@ class ProduceActivity : AppCompatActivity() {
             Toast.makeText(this, "이미지를 선택해주세요.", Toast.LENGTH_SHORT).show()
         }
         else {
-            // TODO. imageValue에서 왜 toMap을 지금까지 해줬을까? 하고 안 하고의 차이가 뭘까??
-            // 이미지 객체 생성
-            for (i in 0 until uriList.size) {
-                val image = Image(i, uriList[i].toString())
-                imageValueList.add(image)
-            }
 
             // TODO. 해야할 것 User의 id를 uid로 수정하고 sign-up에서 database 구조 잘 수정
             databaseRef.child("users").get().addOnSuccessListener { snapshot ->
@@ -130,11 +124,11 @@ class ProduceActivity : AppCompatActivity() {
                 val userValue = snapshot.child(userUid).child("profiles").getValue<User>()!!
                 val post = Post(postKey,
                     userValue,
-                    imageValueList,
+                    posts = null,
                     introduce.text.toString(),
                     createdAt = createdAt)
                 val previewPost =
-                    PreviewPost(postKey, imageValueList[0].imageUrl, createdAt)
+                    PreviewPost(postKey, postImage = "", createdAt)
                 val childUpdates = hashMapOf(
                     "posts/$postKey" to post.toMap(),
                     "users/$userUid/profiles/posts/$postKey" to previewPost
@@ -147,6 +141,7 @@ class ProduceActivity : AppCompatActivity() {
     }
 
     private fun uploadToStorage() {
+        var cnt = 0 // TODO 문제: downloadUri가 순서대로 오지 않음
         for (i in 0 until uriList.size) {
             val fileName = System.currentTimeMillis()
             val storageRef =
@@ -161,6 +156,7 @@ class ProduceActivity : AppCompatActivity() {
                 storageRef.downloadUrl
             }.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    cnt++
                     val downloadUri = task.result
                     // 첫 번째 downloadUri가 Complete 됐을 때 database의 image를 업데이트 해준다.
                     if(i == 0) {
@@ -170,10 +166,11 @@ class ProduceActivity : AppCompatActivity() {
                     val image = Image(i, downloadUri.toString())
                     imageValueList.add(image)
                     // 마지막 downloadUri가 Complete 됐을 때 database의 image들만 업데이트 해준다.
-                    if(i+1 == uriList.size) {
+                    if(cnt == uriList.size) {
                         databaseRef.child("posts/$postKey/post_images").setValue(imageValueList)
                     }
-                    Toast.makeText(this, "${i + 1}/${uriList.size} 완료", Toast.LENGTH_SHORT).show()
+
+                    Toast.makeText(this, "$cnt/${uriList.size} 완료", Toast.LENGTH_SHORT).show()
                 }
             }
         }

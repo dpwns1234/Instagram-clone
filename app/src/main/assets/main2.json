@@ -3,14 +3,14 @@
     {
       "user": {
         "nickname": "welove",
-        "image_url": "https://user-images.githubusercontent.com/52391722/159455432-4ffd9ed9-4712-4eb4-8b2f-792f6ffbe1f7.jpg"
+        "profile_image": "https://user-images.githubusercontent.com/52391722/159455432-4ffd9ed9-4712-4eb4-8b2f-792f6ffbe1f7.jpg"
       },
       "is_seen": true
     },
     {
       "user": {
         "nickname": "yejun",
-        "image_url": "https://user-images.githubusercontent.com/52391722/159455449-98abaf1e-2b9c-44fd-bb7a-1e1f3ec4e58c.jpg"
+        "profile_image": "https://user-images.githubusercontent.com/52391722/159455449-98abaf1e-2b9c-44fd-bb7a-1e1f3ec4e58c.jpg"
       },
       "is_seen": false
     }
@@ -20,11 +20,11 @@
       "post_idx": 1,
       "writer": {
         "nickname": "welove",
-        "image_url": "https://user-images.githubusercontent.com/52391722/159455432-4ffd9ed9-4712-4eb4-8b2f-792f6ffbe1f7.jpg"
+        "profile_image": "https://user-images.githubusercontent.com/52391722/159455432-4ffd9ed9-4712-4eb4-8b2f-792f6ffbe1f7.jpg"
       },
       "post_image": [
         {
-          "image_url": "https://user-images.githubusercontent.com/52391722/159456180-185e553e-f28e-4429-97db-2d6c9f747858.jpg",
+          "profile_image": "https://user-images.githubusercontent.com/52391722/159456180-185e553e-f28e-4429-97db-2d6c9f747858.jpg",
           "tags": [
             "welove",
             "yejun03"
@@ -32,7 +32,7 @@
           "coWorker": "sam-il"
         },
         {
-          "image_url": "https://user-images.githubusercontent.com/52391722/159456318-3795360d-efd1-49ee-a871-572c2cbc8c68.jpg",
+          "profile_image": "https://user-images.githubusercontent.com/52391722/159456318-3795360d-efd1-49ee-a871-572c2cbc8c68.jpg",
           "tags": [
             "welove"
           ],
@@ -61,7 +61,7 @@
       },
       "post_image": [
         {
-          "image_url": "https://user-images.githubusercontent.com/52391722/159456318-3795360d-efd1-49ee-a871-572c2cbc8c68.jpg",
+          "profile_image": "https://user-images.githubusercontent.com/52391722/159456318-3795360d-efd1-49ee-a871-572c2cbc8c68.jpg",
           "tags": [
             "yejun02",
             "who"
@@ -69,7 +69,7 @@
           "coWorker": "sam-il"
         },
         {
-          "image_url": "https://user-images.githubusercontent.com/52391722/159457165-ee30ba5b-d119-4d2d-b886-bb0a512c1f42.jpg",
+          "profile_image": "https://user-images.githubusercontent.com/52391722/159457165-ee30ba5b-d119-4d2d-b886-bb0a512c1f42.jpg",
           "tags": [
             "yejun02",
             "who"

@@ -2,15 +2,16 @@ package com.instagram.model
 
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
+import com.google.firebase.database.PropertyName
 import com.google.gson.annotations.SerializedName
 import kotlin.String
 
-@IgnoreExtraProperties // 안되면 이거 지우고 ㄱㄱ
+@IgnoreExtraProperties
 data class User(
-    val userUid: String = "",
+    @get:PropertyName("user_uid") @set:PropertyName("user_uid") @SerializedName("user_uid") var userUid: String = "",
     val name: String? = null,
     val nickname: String = "",
-    @SerializedName("image_url") val imageUrl: String? = null,
+    @get:PropertyName("profile_image") @set:PropertyName("profile_image") @SerializedName("profile_image") var profileImage: String? = null,
     val introduce: String? = null
 ){
     @Exclude
@@ -19,7 +20,7 @@ data class User(
             "id" to userUid,
             "name" to name,
             "nickname" to nickname,
-            "image_url" to imageUrl,
+            "image_url" to profileImage,
             "introduce" to introduce
         )
     }

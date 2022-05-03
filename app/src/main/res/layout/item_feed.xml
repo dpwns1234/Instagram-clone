@@ -21,7 +21,7 @@
             android:scaleType="centerCrop"
             tools:src="@drawable/welove"
             android:padding="4dp"
-            circleImageUrl="@{feed.user.imageUrl}"
+            circleImageUrl="@{feed.user.profileImage}"
             isSeen="@{feed.isSeen}"
             android:background="@drawable/background_circle_gradient"
             app:layout_constraintEnd_toEndOf="parent"

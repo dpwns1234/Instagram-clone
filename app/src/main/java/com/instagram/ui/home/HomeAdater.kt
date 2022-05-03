@@ -32,12 +32,12 @@ class HomeAdapter(private val context: LifecycleOwner): ListAdapter<Post, HomeAd
 
     inner class HomeViewHolder(private val binding: ItemPostBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
-            postImage(post.posts!!)
+            postImage(post.posts)
             binding.post = post
             binding.executePendingBindings()
         }
 
-        private fun postImage(postImages: List<Image>) {
+        private fun postImage(postImages: List<Image>?) {
             postViewModel = ItemPostViewModel(postImages)
             postAdapter = ItemPostAdapter()
             binding.viewpagerPostImage.adapter = postAdapter

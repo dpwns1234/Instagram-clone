@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.instagram.model.Image
 
 
-class ItemPostViewModel(private val imagesData: List<Image>): ViewModel() {
+class ItemPostViewModel(private val imagesData: List<Image>?): ViewModel() {
     private val _postImages = MutableLiveData<List<Image>>()
     var postImages: LiveData<List<Image>> = _postImages
 

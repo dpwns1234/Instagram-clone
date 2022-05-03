@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="post"
             type="com.instagram.model.Post" />
+
         <variable
             name="viewModel"
             type="com.instagram.ui.home.post.ItemPostViewModel" />
@@ -24,7 +26,7 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_profile_image"
-                imageUrl="@{post.writer.imageUrl}"
+                imageUrl="@{post.writer.profileImage}"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_margin="8dp"
@@ -169,8 +171,10 @@
             style="@style/Size10.Black"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:background="@color/transparent"
             android:ellipsize="end"
+            android:gravity="start"
             android:maxLines="1"
             android:minWidth="0dp"
             android:minHeight="0dp"
@@ -178,14 +182,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/button_writer"
             app:layout_constraintTop_toTopOf="@id/button_writer"
-            tools:text="이번주 놓치면 안될 라이브 추천 ! 3월 4주차 최대 혜택 라이브를 소개합니다\n" />
+            tools:text="이번주 놓치면 안될 라이브 추천 !\n" />
 
         <TextView
             android:id="@+id/tv_created_date"
             style="@style/Size10"
+            createdAt="@{post.createdAt}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            createdAt="@{post.createdAt}"
             app:layout_constraintStart_toStartOf="@id/button_writer"
             app:layout_constraintTop_toBottomOf="@id/button_introduce"
             tools:text="3일전" />

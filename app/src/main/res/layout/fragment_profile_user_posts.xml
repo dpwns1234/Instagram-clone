@@ -13,7 +13,9 @@
             android:layout_height="match_parent"
             android:nestedScrollingEnabled="false"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:reverseLayout="true"
             app:spanCount="3"
+            app:stackFromEnd="true"
             tools:listitem="@layout/item_profile_user_images" />
 
     </RelativeLayout>
