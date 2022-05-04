@@ -106,9 +106,10 @@ class ProduceActivity : AppCompatActivity() {
     private fun loadGallery(launcher: ActivityResultLauncher<Intent>) {
         val intent = Intent()
         intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
+        intent.action = Intent.ACTION_PICK
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)  // 다중 이미지를 가져올 수 있도록 세팅
-        intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI  // 이건 뭐지?
+        intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+
         launcher.launch(intent)
     }
 

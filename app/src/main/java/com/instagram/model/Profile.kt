@@ -22,7 +22,7 @@ data class Profile(
         return mapOf(
             "nickname" to nickname,
             "profile_image" to profileImage,
-            "postCount" to postCount,
+            "post_count" to postCount,
             "follower_count" to followerCount,
             "following_count" to followingCount,
             "name" to name,
