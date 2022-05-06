@@ -2,23 +2,29 @@ package com.instagram.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.instagram.R
 import com.instagram.common.ViewModelFactory
 import com.instagram.databinding.FragmentHomeBinding
+import com.instagram.databinding.ItemPostBinding
+import com.instagram.ui.ModalBottomSheet
 import com.instagram.ui.home.feed.FeedAdapter
 import com.instagram.ui.produce.ProduceActivity
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels() { ViewModelFactory(requireContext()) }
+    private lateinit var postBinding: ItemPostBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,14 +32,21 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater)
+        postBinding = ItemPostBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setData()
         setPopupMenu()
+
+    }
+
+    fun postMenu() {
+        Log.d("hey", "hihih??")
+        val modalBottomSheet = ModalBottomSheet()
+        modalBottomSheet.show(parentFragmentManager, ModalBottomSheet.TAG)
     }
 
     private fun setData() {

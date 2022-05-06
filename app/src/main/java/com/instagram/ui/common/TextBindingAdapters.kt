@@ -12,6 +12,16 @@ import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 
+@BindingAdapter("text")
+fun writeText(view: TextView, text: String) {
+    view.text = text
+}
+
+@BindingAdapter("likeCount")
+fun writeLikeCount(view: TextView, count: Int) {
+    val setText = "좋아요 ${count}개"
+    view.text = setText
+}
 
 @BindingAdapter("calculatingCount")
 fun calculateCount(view: TextView, count: Int) {

@@ -118,8 +118,6 @@ class ProduceActivity : AppCompatActivity() {
             Toast.makeText(this, "이미지를 선택해주세요.", Toast.LENGTH_SHORT).show()
         }
         else {
-
-            // TODO. 해야할 것 User의 id를 uid로 수정하고 sign-up에서 database 구조 잘 수정
             databaseRef.child("users").get().addOnSuccessListener { snapshot ->
                 val createdAt = System.currentTimeMillis()
                 val userValue = snapshot.child(userUid).child("profiles").getValue<User>()!!
@@ -146,7 +144,7 @@ class ProduceActivity : AppCompatActivity() {
         for (i in 0 until uriList.size) {
             val fileName = System.currentTimeMillis()
             val storageRef =
-                fireStorage.reference.child("post_image").child("${userUid}/$fileName.jpg")
+                fireStorage.reference.child("post_image").child("$userUid/$fileName.jpg")
 
             storageRef.putFile(uriList[i]).continueWithTask { task ->
                 if (!task.isSuccessful) {

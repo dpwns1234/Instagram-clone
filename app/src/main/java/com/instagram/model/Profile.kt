@@ -7,6 +7,7 @@ import kotlin.String
 
 @IgnoreExtraProperties
 data class Profile(
+    @get:PropertyName("user_uid") @set:PropertyName("user_uid") var userUid: String = "",
     val nickname: String = "",
     @get:PropertyName("profile_image") @set:PropertyName("profile_image") var profileImage: String? = "",
     @get:PropertyName("post_count") @set:PropertyName("post_count")  var postCount: Int = 0,
@@ -20,6 +21,7 @@ data class Profile(
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
+            "user_uid" to userUid,
             "nickname" to nickname,
             "profile_image" to profileImage,
             "post_count" to postCount,

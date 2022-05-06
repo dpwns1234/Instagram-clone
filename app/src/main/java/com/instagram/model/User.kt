@@ -17,7 +17,7 @@ data class User(
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
-            "id" to userUid,
+            "user_uid" to userUid,
             "name" to name,
             "nickname" to nickname,
             "image_url" to profileImage,

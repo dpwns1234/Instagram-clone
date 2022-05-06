@@ -10,6 +10,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.instagram.databinding.ItemPostBinding
 import com.instagram.model.Image
 import com.instagram.model.Post
+import com.instagram.ui.ModalBottomSheet
 import com.instagram.ui.home.post.ItemPostAdapter
 import com.instagram.ui.home.post.ItemPostViewModel
 
@@ -35,6 +36,7 @@ class HomeAdapter(private val context: LifecycleOwner): ListAdapter<Post, HomeAd
             postImage(post.posts)
             binding.post = post
             binding.executePendingBindings()
+
         }
 
         private fun postImage(postImages: List<Image>?) {

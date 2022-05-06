@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.instagram.databinding.ItemPostImageBinding
 import com.instagram.model.Image
+import com.instagram.ui.ModalBottomSheet
 
 class ItemPostAdapter: ListAdapter<Image, ItemPostAdapter.ItemPostViewHolder>(ItemPostImageDiffUtil()) {
 
@@ -24,7 +25,6 @@ class ItemPostAdapter: ListAdapter<Image, ItemPostAdapter.ItemPostViewHolder>(It
         fun bind(image: Image) {
             // TODO. bind함수가 발생하는 경우가 스크롤을 내려서 새로운 item이 발견되었을 때인가? -> 아마 그럴걸?
             binding.image = image
-            Log.d("why", "itemPostAdapter url: ${image.imageUrl}")
         }
     }
 }

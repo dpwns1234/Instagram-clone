@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,7 +16,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.instagram.databinding.ActivityEditProfileBinding
 import com.instagram.model.PreviewPost
-import com.instagram.model.User
 
 class EditProfileActivity: AppCompatActivity() {
     private lateinit var binding: ActivityEditProfileBinding
@@ -64,52 +62,60 @@ class EditProfileActivity: AppCompatActivity() {
     private fun setCheckButton() {
         binding.buttonCheck.setOnClickListener {
             val databaseRef = database.getReference(userProfilePath)
-
             val name = binding.etEditName.text.toString()
             val nickname = binding.etEditNickname.text.toString()
             val introduce = binding.etEditIntroduce.text.toString()
-            databaseRef.updateChildren(mapOf("name" to name, "nickname" to nickname,
-                "introduce" to introduce))
-                .addOnSuccessListener {
-                    Toast.makeText(this, "프로필이 변경되었습니다.", Toast.LENGTH_SHORT).show()
-                    this.finish()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(this, "프로필을 변경하지 못했습니다.", Toast.LENGTH_SHORT).show()
-                }
 
+            // 사용자의 프로필을 변경한다.
+            editProfile(databaseRef, name, nickname, introduce)
             // 사용자의 모든 게시물의 데이터를 변경한다.
-            val postUidList = mutableListOf<String?>()
-            databaseRef.child("posts").get().addOnSuccessListener { snapshot ->
-                // postUid 만들기
-                for (post in snapshot.children) {
-                    val postValue = post.getValue<PreviewPost>()
-                    postValue?.let {
-                        postUidList.add(it.postUid)
-                    }
-                }
-
-                // database에서 변경하기
-                for (i in 0 until postUidList.size) {
-                    val databasePostRef = database.getReference("posts/${postUidList[i]}/writer")
-                    databasePostRef.updateChildren(mapOf(
-                        "name" to name,
-                        "nickname" to nickname,
-                        "introduce" to introduce
-                    ))
-                }
-            }
+            editProfileOfPost(databaseRef, name, nickname, introduce)
         }
     }
 
-    private fun openGallery(launcher: ActivityResultLauncher<Intent>) {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        
-        launcher.launch(intent)
+    private fun editProfile(
+        databaseRef: DatabaseReference,
+        name: String,
+        nickname: String,
+        introduce: String,
+    ) {
+        databaseRef.updateChildren(mapOf("name" to name, "nickname" to nickname,
+            "introduce" to introduce))
+            .addOnSuccessListener {
+                Toast.makeText(this, "프로필이 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                this.finish()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "프로필을 변경하지 못했습니다.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun editProfileOfPost(
+        databaseRef: DatabaseReference,
+        name: String,
+        nickname: String,
+        introduce: String,
+    ) {
+        val postUidList = mutableListOf<String?>()
+        databaseRef.child("posts").get().addOnSuccessListener { snapshot ->
+            // postUid 만들기
+            for (post in snapshot.children) {
+                val postValue = post.getValue<PreviewPost>()
+                postValue?.let {
+                    postUidList.add(it.postUid)
+                }
+            }
+
+            // database에서 변경하기
+            for (i in 0 until postUidList.size) {
+                val databasePostRef = database.getReference("posts/${postUidList[i]}/writer")
+                databasePostRef.updateChildren(mapOf(
+                    "name" to name,
+                    "nickname" to nickname,
+                    "introduce" to introduce
+                ))
+            }
+        }
     }
 
     private fun activityResultLauncher(): ActivityResultLauncher<Intent> {
@@ -124,7 +130,7 @@ class EditProfileActivity: AppCompatActivity() {
                     // 2. 이미지를 한 장 선택한 경우
                     else if (intent.clipData == null) {
                         val imageUri: Uri = intent.data!!
-                        uploadFireStorage(imageUri)
+                        uploadProfileImage(imageUri)
                         this.finish()
                     }
                 }
@@ -133,7 +139,7 @@ class EditProfileActivity: AppCompatActivity() {
         return launcher
     }
 
-    private fun uploadFireStorage(imageUri: Uri) {
+    private fun uploadProfileImage(imageUri: Uri) {
         val fileName = user.uid + (System.currentTimeMillis() / 1000)
         val fireStorageRef = fireStorage.getReference("user/profile/$fileName.jpg")
 
@@ -171,5 +177,16 @@ class EditProfileActivity: AppCompatActivity() {
                 }
             }
         }
+    }
+
+
+    private fun openGallery(launcher: ActivityResultLauncher<Intent>) {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+
+        launcher.launch(intent)
     }
 }

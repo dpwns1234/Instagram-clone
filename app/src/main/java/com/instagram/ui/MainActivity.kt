@@ -12,7 +12,7 @@ import com.google.firebase.ktx.Firebase
 import com.instagram.R
 import com.instagram.ui.login.LoginActivity
 
-class MainActivity:AppCompatActivity() {
+class MainActivity: AppCompatActivity() {
     private val KITKAT_VALUE = 1002
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +25,6 @@ class MainActivity:AppCompatActivity() {
         navController?.let {
             bottomNavigationView.setupWithNavController(it)
         }
-        // TODO. Permission Denial: opening provider com.android.providers.media.MediaDocumentsProvider from ProcessRecord{91cf1c1 11539:com.instagram/u0a148} (pid=11539, uid=10148) requires that you obtain access using ACTION_OPEN_DOCUMENT or related APIs
 
     }
 }

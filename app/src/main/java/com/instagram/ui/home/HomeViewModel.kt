@@ -39,7 +39,8 @@ class HomeViewModel(private val repository: MainRepository): ViewModel() {
     }
 
     private fun loadHome() {
-        databaseRef.child("posts").addValueEventListener(object: ValueEventListener{
+        databaseRef.child("posts")
+            .addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val posts = mutableListOf<Post>()
                 for(post in snapshot.children) {
