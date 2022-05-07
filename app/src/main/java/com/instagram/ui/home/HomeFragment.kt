@@ -43,6 +43,7 @@ class HomeFragment : Fragment() {
 
     }
 
+    // TODO. 다음 해야할 거 : postMenu 클릭 되도록 + bottom sheet ui 제대로 동작하도록
     fun postMenu() {
         Log.d("hey", "hihih??")
         val modalBottomSheet = ModalBottomSheet()
@@ -83,6 +84,8 @@ class HomeFragment : Fragment() {
                         Toast.makeText(requireContext(), "feed 선택", Toast.LENGTH_SHORT).show()
                     }
                     R.id.navigation_produce_shorts -> {
+                        val modalBottomSheet = ModalBottomSheet()
+                        modalBottomSheet.show(parentFragmentManager, ModalBottomSheet.TAG)
                         Toast.makeText(requireContext(), "릴스 선택", Toast.LENGTH_SHORT).show()
                     }
                     else -> {

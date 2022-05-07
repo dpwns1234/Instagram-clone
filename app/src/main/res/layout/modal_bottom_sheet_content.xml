@@ -1,29 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         android:id="@+id/layout_post_delete"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="삭제하기"
-            style="@style/Size24.Black"
-            />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <TextView
-            android:layout_width="wrap_content"
+            style="@style/Size16.Black"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="공유하기"
-            style="@style/Size24.Black"
-            />
+            android:padding="10dp"
+            android:text="다른 앱 게시..." />
+
+        <TextView
+            style="@style/Size16.Black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="공유하기..." />
+
+        <TextView
+            style="@style/Size16.Black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="링크 복사" />
+
+        <TextView
+            style="@style/Size16.Black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="보관" />
+
+        <TextView
+            style="@style/Size16.Black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="삭제" />
+
+        <TextView
+            style="@style/Size16.Black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="수정" />
+
+        <TextView
+            style="@style/Size16.Black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="좋아요 수 숨기기" />
+
+        <TextView
+            style="@style/Size16.Black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="댓글 기능 해제" />
+
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
