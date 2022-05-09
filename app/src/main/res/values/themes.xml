@@ -1,12 +1,28 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" >
-    <!-- Customize your theme here. -->
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
-</style>
-    <style parent="Widget.AppCompat.Button.Colored" name="ButtonStyle">
-    <item name="colorButtonNormal">@color/colorWhite</item>
-</style>
+<!--    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorWhite</item>
+
+    </style>
+
+    <style name="Theme.App" parent="Theme.MaterialComponents.Dialog.Alert">
+        ...
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+    </style>
+
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorPrimary">@color/shrine_pink_100</item>
+        <item name="colorSecondary">@color/shrine_pink_100</item>
+        <item name="colorSurface">@color/shrine_pink_50</item>
+        <item name="colorOnSurface">@color/shrine_pink_900</item>
+    </style>
+
 </resources>
