@@ -46,7 +46,6 @@ class ProduceActivity : AppCompatActivity() {
     private val userUid = Firebase.auth.currentUser!!.uid
     private val fireStorage = Firebase.storage("gs://instagram-android-65931.appspot.com/")
     private val postKey = databaseRef.child("posts").push().key
-    private val imageValueList = mutableListOf<Image>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -134,13 +133,15 @@ class ProduceActivity : AppCompatActivity() {
                 )
                 databaseRef.updateChildren(childUpdates)
             }
-            uploadToStorage2()
+            uploadToStorage()
             this.finish()
         }
     }
 
     private fun uploadToStorage() {
         var cnt = 0 // TODO 문제: downloadUri가 순서대로 오지 않음
+        val imageValueList = List<Image?>(uriList.size) {null}.toMutableList()
+
         for (i in 0 until uriList.size) {
             val fileName = System.currentTimeMillis()
             val storageRef =
@@ -163,7 +164,7 @@ class ProduceActivity : AppCompatActivity() {
                             .setValue(downloadUri.toString())
                     }
                     val image = Image(i, downloadUri.toString())
-                    imageValueList.add(image)
+                    imageValueList[i] = image
                     // 마지막 downloadUri가 Complete 됐을 때 database의 image들만 업데이트 해준다.
                     if (cnt == uriList.size) {
                         databaseRef.child("posts/$postKey/post_images").setValue(imageValueList)
@@ -175,6 +176,8 @@ class ProduceActivity : AppCompatActivity() {
         }
     }
 
+    // TODO. 압축했을 때 화면 돌아가는 문제 + 1MB 미만은 압축 안 하도록 제한
+    // 압축해서 업로드하는 함수
     private fun uploadToStorage2() {
         var cnt = 0                                                            // 이미지 모두 업로드 하기 위해
         val imageValueList = List<Image?>(uriList.size) {null}.toMutableList() // 이미지가 등록된 순서대로 나오게 하기 위해
@@ -212,7 +215,7 @@ class ProduceActivity : AppCompatActivity() {
         }
     }
 
-    fun compressImageUri(imageUri: Uri): ByteArray? {
+    private fun compressImageUri(imageUri: Uri): ByteArray? {
         // aiming for ~500kb max. assumes typical device image size is around 2megs
         val scaleDivider = 4
         return try {

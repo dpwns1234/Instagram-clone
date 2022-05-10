@@ -8,11 +8,17 @@ import android.widget.Toast
 import androidx.core.graphics.toColor
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.instagram.R
 import com.instagram.databinding.ModalBottomSheetContentBinding
 
-class ModalBottomSheet: BottomSheetDialogFragment() {
+class ModalBottomSheet(private val postUid: String): BottomSheetDialogFragment() {
     private lateinit var binding: ModalBottomSheetContentBinding
+    private val firebaseUrl =
+        "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    private val databaseRef = Firebase.database(firebaseUrl).reference
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,7 +57,13 @@ class ModalBottomSheet: BottomSheetDialogFragment() {
 
     }
 
-    fun acceptDelete() {
-
+    private fun acceptDelete() {
+        val userUid = Firebase.auth.uid
+        val postKey = postUid
+        databaseRef.child("posts").get()
+        databaseRef.updateChildren(hashMapOf<String, Any?>(
+            "users/$userUid/profiles/posts/$postKey" to null,
+            "posts/$postKey" to null
+        ))
     }
 }

@@ -40,24 +40,22 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setData()
         setPopupMenu()
-
     }
 
     // TODO. 다음 해야할 거 : postMenu 클릭 되도록 + bottom sheet ui 제대로 동작하도록
     fun postMenu() {
-        Log.d("hey", "hihih??")
-        val modalBottomSheet = ModalBottomSheet()
-        modalBottomSheet.show(parentFragmentManager, ModalBottomSheet.TAG)
+
     }
 
     private fun setData() {
         val feedAdapter = FeedAdapter()
         binding.rvFeed.adapter = feedAdapter
 
-        val homeAdapter = HomeAdapter(this)
+        val homeAdapter = HomeAdapter(this, this)
         binding.rvHome.adapter = homeAdapter
         // TODO. 공부: 이거 왜 해야하는지, 어떻게 해야하는 지 공뿌
         binding.lifecycleOwner = viewLifecycleOwner
+
 
         with(viewModel) {
             feed.observe(viewLifecycleOwner) { feed ->
@@ -84,8 +82,6 @@ class HomeFragment : Fragment() {
                         Toast.makeText(requireContext(), "feed 선택", Toast.LENGTH_SHORT).show()
                     }
                     R.id.navigation_produce_shorts -> {
-                        val modalBottomSheet = ModalBottomSheet()
-                        modalBottomSheet.show(parentFragmentManager, ModalBottomSheet.TAG)
                         Toast.makeText(requireContext(), "릴스 선택", Toast.LENGTH_SHORT).show()
                     }
                     else -> {

@@ -1,7 +1,10 @@
 package com.instagram.ui.home
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -14,7 +17,7 @@ import com.instagram.ui.ModalBottomSheet
 import com.instagram.ui.home.post.ItemPostAdapter
 import com.instagram.ui.home.post.ItemPostViewModel
 
-class HomeAdapter(private val context: LifecycleOwner): ListAdapter<Post, HomeAdapter.HomeViewHolder>(
+class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val context: Fragment): ListAdapter<Post, HomeAdapter.HomeViewHolder>(
     HomeDiffUtil()
 ) {
     lateinit var postViewModel: ItemPostViewModel
@@ -36,14 +39,13 @@ class HomeAdapter(private val context: LifecycleOwner): ListAdapter<Post, HomeAd
             postImage(post.posts)
             binding.post = post
             binding.executePendingBindings()
-
+            setItemMenuButton()
         }
-
         private fun postImage(postImages: List<Image>?) {
             postViewModel = ItemPostViewModel(postImages)
             postAdapter = ItemPostAdapter()
             binding.viewpagerPostImage.adapter = postAdapter
-            postViewModel.postImages.observe(this@HomeAdapter.context) { images ->
+            postViewModel.postImages.observe(this@HomeAdapter.lifecycleOwner) { images ->
                 postAdapter.submitList(images)
 
                 // indicator
@@ -53,6 +55,14 @@ class HomeAdapter(private val context: LifecycleOwner): ListAdapter<Post, HomeAd
             }
         }
 
+        private fun setItemMenuButton() {
+            binding.buttonPostMenu.setOnClickListener {
+                Log.d("hihi", "hi: ${binding.post?.postUid}")
+                binding.post?.postUid?.let { postUid ->
+                    ModalBottomSheet(postUid).show(context.parentFragmentManager, ModalBottomSheet.TAG)
+                }
+            }
+        }
     }
 }
 
