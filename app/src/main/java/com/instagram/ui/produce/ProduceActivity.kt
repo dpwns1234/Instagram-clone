@@ -3,6 +3,8 @@ package com.instagram.ui.produce
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -19,6 +21,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.instagram.databinding.ActivityProduceBinding
 import com.instagram.model.Image
@@ -28,10 +31,8 @@ import com.instagram.model.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
+import java.io.*
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import kotlin.coroutines.CoroutineContext
 
@@ -47,7 +48,7 @@ class ProduceActivity : AppCompatActivity() {
     private val postKey = databaseRef.child("posts").push().key
     private val imageValueList = mutableListOf<Image>()
 
-        override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProduceBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -114,10 +115,9 @@ class ProduceActivity : AppCompatActivity() {
     }
 
     private fun setCheckButton(introduce: AppCompatEditText) {
-        if(uriList.isEmpty()) {
+        if (uriList.isEmpty()) {
             Toast.makeText(this, "이미지를 선택해주세요.", Toast.LENGTH_SHORT).show()
-        }
-        else {
+        } else {
             databaseRef.child("users").get().addOnSuccessListener { snapshot ->
                 val createdAt = System.currentTimeMillis()
                 val userValue = snapshot.child(userUid).child("profiles").getValue<User>()!!
@@ -134,7 +134,7 @@ class ProduceActivity : AppCompatActivity() {
                 )
                 databaseRef.updateChildren(childUpdates)
             }
-            uploadToStorage()
+            uploadToStorage2()
             this.finish()
         }
     }
@@ -145,7 +145,7 @@ class ProduceActivity : AppCompatActivity() {
             val fileName = System.currentTimeMillis()
             val storageRef =
                 fireStorage.reference.child("post_image").child("$userUid/$fileName.jpg")
-
+            Log.d("compress", "storage: $uriList[i]")
             storageRef.putFile(uriList[i]).continueWithTask { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
@@ -158,14 +158,14 @@ class ProduceActivity : AppCompatActivity() {
                     cnt++
                     val downloadUri = task.result
                     // 첫 번째 downloadUri가 Complete 됐을 때 database의 image를 업데이트 해준다.
-                    if(i == 0) {
+                    if (i == 0) {
                         databaseRef.child("users/$userUid/profiles/posts/$postKey/post_image")
                             .setValue(downloadUri.toString())
                     }
                     val image = Image(i, downloadUri.toString())
                     imageValueList.add(image)
                     // 마지막 downloadUri가 Complete 됐을 때 database의 image들만 업데이트 해준다.
-                    if(cnt == uriList.size) {
+                    if (cnt == uriList.size) {
                         databaseRef.child("posts/$postKey/post_images").setValue(imageValueList)
                     }
 
@@ -173,6 +173,79 @@ class ProduceActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun uploadToStorage2() {
+        var cnt = 0                                                            // 이미지 모두 업로드 하기 위해
+        val imageValueList = List<Image?>(uriList.size) {null}.toMutableList() // 이미지가 등록된 순서대로 나오게 하기 위해
+
+        for (i in 0 until uriList.size) {
+            val fileName = System.currentTimeMillis()
+            val storageRef =
+                fireStorage.reference.child("post_image").child("$userUid/$fileName.jpg")
+            val imageByteArray = compressImageUri(uriList[i])
+            storageRef.putBytes(imageByteArray!!).continueWithTask { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                storageRef.downloadUrl
+            }.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    cnt++
+                    val downloadUri = task.result
+                    // 첫 번째 downloadUri가 Complete 됐을 때 database의 image를 업데이트 해준다.
+                    if (i == 0) {
+                        databaseRef.child("users/$userUid/profiles/posts/$postKey/post_image")
+                            .setValue(downloadUri.toString())
+                    }
+                    val image = Image(i, downloadUri.toString())
+                    imageValueList[i] = image
+                    // 마지막 downloadUri가 Complete 됐을 때 database의 image들만 업데이트 해준다.
+                    if (cnt == uriList.size) {
+                        databaseRef.child("posts/$postKey/post_images").setValue(imageValueList)
+                    }
+                    Toast.makeText(this, "$cnt/${uriList.size} 완료", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    fun compressImageUri(imageUri: Uri): ByteArray? {
+        // aiming for ~500kb max. assumes typical device image size is around 2megs
+        val scaleDivider = 4
+        return try {
+
+            // 1. Convert uri to bitmap
+            val fullBitmap =
+                MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+
+            // 2. Get the downsized image content as a byte[]
+            val scaleWidth = fullBitmap.width / scaleDivider
+            val scaleHeight = fullBitmap.height / scaleDivider
+            val downsizedImageBytes = getDownsizedImageBytes(fullBitmap, scaleWidth, scaleHeight)
+            downsizedImageBytes
+
+        } catch (ioEx: IOException) {
+            ioEx.printStackTrace()
+            null
+        }
+    }
+
+    @Throws(IOException::class)
+    fun getDownsizedImageBytes(
+        fullBitmap: Bitmap?,
+        scaleWidth: Int,
+        scaleHeight: Int
+    ): ByteArray {
+        val scaledBitmap =
+            Bitmap.createScaledBitmap(fullBitmap!!, scaleWidth, scaleHeight, true)
+
+        // 2. Instantiate the downsized image content as a byte[]
+        val baos = ByteArrayOutputStream()
+        scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        return baos.toByteArray()
     }
 
 }

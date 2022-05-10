@@ -7,21 +7,23 @@
         <item name="itemIconTint">@color/skyBlue</item>
         <item name="itemTextColor">@color/black</item>
     </style>
-    
+
     <!--  Image style  -->
     <style name="Circle">
         <item name="cornerSize">50%</item>
     </style>
-    
-    
+
+
     <!--  font style  -->
 
     <style name="Size24">
         <item name="android:textSize">24sp</item>
     </style>
+
     <style name="Size24.Black">
         <item name="android:textColor">@color/black</item>
     </style>
+
     <style name="Size24.Black.Bold">
         <item name="android:textStyle">bold</item>
     </style>
@@ -29,24 +31,31 @@
     <style name="Size16">
         <item name="android:textSize">16sp</item>
     </style>
+
     <style name="Size16.Bold">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="Size16.Black">
         <item name="android:textColor">@color/black</item>
     </style>
+
     <style name="Size16.Black.Bold">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="Size16.White">
         <item name="android:textColor">@color/colorWhite</item>
     </style>
+
     <style name="Size16.White.Bold">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="Size16.SkyBlue">
         <item name="android:textColor">@color/skyBlue</item>
     </style>
+
     <style name="Size16.SkyBlue.Bold">
         <item name="android:textStyle">bold</item>
     </style>
@@ -54,13 +63,46 @@
     <style name="Size10">
         <item name="android:textSize">10sp</item>
     </style>
+
     <style name="Size10.Bold">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="Size10.Black">
         <item name="android:color">@color/black</item>
     </style>
+
     <style name="Size10.Black.Bold">
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MaterialAlertDialog.App" parent="MaterialAlertDialog.MaterialComponents">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.MediumComponent</item>
+    </style>
+
+    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/shrine_pink_900</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Button" parent="">
+        <item name="colorPrimary">@color/shrine_pink_900</item>
+    </style>
+
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+
+    <style name="AlertDialogTextButton">
+        <item name="color">@color/black</item>
     </style>
 </resources>
