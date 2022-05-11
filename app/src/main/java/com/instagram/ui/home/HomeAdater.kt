@@ -17,9 +17,10 @@ import com.instagram.ui.ModalBottomSheet
 import com.instagram.ui.home.post.ItemPostAdapter
 import com.instagram.ui.home.post.ItemPostViewModel
 
-class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val context: Fragment): ListAdapter<Post, HomeAdapter.HomeViewHolder>(
-    HomeDiffUtil()
-) {
+class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val context: Fragment) :
+    ListAdapter<Post, HomeAdapter.HomeViewHolder>(
+        HomeDiffUtil()
+    ) {
     lateinit var postViewModel: ItemPostViewModel
     lateinit var postAdapter: ItemPostAdapter
 
@@ -34,13 +35,15 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
         holder.bind(getItem(position))
     }
 
-    inner class HomeViewHolder(private val binding: ItemPostBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class HomeViewHolder(private val binding: ItemPostBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
             postImage(post.posts)
             binding.post = post
             binding.executePendingBindings()
             setItemMenuButton()
         }
+
         private fun postImage(postImages: List<Image>?) {
             postViewModel = ItemPostViewModel(postImages)
             postAdapter = ItemPostAdapter()
@@ -49,7 +52,8 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
                 postAdapter.submitList(images)
 
                 // indicator
-                TabLayoutMediator(binding.viewpagerPostImageIndicator, binding.viewpagerPostImage) { tab, position ->
+                TabLayoutMediator(binding.viewpagerPostImageIndicator,
+                    binding.viewpagerPostImage) { tab, position ->
 
                 }.attach()
             }
@@ -57,19 +61,20 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
 
         private fun setItemMenuButton() {
             binding.buttonPostMenu.setOnClickListener {
-                Log.d("hihi", "hi: ${binding.post?.postUid}")
                 binding.post?.postUid?.let { postUid ->
-                    ModalBottomSheet(postUid).show(context.parentFragmentManager, ModalBottomSheet.TAG)
+                    ModalBottomSheet(postUid).show(context.parentFragmentManager,
+                        ModalBottomSheet.TAG)
                 }
             }
         }
     }
 }
 
-class HomeDiffUtil: DiffUtil.ItemCallback<Post>() {
+class HomeDiffUtil : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem.postUid == newItem.postUid
     }
+
     override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem == newItem
     }

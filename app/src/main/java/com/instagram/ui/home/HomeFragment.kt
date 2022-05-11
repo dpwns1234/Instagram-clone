@@ -4,35 +4,28 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.instagram.R
 import com.instagram.common.ViewModelFactory
 import com.instagram.databinding.FragmentHomeBinding
-import com.instagram.databinding.ItemPostBinding
-import com.instagram.ui.ModalBottomSheet
 import com.instagram.ui.home.feed.FeedAdapter
 import com.instagram.ui.produce.ProduceActivity
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels() { ViewModelFactory(requireContext()) }
-    private lateinit var postBinding: ItemPostBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater)
-        postBinding = ItemPostBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -40,11 +33,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setData()
         setPopupMenu()
-    }
-
-    // TODO. 다음 해야할 거 : postMenu 클릭 되도록 + bottom sheet ui 제대로 동작하도록
-    fun postMenu() {
-
     }
 
     private fun setData() {
@@ -56,12 +44,10 @@ class HomeFragment : Fragment() {
         // TODO. 공부: 이거 왜 해야하는지, 어떻게 해야하는 지 공뿌
         binding.lifecycleOwner = viewLifecycleOwner
 
-
         with(viewModel) {
             feed.observe(viewLifecycleOwner) { feed ->
                 feedAdapter.submitList(feed)
             }
-
             post.observe(viewLifecycleOwner) { post ->
                 homeAdapter.submitList(post)
             }
@@ -88,7 +74,6 @@ class HomeFragment : Fragment() {
                         Toast.makeText(requireContext(), "live 선택", Toast.LENGTH_SHORT).show()
                     }
                 }
-
                 return@setOnMenuItemClickListener false
             }
             plusMenu.show()

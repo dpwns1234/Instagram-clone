@@ -1,6 +1,7 @@
 package com.instagram.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.instagram.R
 import com.instagram.databinding.ModalBottomSheetContentBinding
+import kotlin.system.exitProcess
 
 class ModalBottomSheet(private val postUid: String): BottomSheetDialogFragment() {
     private lateinit var binding: ModalBottomSheetContentBinding
@@ -46,21 +48,22 @@ class ModalBottomSheet(private val postUid: String): BottomSheetDialogFragment()
                 .setNegativeButton(negative) { dialog, which ->
                     // Respond to negative button press
                     dialog.dismiss()
+                    dismiss()
                 }
                 .setPositiveButton(positive) { dialog, which ->
                     // Respond to positive button press
                     Toast.makeText(requireContext(), "데이터베이스에서 삭제", Toast.LENGTH_SHORT).show()
                     acceptDelete()
+                    dismiss()
                 }
                 .show()
         }
-
     }
 
     private fun acceptDelete() {
         val userUid = Firebase.auth.uid
         val postKey = postUid
-        databaseRef.child("posts").get()
+        Log.d("hihi", "user: $userUid, post: $postKey")
         databaseRef.updateChildren(hashMapOf<String, Any?>(
             "users/$userUid/profiles/posts/$postKey" to null,
             "posts/$postKey" to null
