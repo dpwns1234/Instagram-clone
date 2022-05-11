@@ -4,16 +4,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.instagram.databinding.ItemPostBinding
 import com.instagram.model.Image
 import com.instagram.model.Post
 import com.instagram.ui.ModalBottomSheet
+import com.instagram.ui.ModalBottomSheet.Companion.TAG
 import com.instagram.ui.home.post.ItemPostAdapter
 import com.instagram.ui.home.post.ItemPostViewModel
 
@@ -23,6 +27,9 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
     ) {
     lateinit var postViewModel: ItemPostViewModel
     lateinit var postAdapter: ItemPostAdapter
+    private val firebaseUrl =
+        "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    private val database = Firebase.database(firebaseUrl).reference
 
     // onCreateViewHolder = 새 ViewHolder를 만든다. TODO. Udacity 3-12
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
@@ -42,6 +49,7 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
             binding.post = post
             binding.executePendingBindings()
             setItemMenuButton()
+            setButtonHeart()
         }
 
         private fun postImage(postImages: List<Image>?) {
@@ -62,10 +70,50 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
         private fun setItemMenuButton() {
             binding.buttonPostMenu.setOnClickListener {
                 binding.post?.postUid?.let { postUid ->
-                    ModalBottomSheet(postUid).show(context.parentFragmentManager,
-                        ModalBottomSheet.TAG)
+                    ModalBottomSheet(postUid).show(context.parentFragmentManager, TAG)
                 }
             }
+        }
+
+        private fun setButtonHeart() {
+            binding.buttonHeart.setOnClickListener {
+                onStarClicked()
+            }
+        }
+
+        private fun onStarClicked() {
+            val userUid = Firebase.auth.currentUser?.uid
+            val postKey = binding.post?.postUid
+            val postRef = database.child("posts/$postKey")
+            postRef.runTransaction(object : Transaction.Handler {
+                override fun doTransaction(mutableData: MutableData): Transaction.Result {
+                    val postValue =
+                        mutableData.getValue(Post::class.java) ?: return Transaction.success(mutableData)
+                    if (postValue.likeUserList.contains(userUid)) {
+                        // Unstar the post and remove self from stars
+                        postValue.likeCount = postValue.likeCount - 1
+                        postValue.likeUserList.remove(userUid)
+                    } else {
+                        // Star the post and add self to stars
+                        postValue.likeCount = postValue.likeCount + 1
+                        if (userUid != null) {
+                            postValue.likeUserList.add(userUid)
+                        }
+                    }
+
+                    // Set value and report transaction success
+                    mutableData.value = postValue
+                    return Transaction.success(mutableData)
+                }
+
+                override fun onComplete(
+                    databaseError: DatabaseError?,
+                    committed: Boolean,
+                    currentData: DataSnapshot?,
+                ) {
+                    // Transaction completed
+                }
+            })
         }
     }
 }

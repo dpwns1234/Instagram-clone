@@ -9,8 +9,8 @@ data class Post(
     val writer: User? = null,
     @SerializedName("post_images") @get:PropertyName("post_images") @set:PropertyName("post_images") var posts: List<Image>? = null,
     @SerializedName("post_introduce") @get:PropertyName("post_introduce") @set:PropertyName("post_introduce") var postIntroduce: String? = null,
-    @SerializedName("likeUser_list") @get:PropertyName("likeUser_list") @set:PropertyName("likeUser_list") var likeUserList: List<User>? = null,
-    @SerializedName("comment_ist") @get:PropertyName("comment_ist") @set:PropertyName("comment_ist") var commentList: List<Comment>? = null,
+    @SerializedName("like_user_list") @get:PropertyName("like_user_list") @set:PropertyName("like_user_list") var likeUserList: MutableList<String> = mutableListOf(),
+    @SerializedName("comment_list") @get:PropertyName("comment_list") @set:PropertyName("comment_list") var commentList: MutableList<Comment> = mutableListOf(),
     @SerializedName("like_count") @get:PropertyName("like_count") @set:PropertyName("like_count") var likeCount: Int = 0,
     @SerializedName("comment_count") @get:PropertyName("comment_count") @set:PropertyName("comment_count") var commentCount: Int = 0,
     @SerializedName("created_at") @get:PropertyName("created_at") @set:PropertyName("created_at") var createdAt: Long = 0, // 나중에 변수형 바꾸기

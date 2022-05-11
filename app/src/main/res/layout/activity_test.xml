@@ -7,23 +7,31 @@
     tools:context=".TestActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_storage"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:id="@+id/iv_storage"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:background="@color/black"
         android:scaleType="center"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_database"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:background="@color/skyBlue"
-        app:layout_constraintTop_toBottomOf="@id/iv_storage"
-        app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/iv_database"
         android:layout_marginTop="20dp"
-        />
+        android:background="@color/skyBlue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_storage" />
+
+    <Button
+        android:id="@+id/button_heart"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/button_heart"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

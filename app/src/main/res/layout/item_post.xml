@@ -104,10 +104,10 @@
                 android:id="@+id/button_heart"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@color/transparent"
-                android:padding="8dp"
-                android:scaleType="centerCrop"
                 android:src="@drawable/button_heart"
+                android:padding="8dp"
+                android:background="@color/transparent"
+                android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -146,7 +146,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
-            android:id="@+id/button_like"
+            android:id="@+id/button_like_count"
             style="@style/Size16.Black.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -167,8 +167,8 @@
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:text="@{post.writer.nickname}"
-            app:layout_constraintStart_toStartOf="@id/button_like"
-            app:layout_constraintTop_toBottomOf="@id/button_like"
+            app:layout_constraintStart_toStartOf="@id/button_like_count"
+            app:layout_constraintTop_toBottomOf="@id/button_like_count"
             tools:text="naver.shopping" />
 
         <Button
