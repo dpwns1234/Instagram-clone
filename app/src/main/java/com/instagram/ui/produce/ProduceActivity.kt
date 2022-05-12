@@ -119,9 +119,14 @@ class ProduceActivity : AppCompatActivity() {
                     createdAt = createdAt)
                 val previewPost =
                     PreviewPost(postKey, postImage = "", createdAt)
+
+                val postCountStr = snapshot.child(userUid).child("profiles").child("post_count").value.toString()
+                val postCount = postCountStr.toInt() + 1
+
                 val childUpdates = hashMapOf(
                     "posts/$postKey" to post.toMap(),
-                    "users/$userUid/profiles/posts/$postKey" to previewPost
+                    "users/$userUid/profiles/posts/$postKey" to previewPost,
+                    "users/$userUid/profiles/post_count" to postCount
                 )
                 databaseRef.updateChildren(childUpdates)
             }

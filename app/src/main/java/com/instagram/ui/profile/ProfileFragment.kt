@@ -35,7 +35,6 @@ class ProfileFragment : Fragment() {
             binding.profile = it
         }
         binding.lifecycleOwner = viewLifecycleOwner
-
         setViewpager()
         setEditProfileButton()
     }
@@ -65,4 +64,5 @@ class ProfileFragment : Fragment() {
             startActivity(Intent(activity, EditProfileActivity::class.java))
         }
     }
+
 }

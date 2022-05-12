@@ -16,7 +16,7 @@ import com.instagram.R
 import com.instagram.databinding.ModalBottomSheetContentBinding
 import kotlin.system.exitProcess
 
-class ModalBottomSheet(private val postUid: String): BottomSheetDialogFragment() {
+class ModalBottomSheet(private val postUid: String) : BottomSheetDialogFragment() {
     private lateinit var binding: ModalBottomSheetContentBinding
     private val firebaseUrl =
         "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -25,7 +25,7 @@ class ModalBottomSheet(private val postUid: String): BottomSheetDialogFragment()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding = ModalBottomSheetContentBinding.inflate(inflater, container, false)
         return binding.root
@@ -61,12 +61,19 @@ class ModalBottomSheet(private val postUid: String): BottomSheetDialogFragment()
     }
 
     private fun acceptDelete() {
-        val userUid = Firebase.auth.uid
+        val userUid = Firebase.auth.uid!!
         val postKey = postUid
-        Log.d("hihi", "user: $userUid, post: $postKey")
-        databaseRef.updateChildren(hashMapOf<String, Any?>(
-            "users/$userUid/profiles/posts/$postKey" to null,
-            "posts/$postKey" to null
-        ))
+        databaseRef.child("users").child(userUid).child("profiles").child("post_count")
+            .get().addOnSuccessListener { snapshot ->
+                val postCountStr = snapshot.value.toString()
+                val postCount = postCountStr.toInt() - 1
+
+                databaseRef.updateChildren(hashMapOf<String, Any?>(
+                    "users/$userUid/profiles/posts/$postKey" to null,
+                    "posts/$postKey" to null,
+                    "users/$userUid/profiles/post_count" to postCount
+                ))
+            }
+
     }
 }

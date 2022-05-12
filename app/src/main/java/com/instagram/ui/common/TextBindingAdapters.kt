@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
 import com.instagram.R
+import com.instagram.model.PreviewPost
 import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,6 +33,7 @@ fun calculateCount(view: TextView, count: Int) {
         view.text = count.toString()
     }
 }
+
 
 @RequiresApi(Build.VERSION_CODES.N)
 @SuppressLint("SimpleDateFormat")

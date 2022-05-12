@@ -20,7 +20,7 @@ data class User(
             "user_uid" to userUid,
             "name" to name,
             "nickname" to nickname,
-            "image_url" to profileImage,
+            "profile_image" to profileImage,
             "introduce" to introduce
         )
     }
