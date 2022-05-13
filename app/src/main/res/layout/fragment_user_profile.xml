@@ -23,14 +23,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_back"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/back_arrow"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/tv_nickname"
+                style="@style/Size24.Black.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
                 android:text="@{profile.nickname}"
-                style="@style/Size24.Black.Bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/black"
                 tools:text="yj000222" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -41,16 +49,6 @@
                 android:background="@drawable/menu"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_nickname" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button_plus"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="end"
-                android:background="@drawable/plus"
-                app:layout_constraintEnd_toStartOf="@id/button_menu"
-                app:layout_constraintTop_toTopOf="@id/tv_nickname" />
-
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -189,14 +187,15 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/layout_introduce"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     android:orientation="vertical"
                     app:layout_constraintTop_toBottomOf="@id/layout_total_status"
-                    tools:layout_editor_absoluteX="10dp">
+                    tools:layout_editor_absoluteX="-62dp">
 
                     <TextView
                         android:id="@+id/tv_name"
@@ -204,7 +203,8 @@
                         android:layout_height="wrap_content"
                         android:text="@{profile.name}"
                         android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="Kristelle" />
 
                     <TextView
                         android:id="@+id/tv_introduce"
@@ -212,28 +212,68 @@
                         android:layout_height="wrap_content"
                         android:text="@{profile.introduce}"
                         android:textColor="@color/black"
+                        tools:text="22|bs architecture major"
 
                         />
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/button_edit_profile"
+                    <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="6dp"
-                        android:background="@drawable/button_round"
-                        android:text="@string/string_edit_profile"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/layout_introduce" />
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/button_follow_and_cancel"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_weight="5"
+                            android:background="@drawable/button_round_blue"
+                            android:text="팔로우"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/layout_introduce" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/button_message"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_weight="5"
+                            android:background="@drawable/button_round"
+                            android:text="메세지"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/layout_introduce" />
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/button_recommend_user"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="6dp"
+                            android:background="@color/transparent"
+                            android:padding="4dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/user_posts_icon"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/layout_introduce" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/indicator_profile"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"

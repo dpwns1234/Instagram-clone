@@ -1,6 +1,5 @@
 package com.instagram.ui.home.post
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.instagram.databinding.ItemPostImageBinding
 import com.instagram.model.Image
-import com.instagram.ui.ModalBottomSheet
 
 class ItemPostAdapter: ListAdapter<Image, ItemPostAdapter.ItemPostViewHolder>(ItemPostImageDiffUtil()) {
 

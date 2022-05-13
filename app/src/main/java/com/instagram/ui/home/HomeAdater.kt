@@ -1,8 +1,8 @@
 package com.instagram.ui.home
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
@@ -16,8 +16,7 @@ import com.google.firebase.ktx.Firebase
 import com.instagram.databinding.ItemPostBinding
 import com.instagram.model.Image
 import com.instagram.model.Post
-import com.instagram.ui.ModalBottomSheet
-import com.instagram.ui.ModalBottomSheet.Companion.TAG
+import com.instagram.ui.home.ModalBottomSheet.Companion.TAG
 import com.instagram.ui.home.post.ItemPostAdapter
 import com.instagram.ui.home.post.ItemPostViewModel
 

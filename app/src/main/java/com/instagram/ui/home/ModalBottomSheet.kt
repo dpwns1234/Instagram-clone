@@ -1,20 +1,16 @@
-package com.instagram.ui
+package com.instagram.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.graphics.toColor
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.instagram.R
 import com.instagram.databinding.ModalBottomSheetContentBinding
-import kotlin.system.exitProcess
 
 class ModalBottomSheet(private val postUid: String) : BottomSheetDialogFragment() {
     private lateinit var binding: ModalBottomSheetContentBinding
