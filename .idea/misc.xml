@@ -7,6 +7,7 @@
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/drawable/backgroud_row.xml" value="0.1165" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/drawable/background_circle_border.xml" value="0.1005" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/drawable/background_circle_gradient.xml" value="0.1" />
+        <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/drawable/background_edit_text.xml" value="0.1165" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/drawable/background_line_top_bottom.xml" value="0.1005" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/drawable/bg_login_button.xml" value="0.136" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/drawable/button_heart.xml" value="0.1" />
@@ -33,7 +34,7 @@
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/fragment_profile_posts.xml" value="0.16799999999999998" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/fragment_profile_user_images.xml" value="0.11666666666666667" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/fragment_profile_user_posts.xml" value="0.11666666666666667" />
-        <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/fragment_search.xml" value="0.1109375" />
+        <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/fragment_search.xml" value="0.264" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/fragment_shorts.xml" value="0.1" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/fragment_sign_up.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Public/Android/Instagram-android/app/src/main/res/layout/fragment_sign_up_detail.xml" value="0.25364583333333335" />

@@ -74,6 +74,5 @@ class ModalBottomSheet(private val postUid: String) : BottomSheetDialogFragment(
                     "users/$userUid/profiles/post_count" to postCount
                 ))
             }
-
     }
 }
