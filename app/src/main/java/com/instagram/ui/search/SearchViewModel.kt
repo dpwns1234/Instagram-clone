@@ -29,7 +29,8 @@ class SearchViewModel: ViewModel() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val users = mutableListOf<Profile>()
                     for (user in snapshot.children) {
-                        user.getValue<Profile>()?.let {
+                        val profile = user.child("profiles")
+                        profile.getValue<Profile>()?.let {
                             users.add(it)
                         }
                     }

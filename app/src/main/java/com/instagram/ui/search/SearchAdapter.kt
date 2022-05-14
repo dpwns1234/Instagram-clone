@@ -1,5 +1,6 @@
 package com.instagram.ui.search
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -16,12 +17,15 @@ class SearchAdapter: ListAdapter<Profile, SearchAdapter.SearchViewHolder>(Search
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
+        Log.d("hello", "adapter: ${getItem(position).nickname}")
         holder.bind(getItem(position))
     }
 
     inner class SearchViewHolder(private val binding: ItemSearchHistoryBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(profile: Profile) {
             binding.profile = profile
+            binding.executePendingBindings()
+            Log.d("hello", "profile: ${profile.nickname}")
         }
     }
 }
@@ -33,5 +37,4 @@ class SearchDiffUtil: DiffUtil.ItemCallback<Profile>() {
     override fun areContentsTheSame(oldItem: Profile, newItem: Profile): Boolean {
         return oldItem == newItem
     }
-
 }
