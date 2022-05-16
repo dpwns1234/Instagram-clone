@@ -1,11 +1,15 @@
 package com.instagram.ui.search
 
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.instagram.R
 import com.instagram.databinding.ItemSearchHistoryBinding
 import com.instagram.model.Profile
 
@@ -17,15 +21,21 @@ class SearchAdapter: ListAdapter<Profile, SearchAdapter.SearchViewHolder>(Search
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        Log.d("hello", "adapter: ${getItem(position).nickname}")
         holder.bind(getItem(position))
+        holder.itemClicked()
     }
 
     inner class SearchViewHolder(private val binding: ItemSearchHistoryBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(profile: Profile) {
             binding.profile = profile
             binding.executePendingBindings()
-            Log.d("hello", "profile: ${profile.nickname}")
+        }
+
+        fun itemClicked() {
+            binding.root.setOnClickListener {
+                val action = R.id.action_search_to_user_profile
+                it.findNavController().navigate(action, bundleOf("userUid" to binding.profile!!.userUid))
+            }
         }
     }
 }

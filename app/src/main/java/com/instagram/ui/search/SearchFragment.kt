@@ -12,6 +12,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doBeforeTextChanged
 import androidx.core.widget.doOnTextChanged
+import androidx.navigation.NavDirections
 import com.instagram.databinding.FragmentSearchBinding
 import com.instagram.model.Profile
 

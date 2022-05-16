@@ -6,9 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.instagram.databinding.FragmentUserProfileBinding
+import com.instagram.model.Profile
+import com.instagram.ui.profile.ProfileViewModel
 
 class UserProfileFragment : Fragment() {
     private lateinit var binding: FragmentUserProfileBinding
+    private val firebaseUrl =
+        "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,8 +25,12 @@ class UserProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
+        arguments?.let { bundle ->
+            val userUid = bundle.getString("userUid")
+            val viewModel = UserProfileViewModel(userUid!!)
+            viewModel.userProfile.observe(viewLifecycleOwner) { profile ->
+                binding.profile = profile
+            }
+        }
     }
 }

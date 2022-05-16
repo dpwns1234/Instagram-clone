@@ -16,7 +16,14 @@
         android:id="@+id/navigation_search"
         android:name="com.instagram.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_search_to_user_profile"
+            app:destination="@id/navigation_user_profile" />
+        <argument
+            android:name="userUid"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_shop"
         android:name="com.instagram.ui.ShopFragment"
@@ -27,4 +34,8 @@
         android:name="com.instagram.ui.ShortsFragment"
         android:label="fragment_shorts"
         tools:layout="@layout/fragment_shorts" />
+    <fragment
+        android:id="@+id/navigation_user_profile"
+        android:name="com.instagram.ui.userprofile.UserProfileFragment"
+        android:label="UserProfileFragment" />
 </navigation>

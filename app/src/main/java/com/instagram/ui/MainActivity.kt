@@ -13,7 +13,6 @@ import com.instagram.R
 import com.instagram.ui.login.LoginActivity
 
 class MainActivity: AppCompatActivity() {
-    private val KITKAT_VALUE = 1002
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,6 +24,5 @@ class MainActivity: AppCompatActivity() {
         navController?.let {
             bottomNavigationView.setupWithNavController(it)
         }
-
     }
 }
