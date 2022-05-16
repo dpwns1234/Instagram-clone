@@ -12,7 +12,7 @@ import com.instagram.model.Profile
 class SearchAdapter: ListAdapter<Profile, SearchAdapter.SearchViewHolder>(SearchDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
-        val binding = ItemSearchHistoryBinding.inflate(LayoutInflater.from(parent.context))
+        val binding = ItemSearchHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SearchViewHolder(binding)
     }
 
