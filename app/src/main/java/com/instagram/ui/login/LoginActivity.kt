@@ -26,18 +26,23 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val signInBtn = binding.buttonLogin
-        signInBtn.setOnClickListener{
-            //createUser()
-            signIn(binding.etId.text.toString(), binding.etPassword.text.toString())
-        }
+        setSignInButton()
+        setSignUpButton()
+    }
 
+    private fun setSignUpButton() {
         val signUpBtn = binding.buttonSignUp
         signUpBtn.setOnClickListener {
             moveSignUpPage()
         }
+    }
 
-
+    private fun setSignInButton() {
+        val signInBtn = binding.buttonLogin
+        signInBtn.setOnClickListener {
+            //createUser()
+            signIn(binding.etId.text.toString(), binding.etPassword.text.toString())
+        }
     }
 
     private fun signIn(id: String, password: String) {

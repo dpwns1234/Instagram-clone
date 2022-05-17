@@ -4,20 +4,25 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.instagram.R
 import com.instagram.databinding.ActivityEditProfileBinding
 import com.instagram.model.PreviewPost
 
-class EditProfileActivity: AppCompatActivity() {
+class EditProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditProfileBinding
     private val firebaseUrl =
         "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -28,10 +33,10 @@ class EditProfileActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // TODO. inflate가 되지 않는 이유가 뭘ㄲ까??
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        // data binding
-        val viewModel = ProfileViewModel()
+        setContentView(R.layout.activity_edit_profile)
+        val viewModel = ProfileViewModel(user.uid)
         viewModel.profile.observe(this) {
             binding.profile = it
 
@@ -144,14 +149,14 @@ class EditProfileActivity: AppCompatActivity() {
         val fireStorageRef = fireStorage.getReference("user/profile/$fileName.jpg")
 
         fireStorageRef.putFile(imageUri).continueWithTask { task ->
-            if(!task.isSuccessful) {
+            if (!task.isSuccessful) {
                 task.exception?.let {
                     throw it
                 }
             }
             fireStorageRef.downloadUrl
-        }.addOnCompleteListener {task ->
-            if(task.isSuccessful) {
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 val downloadUri = task.result
                 val databaseRef = database.getReference(userProfilePath)
                 // 사용자의 프로필 사진을 변경한다.
@@ -169,7 +174,7 @@ class EditProfileActivity: AppCompatActivity() {
                     }
 
                     // database에서 변경하기
-                    for(i in 0 until postUidList.size) {
+                    for (i in 0 until postUidList.size) {
                         database.getReference("posts/${postUidList[i]}/writer/profile_image")
                             .setValue(downloadUri.toString())
                     }
@@ -183,8 +188,7 @@ class EditProfileActivity: AppCompatActivity() {
     private fun openGallery(launcher: ActivityResultLauncher<Intent>) {
         val intent = Intent()
         intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.action = Intent.ACTION_PICK
         intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 
         launcher.launch(intent)

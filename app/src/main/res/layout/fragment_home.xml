@@ -27,7 +27,7 @@
                 android:id="@+id/iv_logo_title"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/logo_title" />
+                android:src="@drawable/instagram_logo_text" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:layout_width="50dp"

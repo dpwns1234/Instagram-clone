@@ -10,6 +10,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.instagram.model.PreviewPost
 import com.instagram.model.Profile
 
 class UserProfileViewModel(private val userUid: String) : ViewModel() {
@@ -18,6 +19,12 @@ class UserProfileViewModel(private val userUid: String) : ViewModel() {
 
     private val _userProfile = MutableLiveData<Profile>()
     var userProfile: LiveData<Profile> = _userProfile
+
+    private val _profilePosts = MutableLiveData<List<PreviewPost>>()
+    var profilePosts: LiveData<List<PreviewPost>> = _profilePosts
+
+    private val _profileUserPosts = MutableLiveData<List<PreviewPost>>()
+    var profileUserPosts: LiveData<List<PreviewPost>> = _profileUserPosts
 
     init {
         loadUserProfile()

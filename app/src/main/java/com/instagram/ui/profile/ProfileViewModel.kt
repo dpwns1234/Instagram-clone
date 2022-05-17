@@ -12,7 +12,7 @@ import com.google.firebase.ktx.Firebase
 import com.instagram.model.PreviewPost
 import com.instagram.model.Profile
 
-class ProfileViewModel(): ViewModel() {
+class ProfileViewModel(private val userUid: String): ViewModel() {
     private val firebaseUrl = "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
 
     private val _profile = MutableLiveData<Profile>()
@@ -29,20 +29,14 @@ class ProfileViewModel(): ViewModel() {
     }
 
     private fun loadProfileFromFirebase() {
-        val auth = Firebase.auth
-        val databaseRef = Firebase.database(firebaseUrl).reference
-            .child("users")
-            .child(auth.currentUser!!.uid)
-            .child("profiles")
-
+        val databaseRef = Firebase.database(firebaseUrl)
+            .getReference("users/$userUid/profiles")
         setProfile(databaseRef)
-
     }
 
     private fun setProfile(databaseRef: DatabaseReference) {
         val profileListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.d("what", "object : ${snapshot.value}")
                 val profile = snapshot.getValue<Profile>()
                 profile?.let { it ->
                     _profile.value = it

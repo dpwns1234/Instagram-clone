@@ -3,44 +3,51 @@ package com.instagram.ui.profile
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.instagram.R
 import com.instagram.databinding.FragmentProfileBinding
+import com.instagram.ui.login.LoginActivity
 
 
 class ProfileFragment : Fragment() {
     lateinit var binding: FragmentProfileBinding
-    lateinit var profileViewModel: ProfileViewModel
-
+    private val auth = Firebase.auth
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
-        profileViewModel = ProfileViewModel()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val userUid = auth.currentUser!!.uid
+        val profileViewModel = ProfileViewModel(userUid)
 
         profileViewModel.profile.observe(viewLifecycleOwner) {
             binding.profile = it
         }
         binding.lifecycleOwner = viewLifecycleOwner
-        setViewpager()
+        setViewpager(userUid)
         setEditProfileButton()
+        setSignOutButton()
     }
 
-    private fun setViewpager() {
-        val profileViewpagerAdapter = ProfileViewpagerAdapter(requireActivity())
+    private fun setViewpager(userUid: String) {
+        val profileViewpagerAdapter = ProfileViewpagerAdapter(requireActivity(), userUid)
         with(binding.viewpagerProfile) {
             adapter = profileViewpagerAdapter
             val tabsIconDrawable = arrayOf(R.drawable.gallery, R.drawable.user_posts_icon)
@@ -62,6 +69,27 @@ class ProfileFragment : Fragment() {
             it.startAnimation(clickAnimation)
 
             startActivity(Intent(activity, EditProfileActivity::class.java))
+        }
+    }
+
+    private fun setSignOutButton() {
+        binding.buttonSignOut.setOnClickListener {
+            // again request by using alert message
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Instagram에서 로그아웃 하시겠서요?")
+                .setNegativeButton("취소") { dialog, which ->
+                    dialog.cancel()
+                }
+                .setPositiveButton("로그아웃") { dialog, which ->
+                    // firebase sign out
+                    auth.signOut()
+                    Toast.makeText(requireContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+
+                    // move login activity
+                    val intent = Intent(activity, LoginActivity::class.java)
+                    startActivity(intent)
+                    activity?.finish()
+                }.show()
         }
     }
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.profile.EditProfileActivity">
 
     <data>
-
         <variable
             name="profile"
             type="com.instagram.model.Profile" />
@@ -12,8 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.profile.EditProfileActivity">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_edit_appbar"
@@ -66,16 +65,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_edit_appbar">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_profile_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="14dp"
-                android:background="@drawable/background_circle_border"
+                app:shapeAppearanceOverlay="@style/Circle"
                 android:scaleType="centerCrop"
-                circleImageUrl="@{profile.profileImage}"
-                isSeen="@{false}"
+                android:src="@drawable/welove"
                 tools:src="@drawable/welove" />
 
             <TextView

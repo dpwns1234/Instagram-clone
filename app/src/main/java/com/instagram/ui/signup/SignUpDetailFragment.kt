@@ -23,7 +23,6 @@ class SignUpDetailFragment : Fragment() {
     private var auth: FirebaseAuth? = null
     private lateinit var database: DatabaseReference
     private val firebaseUrl = "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
-    private val user = Firebase.auth.currentUser!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,9 +60,9 @@ class SignUpDetailFragment : Fragment() {
 
     private fun initUserProfile(uid: String) {
         database = Firebase.database(firebaseUrl).reference
-        val profile = Profile(uid, "nada", profileImage = "https://user-images.githubusercontent.com/52391722/159457181-15f1a875-fde9-4a44-bf7e-12723757d3ee.jpg",
+        val profile = Profile(uid, "-", profileImage = "",
             0, 0, 0,
-            "예준")
+            "-")
         val profileValue = profile.toMap()
 
         // [POST] users/{uid}/profiles/
@@ -72,11 +71,10 @@ class SignUpDetailFragment : Fragment() {
                 .addOnSuccessListener {
                     startActivity(Intent(activity, MainActivity::class.java))
                     activity?.finish()
-                    Log.d("hihi", "성공 ㅎㅎ 데이터베이스")
                 }
                 // TODO. 문제: 이렇게 구성하면 계정은 만들고 프로필 정보 입력하는데 실패하면 중복 계정 문제가 생기니까 나중에 수정
                 .addOnFailureListener {
-                    Log.d("hihi", "실패 ㅎㅎ 데이터베이스")
+                    Log.w("SignUpDetailFragment", "Failed add user's account")
                 }
         } catch (e: Exception) {
             e.stackTrace

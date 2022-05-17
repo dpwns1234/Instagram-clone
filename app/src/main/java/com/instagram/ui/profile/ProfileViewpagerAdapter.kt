@@ -6,9 +6,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.instagram.ui.profile.posts.ProfilePostsFragment
 import com.instagram.ui.profile.userposts.ProfileUserPostsFragment
 
-class ProfileViewpagerAdapter(fragmentActivity: FragmentActivity): FragmentStateAdapter(fragmentActivity){
+class ProfileViewpagerAdapter(fragmentActivity: FragmentActivity, userUid: String) :
+    FragmentStateAdapter(fragmentActivity) {
 
-    private val fragments = listOf(ProfilePostsFragment(), ProfileUserPostsFragment())
+    private val fragments = listOf(ProfilePostsFragment(userUid), ProfileUserPostsFragment(userUid))
 
     override fun getItemCount(): Int {
         return fragments.size
@@ -17,7 +18,6 @@ class ProfileViewpagerAdapter(fragmentActivity: FragmentActivity): FragmentState
     override fun createFragment(position: Int): Fragment {
         return fragments[position]
     }
-
 
 
 //    fun addFragment(fragment: Fragment) {

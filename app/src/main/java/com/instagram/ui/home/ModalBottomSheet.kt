@@ -18,6 +18,10 @@ class ModalBottomSheet(private val postUid: String) : BottomSheetDialogFragment(
         "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
     private val databaseRef = Firebase.database(firebaseUrl).reference
 
+    companion object {
+        const val TAG = "ModalBottomSheet"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,10 +29,6 @@ class ModalBottomSheet(private val postUid: String) : BottomSheetDialogFragment(
     ): View? {
         binding = ModalBottomSheetContentBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    companion object {
-        const val TAG = "ModalBottomSheet"
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

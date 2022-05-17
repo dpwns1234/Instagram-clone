@@ -20,9 +20,9 @@
         <ImageView
             android:id="@+id/iv_logo_title"
             android:layout_width="250dp"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_marginTop="150dp"
-            android:src="@drawable/logo_title"
+            android:src="@drawable/instagram_logo_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,23 +31,29 @@
         <EditText
             android:id="@+id/et_id"
             android:layout_width="350dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/background_edit_text"
             android:ems="10"
             android:hint="@string/hint_id"
             android:inputType="textPersonName"
+            android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
+            style="@style/Size16.Black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_logo_title" />
-
 
         <EditText
             android:id="@+id/et_password"
             android:layout_width="350dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="10dp"
+            style="@style/Size16.Black"
+            android:background="@drawable/background_edit_text"
             android:ems="10"
             android:hint="@string/hint_password"
             android:inputType="textPassword"
+            android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_id" />
