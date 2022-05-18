@@ -1,11 +1,9 @@
 package com.instagram
 
 import android.net.Uri
-import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,11 +13,9 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.instagram.model.Image
-import org.w3c.dom.Text
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
-import java.net.URI
 import java.net.URL
 
 
@@ -64,6 +60,18 @@ class TestActivity : AppCompatActivity() {
             e.stackTrace
         }
 
+    }
+
+    private fun p1138() {
+        val list = mutableListOf<Int>() // 6 1 1 1 2 0 0
+        val n = 4
+        val answer = mutableListOf<Int>()
+        var mens = list.size
+        // 큰 수부터 차례대로 배치
+        for(i in list.size-1 until 0) {
+            answer.add(list[i], mens)
+            mens--
+        }
     }
 }
 

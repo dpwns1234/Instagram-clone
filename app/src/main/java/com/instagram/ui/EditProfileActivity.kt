@@ -33,17 +33,12 @@ class EditProfileActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // TODO. inflate가 되지 않는 이유가 뭘ㄲ까??
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_edit_profile)
+        setContentView(binding.root)
         val viewModel = ProfileViewModel(user.uid)
         viewModel.profile.observe(this) {
             binding.profile = it
-
-            // TODO. 왜 위에걸로 해결이 안되는 것인가??
-            binding.etEditName.setText(it.name)
-            binding.etEditNickname.setText(it.nickname)
-            binding.etEditIntroduce.setText(it.introduce)
+            Log.d("hihi", "image: ${it.profileImage}")
         }
         val launcher = activityResultLauncher()
 

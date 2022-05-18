@@ -60,6 +60,18 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Size14">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Size14.Black">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Size14.Black.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Size10">
         <item name="android:textSize">10sp</item>
     </style>

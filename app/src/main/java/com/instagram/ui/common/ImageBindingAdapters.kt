@@ -3,6 +3,7 @@ package com.instagram.ui.common
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -21,15 +22,14 @@ fun loadImage(view: ImageView, imageUrl: Any?) {
 
 @BindingAdapter("circleImageUrl", "isSeen")
 fun loadCircleImage(view: ImageView, imageUrl: String?, isSeen: Boolean) {
-    if(!imageUrl.isNullOrEmpty()) {
+    if (!imageUrl.isNullOrEmpty()) {
         Glide.with(view)
             .load(imageUrl)
             .circleCrop()
             .into(view)
     }
 
-    if(isSeen) {
+    if (isSeen) {
         view.background = ColorDrawable(Color.parseColor("#00FF0000"))
     }
 }
-

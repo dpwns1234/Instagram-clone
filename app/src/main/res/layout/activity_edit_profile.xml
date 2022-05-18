@@ -73,7 +73,7 @@
                 android:layout_marginTop="14dp"
                 app:shapeAppearanceOverlay="@style/Circle"
                 android:scaleType="centerCrop"
-                android:src="@drawable/welove"
+                imageUrl="@{profile.profileImage}"
                 tools:src="@drawable/welove" />
 
             <TextView
@@ -159,17 +159,36 @@
                 style="@style/Size16.SkyBlue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="14dp"
                 android:background="@drawable/background_line_top_bottom"
                 android:text="프로페셔널 계정으로 전환" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Size16.SkyBlue.Bold"
-                android:layout_width="wrap_content"
+                style="@style/Size16.SkyBlue"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:padding="14dp"
+                android:text="아바타 설정" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorLightGray"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Size16.SkyBlue.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="14dp"
                 android:text="개인정보 설정" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorLightGray"
+                />
+
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
