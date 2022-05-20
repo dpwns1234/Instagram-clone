@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="user"
+            type="com.instagram.model.User" />
+        <variable
+            name="post"
+            type="com.instagram.model.Post" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".CommentActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_toolbar_comment"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_back"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/back_arrow"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_comment_string"
+                style="@style/Size24.Black.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="댓글"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_back"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_menu"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end"
+                android:background="@drawable/menu"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_writer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_writer_image"
+                        circleImageUrl="@{post.writer.profileImage}"
+                        isSeen="@{true}"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_margin="10dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:background="@drawable/background_circle_gradient"
+                        tools:src="@drawable/welove" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_writer_nickname_introduce"
+                        style="@style/Size14.Black"
+                        nickname="@{post.writer.nickname}"
+                        comment="@{post.postIntroduce}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:layout_constraintStart_toEndOf="@id/iv_writer_image"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="fa_ith_letter 이스라엘과 마찬가지로 우리가 하나님과 멀어질 때마다 하나님은 가슴 아파하십니다. 우린 단순히 자신의 이익, 쾌락을 위해 죄를 짓는 동안 하나님은 사랑하는 이에게 '버림'당하는 가슴 찢기는 슬픔을 견디고 계십니다.\n\n우리가 하나님을 정말 사랑한다면, 사랑하고자 한다면 그 마음에 공감해야 하지 않을까요? 우리의 기쁨에 같이 기뻐하시며 우리의 슬픔에 공감하시고 위로하시는 하나님께 이제는 일방적으로 사랑받는 것이 아니라, 더욱 하나님의 마음에 공감하여 우리도 하나님을 진심으로 사랑하면 좋겠습니다. 그리고 그런 마음으로 하나님께 나아가는 우리 5팀 되길 소망합니다! 🙂🙃" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorLightGray" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.core.widget.NestedScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorLightGray" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_write_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_user_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                imageUrl="@{user.profileImage}"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/Circle"
+                tools:src="@drawable/welove" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_write_comment"
+                style="@style/Size16"
+                android:layout_width="290dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:background="@color/transparent"
+                android:hint="댓글 달기..." />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Size16.SkyBlue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="2dp"
+                android:text="게시" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -1,17 +1,19 @@
 package com.instagram.ui.common
 
 import android.annotation.SuppressLint
+import android.graphics.Typeface
 import android.icu.text.RelativeDateTimeFormatter
 import android.os.Build
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.StyleSpan
 import android.util.Log
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
 import com.instagram.R
-import com.instagram.model.PreviewPost
-import org.w3c.dom.Text
-import java.text.SimpleDateFormat
 import java.util.*
+
 
 @BindingAdapter("text")
 fun writeText(view: TextView, text: String) {
@@ -63,4 +65,17 @@ fun createdAt(view: TextView, createdTime: Long) {
     val formatTime = formatter.format(currentTime.toDouble(), direction, relativeUnit)
     Log.d("file", "format: $formatTime")
     view.text = formatTime
+}
+
+@BindingAdapter("nickname", "comment")
+fun userAndComment(view: TextView, user: String?, comment: String?) {
+    val spannableString = SpannableString("$user $comment")
+
+    if(user != null) {
+        spannableString.setSpan(StyleSpan(Typeface.BOLD),
+            0,
+            user.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+    view.text = spannableString
 }

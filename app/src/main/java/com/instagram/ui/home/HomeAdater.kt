@@ -1,5 +1,6 @@
 package com.instagram.ui.home
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.view.animation.BounceInterpolator
 import android.view.animation.ScaleAnimation
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
@@ -19,6 +21,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.instagram.CommentActivity
 import com.instagram.R
 import com.instagram.databinding.ItemPostBinding
 import com.instagram.model.Image
@@ -48,6 +51,7 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
     // onBindViewHolder = 만들어진 ViewHolder에 정보를 넣는다.
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         holder.bind(getItem(position))
+        holder.setPostHeart(getItem(position))
     }
 
     inner class HomeViewHolder(private val binding: ItemPostBinding) :
@@ -58,10 +62,16 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
             binding.executePendingBindings()
             setItemMenuButton()
             setButtonHeart()
-            if(post.likeUserList.contains(userUid))
-                binding.buttonHeart.setImageResource(R.drawable.heart_clicked) // 반대인데 왜 이게 정상으로 나오지??
-            else
-                binding.buttonHeart.setImageResource(R.drawable.heart) // 반대인데 왜 이게 정상으로 나오지??
+
+            // setCommentButton
+            binding.buttonIntroduce.setOnClickListener {
+                val intent = Intent(context.requireActivity(), CommentActivity::class.java)
+                intent.apply {
+                    putExtra("postUid", post.postUid)
+                }
+                context.startActivity(intent)
+                //context.startActivity(intent, bundleOf("postUid" to post.postUid))
+            }
         }
 
         private fun postImage(postImages: List<Image>?) {
@@ -77,6 +87,14 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
 
                 }.attach()
             }
+        }
+
+        // 회원용 하트 상태 여부 binding
+        fun setPostHeart(post: Post) {
+            if (post.likeUserList.contains(userUid))
+                binding.buttonHeart.setImageResource(R.drawable.heart_clicked) // 반대인데 왜 이게 정상으로 나오지??
+            else
+                binding.buttonHeart.setImageResource(R.drawable.heart)
         }
 
         private fun setItemMenuButton() {

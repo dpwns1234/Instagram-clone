@@ -6,6 +6,7 @@ import com.google.firebase.database.PropertyName
 import com.google.gson.annotations.SerializedName
 import kotlin.String
 
+// profile data class는 detail한 것, user data class 는 간단한 data들
 @IgnoreExtraProperties
 data class User(
     @get:PropertyName("user_uid") @set:PropertyName("user_uid") @SerializedName("user_uid") var userUid: String = "",

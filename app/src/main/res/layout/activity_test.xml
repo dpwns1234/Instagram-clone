@@ -29,7 +29,6 @@
         android:id="@+id/button_heart"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="@drawable/button_heart"
         android:padding="8dp"
         android:scaleType="fitCenter"
         android:clickable="true"
