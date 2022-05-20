@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="user"
             type="com.instagram.model.User" />
+
         <variable
             name="post"
             type="com.instagram.model.Post" />
@@ -16,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".CommentActivity">
+        tools:context=".ui.comment.CommentActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_toolbar_comment"
@@ -37,7 +39,7 @@
 
             <TextView
                 android:id="@+id/tv_comment_string"
-                style="@style/Size24.Black.Bold"
+                style="@style/Size20.Black.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -90,8 +92,8 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_writer_nickname_introduce"
                         style="@style/Size14.Black"
-                        nickname="@{post.writer.nickname}"
                         comment="@{post.postIntroduce}"
+                        nickname="@{post.writer.nickname}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -101,12 +103,18 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colorLightGray" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_comments"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_comment" />
 
                 <View
                     android:layout_width="match_parent"
@@ -126,13 +134,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="10">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_user_image"
+                imageUrl="@{user.profileImage}"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                imageUrl="@{user.profileImage}"
                 android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/Circle"
                 tools:src="@drawable/welove" />
@@ -140,19 +149,22 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_write_comment"
                 style="@style/Size16"
-                android:layout_width="290dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="20dp"
+                android:layout_weight="9.5"
                 android:background="@color/transparent"
                 android:hint="댓글 달기..." />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_write_comment"
                 style="@style/Size16.SkyBlue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="2dp"
+                android:layout_weight="0.5"
                 android:text="게시" />
 
 

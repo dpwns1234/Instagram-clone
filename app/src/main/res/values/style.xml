@@ -28,6 +28,38 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Size20">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Size20.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Size20.Black">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Size20.Black.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Size20.White">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="Size20.White.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Size20.SkyBlue">
+        <item name="android:textColor">@color/skyBlue</item>
+    </style>
+
+    <style name="Size20.SkyBlue.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Size16">
         <item name="android:textSize">16sp</item>
     </style>
