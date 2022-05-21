@@ -37,36 +37,8 @@ class CommentActivity : AppCompatActivity() {
 
         setCommentAdapter(viewModel)
         setBasicData(viewModel)
-
-        binding.tvWriteComment.setOnClickListener {
-            val databaseRef = database.getReference("posts/$postUid")
-            val commentKey = databaseRef.push().key!!
-            val comment = binding.etWriteComment.text.toString()
-            val createdAt = System.currentTimeMillis()
-            val commentValue = Comment(commentKey, viewModel.user.value!!, comment, createdAt)
-
-            databaseRef.runTransaction(object : Transaction.Handler {
-                override fun doTransaction(currentData: MutableData): Transaction.Result {
-                    val postValue = currentData.getValue(Post::class.java)
-                            ?: return Transaction.success(currentData)
-                    postValue.comments.add(commentValue)
-
-                    currentData.value = postValue
-                    return Transaction.success(currentData)
-                }
-
-                override fun onComplete(
-                    error: DatabaseError?,
-                    committed: Boolean,
-                    currentData: DataSnapshot?,
-                ) {
-                    // 키보드 내리기
-                    binding.etWriteComment.text = null
-                    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    inputMethodManager.hideSoftInputFromWindow(binding.etWriteComment.windowToken, 0)
-                }
-            })
-        }
+        setButtonShowComment(postUid, viewModel)
+        setButtonBack()
     }
 
     private fun setBasicData(viewModel: CommentViewModel) {
@@ -86,5 +58,48 @@ class CommentActivity : AppCompatActivity() {
 
         binding.rvComments.adapter = commentAdapter
         binding.lifecycleOwner = this
+    }
+
+    private fun setButtonShowComment(
+        postUid: String?,
+        viewModel: CommentViewModel,
+    ) {
+        binding.tvWriteComment.setOnClickListener {
+            val databaseRef = database.getReference("posts/$postUid")
+            val commentKey = databaseRef.push().key!!
+            val comment = binding.etWriteComment.text.toString()
+            val createdAt = System.currentTimeMillis()
+            val commentValue = Comment(commentKey, viewModel.user.value!!, comment, createdAt)
+
+            databaseRef.runTransaction(object : Transaction.Handler {
+                override fun doTransaction(currentData: MutableData): Transaction.Result {
+                    val postValue = currentData.getValue(Post::class.java)
+                        ?: return Transaction.success(currentData)
+                    postValue.comments.add(commentValue)
+
+                    currentData.value = postValue
+                    return Transaction.success(currentData)
+                }
+
+                override fun onComplete(
+                    error: DatabaseError?,
+                    committed: Boolean,
+                    currentData: DataSnapshot?,
+                ) {
+                    // 키보드 내리기
+                    binding.etWriteComment.text = null
+                    val inputMethodManager =
+                        getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.hideSoftInputFromWindow(binding.etWriteComment.windowToken,
+                        0)
+                }
+            })
+        }
+    }
+
+    private fun setButtonBack() {
+        binding.buttonBack.setOnClickListener {
+            this.finish()
+        }
     }
 }

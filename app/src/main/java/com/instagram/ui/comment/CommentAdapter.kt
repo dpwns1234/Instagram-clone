@@ -8,10 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.instagram.databinding.ItemCommentBinding
 import com.instagram.model.Comment
 
+
+
+
 class CommentAdapter: ListAdapter<Comment, CommentAdapter.CommentViewHolder>(CommentDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
-        val binding = ItemCommentBinding.inflate(LayoutInflater.from(parent.context))
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemCommentBinding.inflate(inflater, parent, false)
         return CommentViewHolder(binding)
     }
 
@@ -22,6 +26,13 @@ class CommentAdapter: ListAdapter<Comment, CommentAdapter.CommentViewHolder>(Com
     inner class CommentViewHolder(val binding: ItemCommentBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(comment: Comment) {
             binding.comment = comment
+            binding.executePendingBindings()
+
+            binding.tvWriterNicknameIntroduce.text.toString()
+        }
+
+        fun setClickNickname() {
+
         }
     }
 }

@@ -6,12 +6,16 @@ import android.icu.text.RelativeDateTimeFormatter
 import android.os.Build
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ClickableSpan
 import android.text.style.StyleSpan
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
 import com.instagram.R
+import com.instagram.ui.home.HomeAdapter
 import java.util.*
 
 
@@ -68,14 +72,36 @@ fun createdAt(view: TextView, createdTime: Long) {
 }
 
 @BindingAdapter("nickname", "comment")
-fun userAndComment(view: TextView, user: String?, comment: String?) {
-    val spannableString = SpannableString("$user $comment")
+fun userAndComment(view: TextView, nickname: String?, comment: String?, ) {
+    val spannableString = SpannableString("$nickname $comment")
 
-    if(user != null) {
+    if(nickname != null) {
         spannableString.setSpan(StyleSpan(Typeface.BOLD),
             0,
-            user.length,
+            nickname.length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
+
+
     view.text = spannableString
 }
+
+//@BindingAdapter("nickname", "introduce", "viewMore")
+//fun postIntroduce(view: TextView, nickname: String?, comment: String?, homeViewHolder: HomeAdapter.HomeViewHolder) {
+//    val spannableString = SpannableString("$nickname $comment")
+//
+//    if(nickname != null) {
+//        spannableString.setSpan(StyleSpan(Typeface.BOLD),
+//            0,
+//            nickname.length,
+//            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+//    }
+//
+//    spannableString.setSpan(object : ClickableSpan() {
+//        override fun onClick(p0: View) {
+//            homeViewHolder.setButtonComment()
+//        }
+//
+//    },0,1,2)
+//    view.text = spannableString
+//}

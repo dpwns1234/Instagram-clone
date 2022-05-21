@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
@@ -45,6 +46,7 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         holder.bind(getItem(position))
         holder.setPostHeart(getItem(position))
+        holder.setViewMore()
     }
 
     inner class HomeViewHolder(private val binding: ItemPostBinding) :
@@ -55,17 +57,10 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
             binding.executePendingBindings()
             setItemMenuButton()
             setButtonHeart()
-
-            // setCommentButton
-            binding.buttonIntroduce.setOnClickListener {
-                val intent = Intent(context.requireActivity(), CommentActivity::class.java)
-                intent.apply {
-                    putExtra("postUid", post.postUid)
-                }
-                context.startActivity(intent)
-                //context.startActivity(intent, bundleOf("postUid" to post.postUid))
-            }
+            setButtonComment(post)
         }
+
+
 
         private fun postImage(postImages: List<Image>?) {
             postViewModel = ItemPostViewModel(postImages)
@@ -112,7 +107,8 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
             postRef.runTransaction(object : Transaction.Handler {
                 override fun doTransaction(mutableData: MutableData): Transaction.Result {
                     val postValue =
-                        mutableData.getValue(Post::class.java) ?: return Transaction.success(mutableData)
+                        mutableData.getValue(Post::class.java) ?: return Transaction.success(
+                            mutableData)
                     // 좋아요 목록에 있다면(=이미 좋아요) 좋아요 취소
                     if (postValue.likeUserList.contains(userUid)) {
                         // Unstar the post and remove self from stars
@@ -145,6 +141,40 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
                     // Transaction completed
                 }
             })
+        }
+
+        private fun setButtonComment(post: Post) {
+            val commentClickListener = View.OnClickListener {
+                val intent = Intent(context.requireActivity(), CommentActivity::class.java)
+                intent.apply {
+                    putExtra("postUid", post.postUid)
+                }
+                context.startActivity(intent)
+            }
+
+            binding.buttonIntroduce.setOnClickListener(commentClickListener)
+            binding.buttonComment.setOnClickListener(commentClickListener)
+        }
+
+        fun setViewMore() {
+            // getEllipsisCount()을 통한 더보기 표시 및 구현
+            val contentTextView = binding.buttonIntroduce
+            val viewMoreTextView = binding.tvMore
+            contentTextView.post {
+                val lineCount = contentTextView.layout.lineCount
+                if (lineCount > 0) {
+                    if (contentTextView.layout.getEllipsisCount(lineCount - 1) > 0) {
+                        // 더보기 표시
+                        viewMoreTextView.visibility = View.VISIBLE
+
+                        // 더보기 클릭 이벤트
+                        viewMoreTextView.setOnClickListener {
+                            contentTextView.maxLines = Int.MAX_VALUE
+                            viewMoreTextView.visibility = View.GONE
+                        }
+                    }
+                }
+            }
         }
     }
 }

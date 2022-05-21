@@ -181,10 +181,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:layout_marginEnd="50dp"
             android:background="@color/transparent"
             android:ellipsize="end"
             android:gravity="start"
-            android:maxLines="1"
+            android:maxLines="2"
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:text="@{post.postIntroduce}"
@@ -192,7 +193,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/button_writer"
             app:layout_constraintTop_toTopOf="@id/button_writer"
-            tools:text="이번주 놓치면 안될 라이브 추천 !\n" />
+            tools:text="이번주 놓치면 안될 라이브 추천은 ㅇㅇㅇㅇㅇㅇㅇ" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="더 보기"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/button_introduce"
+            app:layout_constraintTop_toTopOf="@id/button_introduce" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_created_date"
