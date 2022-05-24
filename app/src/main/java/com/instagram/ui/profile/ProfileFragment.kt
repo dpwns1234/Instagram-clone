@@ -1,6 +1,5 @@
 package com.instagram.ui.profile
 
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,12 +10,15 @@ import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.instagram.R
+import com.instagram.common.ViewModelFactory
 import com.instagram.databinding.FragmentProfileBinding
+import com.instagram.network.ApiClient
 import com.instagram.ui.login.LoginActivity
 
 
@@ -35,15 +37,17 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val userUid = auth.currentUser!!.uid
-        val profileViewModel = ProfileViewModel(userUid)
+        val profileViewModel: ProfileViewModel by viewModels { ViewModelFactory(requireContext(), userUid) }
+        // val profileViewModel = ProfileViewModel(userUid)
+
 
         profileViewModel.profile.observe(viewLifecycleOwner) {
             binding.profile = it
         }
-        binding.lifecycleOwner = viewLifecycleOwner
-        setViewpager(userUid)
-        setEditProfileButton()
-        setSignOutButton()
+//        binding.lifecycleOwner = viewLifecycleOwner
+//        setViewpager(userUid)
+//        setEditProfileButton()
+//        setSignOutButton()
     }
 
     private fun setViewpager(userUid: String) {

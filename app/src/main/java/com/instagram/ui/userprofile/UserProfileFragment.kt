@@ -10,7 +10,6 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayoutMediator
 import com.instagram.R
 import com.instagram.databinding.FragmentUserProfileBinding
-import com.instagram.model.Profile
 import com.instagram.ui.profile.ProfileViewModel
 import com.instagram.ui.profile.ProfileViewpagerAdapter
 
@@ -34,12 +33,12 @@ class UserProfileFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         val userUid = args.userUid
-        val viewModel = ProfileViewModel(userUid)
-        viewModel.profile.observe(viewLifecycleOwner) { profile ->
-            binding.profile = profile
-        }
-
-        setViewpager(userUid)
+//        val viewModel = ProfileViewModel(userUid)
+//        viewModel.profile.observe(viewLifecycleOwner) { profile ->
+//            binding.profile = profile
+//        }
+//
+//        setViewpager(userUid)
     }
 
     private fun setViewpager(userUid: String) {

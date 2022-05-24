@@ -4,17 +4,20 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.instagram.model.Post
 import com.instagram.model.PreviewPost
 import com.instagram.model.Profile
+import com.instagram.repository.profile.ProfileRepository
+import kotlinx.coroutines.launch
 
-class ProfileViewModel(private val userUid: String): ViewModel() {
+class ProfileViewModel(private val profileRepository: ProfileRepository, private val userUid: String): ViewModel() {
     private val firebaseUrl = "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
-
     private val _profile = MutableLiveData<Profile>()
     var profile: LiveData<Profile> = _profile
 
@@ -25,7 +28,21 @@ class ProfileViewModel(private val userUid: String): ViewModel() {
     var profileUserPosts: LiveData<List<PreviewPost>> = _profileUserPosts
 
     init{
-        loadProfileFromFirebase()
+        //loadProfileFromFirebase()
+        loadProfileFromCoroutine()
+    }
+    fun testSetData(post2: Post) {
+        profileRepository
+    }
+
+    private fun loadProfileFromCoroutine() {
+        viewModelScope.launch {
+            val profile = profileRepository.getProfileData(userUid)
+            _profile.value = profile
+
+            val posts = profileRepository.getPosts(userUid)
+            _profilePosts.value = posts
+        }
     }
 
     private fun loadProfileFromFirebase() {

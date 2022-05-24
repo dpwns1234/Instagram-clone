@@ -19,7 +19,8 @@ import com.instagram.ui.produce.ProduceActivity
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: HomeViewModel by viewModels() { ViewModelFactory(requireContext()) }
+    private val viewModel: HomeViewModel by viewModels() { ViewModelFactory(requireContext(), "22") }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,

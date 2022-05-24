@@ -5,20 +5,16 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import com.instagram.R
 import com.instagram.databinding.ActivityEditProfileBinding
 import com.instagram.model.PreviewPost
 
@@ -35,11 +31,11 @@ class EditProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val viewModel = ProfileViewModel(user.uid)
-        viewModel.profile.observe(this) {
-            binding.profile = it
-            Log.d("hihi", "image: ${it.profileImage}")
-        }
+//        val viewModel = ProfileViewModel(user.uid)
+//        viewModel.profile.observe(this) {
+//            binding.profile = it
+//            Log.d("hihi", "image: ${it.profileImage}")
+//        }
         val launcher = activityResultLauncher()
 
         setProfileImageButton(launcher)
