@@ -1,12 +1,15 @@
 package com.instagram.ui.home
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +26,8 @@ import com.instagram.model.Post
 import com.instagram.ui.home.ModalBottomSheet.Companion.TAG
 import com.instagram.ui.home.post.ItemPostAdapter
 import com.instagram.ui.home.post.ItemPostViewModel
+import com.instagram.ui.search.SearchFragmentDirections
+import com.instagram.ui.userprofile.UserProfileFragment
 
 
 class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val context: Fragment) :
@@ -47,6 +52,8 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
         holder.bind(getItem(position))
         holder.setPostHeart(getItem(position))
         holder.setViewMore()
+        holder.setItemMenuButton()
+        holder.setButtonHeart()
     }
 
     inner class HomeViewHolder(private val binding: ItemPostBinding) :
@@ -55,12 +62,9 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
             postImage(post.posts)
             binding.post = post
             binding.executePendingBindings()
-            setItemMenuButton()
-            setButtonHeart()
             setButtonComment(post)
+            setMoveUserProfile(post)
         }
-
-
 
         private fun postImage(postImages: List<Image>?) {
             postViewModel = ItemPostViewModel(postImages)
@@ -85,7 +89,7 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
                 binding.buttonHeart.setImageResource(R.drawable.heart)
         }
 
-        private fun setItemMenuButton() {
+        fun setItemMenuButton() {
             binding.buttonPostMenu.setOnClickListener {
                 binding.post?.postUid?.let { postUid ->
                     ModalBottomSheet(postUid).show(context.parentFragmentManager, TAG)
@@ -93,7 +97,7 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
             }
         }
 
-        private fun setButtonHeart() {
+        fun setButtonHeart() {
             binding.buttonHeart.setOnClickListener {
                 onStarClicked(it)
             }
@@ -156,6 +160,7 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
             binding.buttonComment.setOnClickListener(commentClickListener)
         }
 
+        // 더보기
         fun setViewMore() {
             // getEllipsisCount()을 통한 더보기 표시 및 구현
             val contentTextView = binding.buttonIntroduce
@@ -176,6 +181,17 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
                 }
             }
         }
+
+        private fun setMoveUserProfile(post: Post) {
+            val action = HomeFragmentDirections.actionHomeToUserProfile(post.writer.userUid)
+            val clickListener = View.OnClickListener {
+                context.findNavController().navigate(action)
+            }
+
+            binding.ivProfileImage.setOnClickListener(clickListener)
+            binding.tvProfileName.setOnClickListener(clickListener)
+        }
+
     }
 }
 

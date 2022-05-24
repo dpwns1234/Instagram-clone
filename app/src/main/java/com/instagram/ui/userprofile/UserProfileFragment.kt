@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayoutMediator
 import com.instagram.R
 import com.instagram.databinding.FragmentUserProfileBinding
@@ -17,6 +18,7 @@ class UserProfileFragment : Fragment() {
     private lateinit var binding: FragmentUserProfileBinding
     private val firebaseUrl =
         "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    private val args: UserProfileFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,17 +31,15 @@ class UserProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.lifecycleOwner = viewLifecycleOwner
-        arguments?.let { bundle ->
-            val userUid = bundle.getString("userUid")
-            val viewModel = ProfileViewModel(userUid!!)
-            viewModel.profile.observe(viewLifecycleOwner) { profile ->
-                binding.profile = profile
-            }
 
-            setViewpager(userUid)
+        val userUid = args.userUid
+        val viewModel = ProfileViewModel(userUid)
+        viewModel.profile.observe(viewLifecycleOwner) { profile ->
+            binding.profile = profile
         }
+
+        setViewpager(userUid)
     }
 
     private fun setViewpager(userUid: String) {

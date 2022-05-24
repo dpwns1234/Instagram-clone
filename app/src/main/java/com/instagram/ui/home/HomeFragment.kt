@@ -39,7 +39,6 @@ class HomeFragment : Fragment() {
     private fun setData() {
         val feedAdapter = FeedAdapter()
         binding.rvFeed.adapter = feedAdapter
-
         val homeAdapter = HomeAdapter(this, this)
         binding.rvHome.adapter = homeAdapter
         // TODO. 공부: 이거 왜 해야하는지, 어떻게 해야하는 지 공뿌
