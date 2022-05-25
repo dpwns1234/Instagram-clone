@@ -7,5 +7,5 @@ import com.instagram.model.Profile
 interface ProfileDataSource {
     suspend fun getProfileData(userUid: String): Profile
 
-    suspend fun getPosts(userUid: String): List<PreviewPost>
+    suspend fun getPreviewPosts(userUid: String): List<PreviewPost>
 }

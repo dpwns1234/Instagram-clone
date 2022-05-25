@@ -40,8 +40,8 @@ class ProfileViewModel(private val profileRepository: ProfileRepository, private
             val profile = profileRepository.getProfileData(userUid)
             _profile.value = profile
 
-            val posts = profileRepository.getPosts(userUid)
-            _profilePosts.value = posts
+//            val posts = profileRepository.getPosts(userUid)
+//            _profilePosts.value = posts
         }
     }
 

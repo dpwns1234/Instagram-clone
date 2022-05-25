@@ -21,10 +21,13 @@ import com.instagram.databinding.FragmentProfileBinding
 import com.instagram.network.ApiClient
 import com.instagram.ui.login.LoginActivity
 
-
+// TODO. 왜 observe가 제대로 반응을 안하지? 뒤로가기 버튼이나 나갔다 들어와야 데이터가 변경된게 반영이됨..
 class ProfileFragment : Fragment() {
     lateinit var binding: FragmentProfileBinding
     private val auth = Firebase.auth
+    private val userUid = auth.currentUser!!.uid
+    private val profileViewModel: ProfileViewModel by viewModels { ViewModelFactory(requireContext(), userUid) }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,18 +39,17 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val userUid = auth.currentUser!!.uid
-        val profileViewModel: ProfileViewModel by viewModels { ViewModelFactory(requireContext(), userUid) }
+
         // val profileViewModel = ProfileViewModel(userUid)
 
 
         profileViewModel.profile.observe(viewLifecycleOwner) {
             binding.profile = it
         }
-//        binding.lifecycleOwner = viewLifecycleOwner
-//        setViewpager(userUid)
-//        setEditProfileButton()
-//        setSignOutButton()
+        binding.lifecycleOwner = viewLifecycleOwner
+        setViewpager(userUid)
+        setEditProfileButton()
+        setSignOutButton()
     }
 
     private fun setViewpager(userUid: String) {

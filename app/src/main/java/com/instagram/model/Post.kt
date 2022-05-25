@@ -46,8 +46,8 @@ data class Like(
 )
 
 data class Image(
-    @SerializedName("image_idx")val imageIdx: Int = 0,
-    @SerializedName("image_url") val imageUrl: String = ""
+    @SerializedName("image_idx") @get:PropertyName("image_idx") @set:PropertyName("image_idx") var imageIdx: Int = 0,
+    @SerializedName("image_url") @get:PropertyName("image_url") @set:PropertyName("image_url") var imageUrl: String = ""
 ) {
     fun toMap(): Map<String, Any> {
         return mapOf(

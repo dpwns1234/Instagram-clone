@@ -19,7 +19,7 @@ import com.instagram.ui.produce.ProduceActivity
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: HomeViewModel by viewModels() { ViewModelFactory(requireContext(), "22") }
+    private val viewModel: HomeViewModel by viewModels() { ViewModelFactory(requireContext(), "", ) }
 
 
     override fun onCreateView(

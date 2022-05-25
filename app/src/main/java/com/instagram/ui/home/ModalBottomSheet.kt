@@ -1,6 +1,7 @@
 package com.instagram.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.instagram.databinding.ModalBottomSheetContentBinding
+import com.instagram.model.PreviewPost
 
 class ModalBottomSheet(private val postUid: String) : BottomSheetDialogFragment() {
     private lateinit var binding: ModalBottomSheetContentBinding
@@ -59,15 +62,24 @@ class ModalBottomSheet(private val postUid: String) : BottomSheetDialogFragment(
     private fun acceptDelete() {
         val userUid = Firebase.auth.uid!!
         val postKey = postUid
-        databaseRef.child("users").child(userUid).child("profiles").child("post_count")
+        databaseRef.child("users").child(userUid).child("profiles").child("posts")
             .get().addOnSuccessListener { snapshot ->
-                val postCountStr = snapshot.value.toString()
-                val postCount = postCountStr.toInt() - 1
+                val posts = snapshot.getValue<MutableList<PreviewPost>>()!!
 
+                // app 안에서 제거
+                for(i in 0 until posts.size) {
+                    if(posts[i].postUid == postUid) {
+                        Log.d("hihi", "postUid: $postUid, index: $i")
+                        posts.removeAt(i)
+                        break
+                    }
+                }
+
+                // database 내에서 제거
                 databaseRef.updateChildren(hashMapOf<String, Any?>(
-                    "users/$userUid/profiles/posts/$postKey" to null,
+                    "users/$userUid/profiles/posts" to posts,
                     "posts/$postKey" to null,
-                    "users/$userUid/profiles/post_count" to postCount
+                    "users/$userUid/profiles/post_count" to posts.size
                 ))
             }
     }

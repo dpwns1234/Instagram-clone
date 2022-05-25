@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -12,9 +13,10 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.instagram.model.Feed
 import com.instagram.model.Post
-import com.instagram.repository.MainRepository
+import com.instagram.repository.home.HomeRepository
+import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: MainRepository): ViewModel() {
+class HomeViewModel(private val repository: HomeRepository): ViewModel() {
     private val firebaseUrl = "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
     private val databaseRef = Firebase.database(firebaseUrl).reference
 
@@ -26,7 +28,15 @@ class HomeViewModel(private val repository: MainRepository): ViewModel() {
 
     init {
         loadMain()
-        loadHome()
+        // loadHome()
+        loadHomeFromCoroutine()
+    }
+
+    private fun loadHomeFromCoroutine() {
+        viewModelScope.launch {
+            _post.value = repository.getPosts()
+        }
+
     }
 
     private fun loadMain() {

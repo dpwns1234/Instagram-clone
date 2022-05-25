@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -18,10 +19,17 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.instagram.databinding.ActivityProduceBinding
-import com.instagram.model.*
+import com.instagram.model.Image
+import com.instagram.model.Post
+import com.instagram.model.PreviewPost
+import com.instagram.model.User
 import java.io.*
+import java.lang.Exception
+import java.text.SimpleDateFormat
+import kotlin.coroutines.CoroutineContext
 
-class ProduceActivity : AppCompatActivity() {
+// retrofit 을 사용한 produce
+class ProduceActivity2 : AppCompatActivity() {
     private val firebaseUrl =
         "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
     private val databaseRef = Firebase.database(firebaseUrl).reference
@@ -30,7 +38,6 @@ class ProduceActivity : AppCompatActivity() {
     private val userUid = Firebase.auth.currentUser!!.uid
     private val fireStorage = Firebase.storage("gs://instagram-android-65931.appspot.com/")
     private val postKey = databaseRef.child("posts").push().key
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,61 +109,41 @@ class ProduceActivity : AppCompatActivity() {
         if (uriList.isEmpty()) {
             Toast.makeText(this, "이미지를 선택해주세요.", Toast.LENGTH_SHORT).show()
         } else {
-            databaseRef.child("users/$userUid/profiles").get().addOnSuccessListener { snapshot ->
+            databaseRef.child("users").get().addOnSuccessListener { snapshot ->
                 val createdAt = System.currentTimeMillis()
-                val userValue = snapshot.getValue<User>()!!
+                val userValue = snapshot.child(userUid).child("profiles").getValue<User>()!!
+                val post = Post(postKey,
+                    userValue,
+                    posts = null,
+                    introduce.text.toString(),
+                    createdAt = createdAt)
+                val previewPost =
+                    PreviewPost(postKey, postImage = "", createdAt)
 
-                databaseRef.child("posts").get().addOnSuccessListener { postsSnapshot ->
-                    var postsValue = postsSnapshot.getValue<MutableList<Post>>()
+                val postCountStr = snapshot.child(userUid).child("profiles").child("post_count").value.toString()
+                val postCount = postCountStr.toInt() + 1
 
-                    // 이미지를 제외한 객체들을 미리 만들어 database에 넣어준다.
-                    val postValue = Post(postKey,
-                        userValue,
-                        posts = null,
-                        introduce.text.toString(),
-                        createdAt = createdAt)
-
-                    // post가 하나도 없다면 새로 하나 만들고, 있다면 add로 추가해준다.
-                    if(postsValue == null)
-                        postsValue = mutableListOf(postValue)
-                    else {
-                        postsValue.add(postValue)
-                    }
-
-                    var previewPostsValue =
-                        snapshot.child("posts").getValue<MutableList<PreviewPost>>()
-                    // getValue를 했을 때 nullable 한 타입으로 넘어와서 아래와 같은 조건문을 만들어준다.
-                    if(previewPostsValue == null)
-                        previewPostsValue = mutableListOf(PreviewPost(postKey, postImage = "", createdAt))
-                    else {
-                        previewPostsValue.add(PreviewPost(postKey, postImage = "", createdAt))
-                    }
-
-                    val childUpdates = hashMapOf(
-                        "posts" to postsValue,
-                        "users/$userUid/profiles/posts" to previewPostsValue,
-                        "users/$userUid/profiles/post_count" to previewPostsValue.size
-                    )
-                    databaseRef.updateChildren(childUpdates).addOnSuccessListener {
-                        // last index에 이미지 업로드하기
-                        uploadToStorage(postsValue.lastIndex, previewPostsValue.lastIndex)
-                    }
-                }
+                val childUpdates = hashMapOf(
+                    "posts/$postKey" to post.toMap(),
+                    "users/$userUid/profiles/posts/$postKey" to previewPost,
+                    "users/$userUid/profiles/post_count" to postCount
+                )
+                databaseRef.updateChildren(childUpdates)
             }
-
+            uploadToStorage()
             this.finish()
         }
     }
 
-    private fun uploadToStorage(postsLastIndex: Int, previewPostLastIndex: Int) {
+    private fun uploadToStorage() {
         var cnt = 0 // TODO 문제: downloadUri가 순서대로 오지 않음
-        val imageValueList = List<Image?>(uriList.size) { null }.toMutableList()
+        val imageValueList = List<Image?>(uriList.size) {null}.toMutableList()
 
         for (i in 0 until uriList.size) {
             val fileName = System.currentTimeMillis()
             val storageRef =
                 fireStorage.reference.child("post_image").child("$userUid/$fileName.jpg")
-
+            Log.d("compress", "storage: $uriList[i]")
             storageRef.putFile(uriList[i]).continueWithTask { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
@@ -170,14 +157,14 @@ class ProduceActivity : AppCompatActivity() {
                     val downloadUri = task.result
                     // 첫 번째 downloadUri가 Complete 됐을 때 database의 image를 업데이트 해준다.
                     if (i == 0) {
-                        databaseRef.child("users/$userUid/profiles/posts/${previewPostLastIndex}/post_image")
+                        databaseRef.child("users/$userUid/profiles/posts/$postKey/post_image")
                             .setValue(downloadUri.toString())
                     }
                     val image = Image(i, downloadUri.toString())
                     imageValueList[i] = image
                     // 마지막 downloadUri가 Complete 됐을 때 database의 image들만 업데이트 해준다.
                     if (cnt == uriList.size) {
-                        databaseRef.child("posts/$postsLastIndex/post_images").setValue(imageValueList)
+                        databaseRef.child("posts/$postKey/post_images").setValue(imageValueList)
                     }
 
                     Toast.makeText(this, "$cnt/${uriList.size} 완료", Toast.LENGTH_SHORT).show()
@@ -190,8 +177,7 @@ class ProduceActivity : AppCompatActivity() {
     // 압축해서 업로드하는 함수
     private fun uploadToStorage2() {
         var cnt = 0                                                            // 이미지 모두 업로드 하기 위해
-        val imageValueList =
-            List<Image?>(uriList.size) { null }.toMutableList() // 이미지가 등록된 순서대로 나오게 하기 위해
+        val imageValueList = List<Image?>(uriList.size) {null}.toMutableList() // 이미지가 등록된 순서대로 나오게 하기 위해
 
         for (i in 0 until uriList.size) {
             val fileName = System.currentTimeMillis()
@@ -251,7 +237,7 @@ class ProduceActivity : AppCompatActivity() {
     fun getDownsizedImageBytes(
         fullBitmap: Bitmap?,
         scaleWidth: Int,
-        scaleHeight: Int,
+        scaleHeight: Int
     ): ByteArray {
         val scaledBitmap =
             Bitmap.createScaledBitmap(fullBitmap!!, scaleWidth, scaleHeight, true)

@@ -8,13 +8,16 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.instagram.common.ViewModelFactory
 import com.instagram.databinding.ActivityEditProfileBinding
 import com.instagram.model.PreviewPost
 
@@ -26,16 +29,15 @@ class EditProfileActivity : AppCompatActivity() {
     private val userProfilePath = "users/${user.uid}/profiles"
     private val database = Firebase.database(firebaseUrl)
     private val fireStorage = Firebase.storage("gs://instagram-android-65931.appspot.com/")
+    private val viewModel: ProfileViewModel by viewModels { ViewModelFactory(this, user.uid) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        val viewModel = ProfileViewModel(user.uid)
-//        viewModel.profile.observe(this) {
-//            binding.profile = it
-//            Log.d("hihi", "image: ${it.profileImage}")
-//        }
+        viewModel.profile.observe(this) {
+            binding.profile = it
+        }
         val launcher = activityResultLauncher()
 
         setProfileImageButton(launcher)

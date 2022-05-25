@@ -17,11 +17,17 @@ interface ApiClient {
     //@GET("movie/readMovieList")
     //suspend fun getMovieList() : List<MovieList>
 
+    // profile
     @GET("users/{uid}/profiles.json")
     suspend fun getProfile(@Path("uid") uid: String): Profile
 
     @GET("users/{userUid}/profiles/posts.json")
-    suspend fun getPosts(@Path("userUid") userUid: String) : List<PreviewPost>
+    suspend fun getPreviewPosts(@Path("userUid") userUid: String) : List<PreviewPost>
+
+
+    // home
+    @GET("posts.json")
+    suspend fun getPosts() : List<Post>?
 
     companion object {
         private const val baseUrl = "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
