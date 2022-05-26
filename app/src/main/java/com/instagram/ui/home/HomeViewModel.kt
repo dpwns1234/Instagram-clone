@@ -28,15 +28,14 @@ class HomeViewModel(private val repository: HomeRepository): ViewModel() {
 
     init {
         loadMain()
-        // loadHome()
-        loadHomeFromCoroutine()
+        loadHome()
+        //loadHomeFromCoroutine()
     }
 
     private fun loadHomeFromCoroutine() {
         viewModelScope.launch {
             _post.value = repository.getPosts()
         }
-
     }
 
     private fun loadMain() {

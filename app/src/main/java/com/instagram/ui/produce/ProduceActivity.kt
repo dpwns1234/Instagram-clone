@@ -13,12 +13,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.instagram.databinding.ActivityProduceBinding
 import com.instagram.model.*
+import com.instagram.network.ApiClient
 import java.io.*
 
 class ProduceActivity : AppCompatActivity() {
@@ -47,6 +49,7 @@ class ProduceActivity : AppCompatActivity() {
         binding.buttonProduceCheck.setOnClickListener {
             setCheckButton(binding.etIntroduce)
         }
+
     }
 
     private fun activityResultLauncher(imageView: ImageView): ActivityResultLauncher<Intent> {
@@ -106,40 +109,24 @@ class ProduceActivity : AppCompatActivity() {
                 val createdAt = System.currentTimeMillis()
                 val userValue = snapshot.getValue<User>()!!
 
+                // 이미지를 제외한 객체들을 미리 만들어 database에 넣어준다.
+                val postValue = Post(postKey,
+                    userValue,
+                    posts = null,
+                    introduce.text.toString(),
+                    createdAt = createdAt)
+
                 databaseRef.child("posts").get().addOnSuccessListener { postsSnapshot ->
-                    var postsValue = postsSnapshot.getValue<MutableList<Post>>()
-
-                    // 이미지를 제외한 객체들을 미리 만들어 database에 넣어준다.
-                    val postValue = Post(postKey,
-                        userValue,
-                        posts = null,
-                        introduce.text.toString(),
-                        createdAt = createdAt)
-
-                    // post가 하나도 없다면 새로 하나 만들고, 있다면 add로 추가해준다.
-                    if(postsValue == null)
-                        postsValue = mutableListOf(postValue)
-                    else {
-                        postsValue.add(postValue)
-                    }
-
-                    var previewPostsValue =
-                        snapshot.child("posts").getValue<MutableList<PreviewPost>>()
-                    // getValue를 했을 때 nullable 한 타입으로 넘어와서 아래와 같은 조건문을 만들어준다.
-                    if(previewPostsValue == null)
-                        previewPostsValue = mutableListOf(PreviewPost(postKey, postImage = "", createdAt))
-                    else {
-                        previewPostsValue.add(PreviewPost(postKey, postImage = "", createdAt))
-                    }
+                    val previewPostsValue = addPreviewPosts(snapshot, createdAt)
 
                     val childUpdates = hashMapOf(
-                        "posts" to postsValue,
+                        "posts/$postKey" to postValue,
                         "users/$userUid/profiles/posts" to previewPostsValue,
                         "users/$userUid/profiles/post_count" to previewPostsValue.size
                     )
                     databaseRef.updateChildren(childUpdates).addOnSuccessListener {
                         // last index에 이미지 업로드하기
-                        uploadToStorage(postsValue.lastIndex, previewPostsValue.lastIndex)
+                        uploadToStorage(previewPostsValue.lastIndex)
                     }
                 }
             }
@@ -148,7 +135,23 @@ class ProduceActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadToStorage(postsLastIndex: Int, previewPostLastIndex: Int) {
+    private fun addPreviewPosts(
+        snapshot: DataSnapshot,
+        createdAt: Long,
+    ): MutableList<PreviewPost> {
+        var previewPostsValue =
+            snapshot.child("posts").getValue<MutableList<PreviewPost>>()
+        // getValue를 했을 때 nullable 한 타입으로 넘어와서 아래와 같은 조건문을 만들어준다.
+        if (previewPostsValue == null)
+            previewPostsValue = mutableListOf(PreviewPost(postKey, postImage = "", createdAt))
+        else {
+            previewPostsValue.add(PreviewPost(postKey, postImage = "", createdAt))
+        }
+        return previewPostsValue
+    }
+
+
+    private fun uploadToStorage(previewPostLastIndex: Int) {
         var cnt = 0 // TODO 문제: downloadUri가 순서대로 오지 않음
         val imageValueList = List<Image?>(uriList.size) { null }.toMutableList()
 
@@ -177,7 +180,7 @@ class ProduceActivity : AppCompatActivity() {
                     imageValueList[i] = image
                     // 마지막 downloadUri가 Complete 됐을 때 database의 image들만 업데이트 해준다.
                     if (cnt == uriList.size) {
-                        databaseRef.child("posts/$postsLastIndex/post_images").setValue(imageValueList)
+                        databaseRef.child("posts/$postKey/post_images").setValue(imageValueList)
                     }
 
                     Toast.makeText(this, "$cnt/${uriList.size} 완료", Toast.LENGTH_SHORT).show()

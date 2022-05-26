@@ -48,12 +48,9 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
     }
 
     // onBindViewHolder = 만들어진 ViewHolder에 정보를 넣는다.
+    // 재사용 될 때도 이를 호출하기 때문에 이곳에 onClickListener 등을 넣지 않도록 한다.
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         holder.bind(getItem(position))
-        holder.setPostHeart(getItem(position))
-        holder.setViewMore()
-        holder.setItemMenuButton()
-        holder.setButtonHeart()
     }
 
     inner class HomeViewHolder(private val binding: ItemPostBinding) :
@@ -62,6 +59,10 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
             postImage(post.posts)
             binding.post = post
             binding.executePendingBindings()
+            setPostHeart(post)
+            setViewMore()
+            setItemMenuButton()
+            setButtonHeart()
             setButtonComment(post)
             setMoveUserProfile(post)
         }
@@ -82,14 +83,14 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
         }
 
         // 회원용 하트 상태 여부 binding
-        fun setPostHeart(post: Post) {
+        private fun setPostHeart(post: Post) {
             if (post.likeUserList.contains(userUid))
                 binding.buttonHeart.setImageResource(R.drawable.heart_clicked) // 반대인데 왜 이게 정상으로 나오지??
             else
                 binding.buttonHeart.setImageResource(R.drawable.heart)
         }
 
-        fun setItemMenuButton() {
+        private fun setItemMenuButton() {
             binding.buttonPostMenu.setOnClickListener {
                 binding.post?.postUid?.let { postUid ->
                     ModalBottomSheet(postUid).show(context.parentFragmentManager, TAG)
@@ -97,7 +98,7 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
             }
         }
 
-        fun setButtonHeart() {
+        private fun setButtonHeart() {
             binding.buttonHeart.setOnClickListener {
                 onStarClicked(it)
             }
@@ -161,7 +162,7 @@ class HomeAdapter(private val lifecycleOwner: LifecycleOwner, private val contex
         }
 
         // 더보기
-        fun setViewMore() {
+        private fun setViewMore() {
             // getEllipsisCount()을 통한 더보기 표시 및 구현
             val contentTextView = binding.buttonIntroduce
             val viewMoreTextView = binding.tvMore

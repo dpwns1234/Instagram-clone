@@ -9,6 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 
@@ -28,6 +29,7 @@ interface ApiClient {
     // home
     @GET("posts.json")
     suspend fun getPosts() : List<Post>?
+
 
     companion object {
         private const val baseUrl = "https://instagram-android-65931-default-rtdb.asia-southeast1.firebasedatabase.app/"
