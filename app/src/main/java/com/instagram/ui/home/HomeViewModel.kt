@@ -1,6 +1,9 @@
 package com.instagram.ui.home
 
 import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -65,4 +68,5 @@ class HomeViewModel(private val repository: HomeRepository): ViewModel() {
             }
         })
     }
+
 }

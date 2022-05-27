@@ -33,11 +33,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setData()
+        setDataBinding()
         setPopupMenu()
     }
 
-    private fun setData() {
+    private fun setDataBinding() {
         val feedAdapter = FeedAdapter()
         binding.rvFeed.adapter = feedAdapter
         val homeAdapter = HomeAdapter(this, this)

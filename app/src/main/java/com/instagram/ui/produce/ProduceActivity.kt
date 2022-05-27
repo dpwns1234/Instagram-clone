@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -116,19 +117,18 @@ class ProduceActivity : AppCompatActivity() {
                     introduce.text.toString(),
                     createdAt = createdAt)
 
-                databaseRef.child("posts").get().addOnSuccessListener { postsSnapshot ->
-                    val previewPostsValue = addPreviewPosts(snapshot, createdAt)
+                val previewPostsValue = addPreviewPosts(snapshot, createdAt)
 
-                    val childUpdates = hashMapOf(
-                        "posts/$postKey" to postValue,
-                        "users/$userUid/profiles/posts" to previewPostsValue,
-                        "users/$userUid/profiles/post_count" to previewPostsValue.size
-                    )
-                    databaseRef.updateChildren(childUpdates).addOnSuccessListener {
-                        // last index에 이미지 업로드하기
-                        uploadToStorage(previewPostsValue.lastIndex)
-                    }
+                val childUpdates = hashMapOf(
+                    "posts/$postKey" to postValue,
+                    "users/$userUid/profiles/posts" to previewPostsValue,
+                    "users/$userUid/profiles/post_count" to previewPostsValue.size
+                )
+                databaseRef.updateChildren(childUpdates).addOnSuccessListener {
+                    // last index에 이미지 업로드하기
+                    uploadToStorage(previewPostsValue.lastIndex)
                 }
+
             }
 
             this.finish()
@@ -154,7 +154,6 @@ class ProduceActivity : AppCompatActivity() {
     private fun uploadToStorage(previewPostLastIndex: Int) {
         var cnt = 0 // TODO 문제: downloadUri가 순서대로 오지 않음
         val imageValueList = List<Image?>(uriList.size) { null }.toMutableList()
-
         for (i in 0 until uriList.size) {
             val fileName = System.currentTimeMillis()
             val storageRef =
