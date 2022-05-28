@@ -8,13 +8,15 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.annotation.GlideModule
+import com.instagram.GlideApp
 import com.instagram.R
 
 
 @BindingAdapter("imageUrl")
 fun loadImage(view: ImageView, imageUrl: Any?) {
     if (imageUrl != null) {
-        Glide.with(view)
+        GlideApp.with(view)
             .load(imageUrl)
             .into(view)
     }
@@ -23,7 +25,7 @@ fun loadImage(view: ImageView, imageUrl: Any?) {
 @BindingAdapter("circleImageUrl", "isSeen")
 fun loadCircleImage(view: ImageView, imageUrl: String?, isSeen: Boolean) {
     if (!imageUrl.isNullOrEmpty()) {
-        Glide.with(view)
+        GlideApp.with(view)
             .load(imageUrl)
             .circleCrop()
             .into(view)
