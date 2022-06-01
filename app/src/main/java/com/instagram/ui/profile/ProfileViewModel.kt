@@ -27,6 +27,9 @@ class ProfileViewModel(private val profileRepository: ProfileRepository, private
     private val _profileUserPosts = MutableLiveData<List<PreviewPost>>()
     var profileUserPosts: LiveData<List<PreviewPost>> = _profileUserPosts
 
+    private val _followList = MutableLiveData<List<String>?>()
+    var followList: LiveData<List<String>?> = _followList
+
     init{
         //loadProfileFromFirebase()
         loadProfileFromCoroutine()
@@ -40,10 +43,14 @@ class ProfileViewModel(private val profileRepository: ProfileRepository, private
             val profile = profileRepository.getProfileData(userUid)
             _profile.value = profile
 
+            val followerList = profileRepository.getFollowingList(userUid).body()
+            _followList.value = followerList
+
 //            val posts = profileRepository.getPosts(userUid)
 //            _profilePosts.value = posts
         }
     }
+
 
     private fun loadProfileFromFirebase() {
         val databaseRef = Firebase.database(firebaseUrl)

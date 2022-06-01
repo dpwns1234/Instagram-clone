@@ -40,9 +40,6 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // val profileViewModel = ProfileViewModel(userUid)
-
-
         profileViewModel.profile.observe(viewLifecycleOwner) {
             binding.profile = it
         }

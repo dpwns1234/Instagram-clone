@@ -6,6 +6,7 @@ import com.instagram.model.PreviewPost
 import com.instagram.model.Profile
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -24,6 +25,9 @@ interface ApiClient {
 
     @GET("users/{userUid}/profiles/posts.json")
     suspend fun getPreviewPosts(@Path("userUid") userUid: String) : List<PreviewPost>
+
+    @GET("users/{userUid}/following_list.json")
+    suspend fun getFollowingList(@Path("userUid") userUid: String) : Response<List<String>>
 
 
     // home

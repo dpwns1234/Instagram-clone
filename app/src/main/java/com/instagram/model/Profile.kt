@@ -16,7 +16,10 @@ data class Profile(
     @SerializedName("following_count") @get:PropertyName("following_count") @set:PropertyName("following_count")  var followingCount: Int = 0,
     val name: String = "",
     val introduce: String? = "",
-    @SerializedName("posts") @get:PropertyName("posts") @set:PropertyName("posts") var posts: MutableList<PreviewPost> = mutableListOf()
+    @SerializedName("posts") @get:PropertyName("posts") @set:PropertyName("posts") var posts: MutableList<PreviewPost> = mutableListOf(),
+    @SerializedName("following_list") @get:PropertyName("following_list") @set:PropertyName("following_list") var followingList: MutableList<String> = mutableListOf(),
+    @SerializedName("follower_list") @get:PropertyName("follower_list") @set:PropertyName("follower_list") var followerList: MutableList<String> = mutableListOf()
+
 //    @get:PropertyName("user_posts") @set:PropertyName("user_posts")  var userPosts: List<PreviewPost>? = null
     ) {
     @Exclude

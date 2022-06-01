@@ -133,7 +133,7 @@
                         <TextView
                             android:id="@+id/tv_follower_count"
                             style="@style/Size24.Black.Bold"
-                            calculatingCount="@{profile.followerCount}"
+                            calculatingCount="@{profile.followerList.size()}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -167,7 +167,7 @@
                         <TextView
                             android:id="@+id/tv_following_count"
                             style="@style/Size24.Black.Bold"
-                            calculatingCount="@{profile.followingCount}"
+                            calculatingCount="@{profile.followingList.size()}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
