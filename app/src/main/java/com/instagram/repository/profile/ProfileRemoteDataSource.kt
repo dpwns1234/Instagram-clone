@@ -14,7 +14,7 @@ class ProfileRemoteDataSource(private val apiClient: ApiClient): ProfileDataSour
         return apiClient.getPreviewPosts(userUid)
     }
 
-    override suspend fun getFollowingList(userUid: String): Response<List<String>> {
+    override suspend fun getFollowingList(userUid: String): Response<MutableList<String>> {
         return apiClient.getFollowingList(userUid)
     }
 

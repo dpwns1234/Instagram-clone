@@ -27,7 +27,7 @@ interface ApiClient {
     suspend fun getPreviewPosts(@Path("userUid") userUid: String) : List<PreviewPost>
 
     @GET("users/{userUid}/following_list.json")
-    suspend fun getFollowingList(@Path("userUid") userUid: String) : Response<List<String>>
+    suspend fun getFollowingList(@Path("userUid") userUid: String) : Response<MutableList<String>>
 
 
     // home

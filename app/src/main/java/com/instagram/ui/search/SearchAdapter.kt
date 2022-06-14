@@ -33,7 +33,7 @@ class SearchAdapter: ListAdapter<Profile, SearchAdapter.SearchViewHolder>(Search
 
         fun itemClicked() {
             binding.root.setOnClickListener {
-                val action = SearchFragmentDirections.actionSearchToUserProfile(getItem(position).userUid)
+                val action = SearchFragmentDirections.actionSearchToUserProfile(getItem(adapterPosition).userUid)
                 it.findNavController().navigate(action)
             }
         }

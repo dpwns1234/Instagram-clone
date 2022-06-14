@@ -20,7 +20,7 @@ class ProfileRepository(private val profileRemoteDataSource: ProfileRemoteDataSo
         return profileRemoteDataSource.getPreviewPosts(userUid)
     }
 
-    suspend fun getFollowingList(userUid: String) : Response<List<String>> {
+    suspend fun getFollowingList(userUid: String) : Response<MutableList<String>> {
         return profileRemoteDataSource.getFollowingList(userUid)
     }
 }

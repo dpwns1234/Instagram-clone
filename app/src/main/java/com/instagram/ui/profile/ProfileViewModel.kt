@@ -27,24 +27,25 @@ class ProfileViewModel(private val profileRepository: ProfileRepository, private
     private val _profileUserPosts = MutableLiveData<List<PreviewPost>>()
     var profileUserPosts: LiveData<List<PreviewPost>> = _profileUserPosts
 
-    private val _followList = MutableLiveData<List<String>?>()
-    var followList: LiveData<List<String>?> = _followList
+    private val _followingList = MutableLiveData<List<String>?>()
+    var followingList: LiveData<List<String>?> = _followingList
+
+    private val _followerList = MutableLiveData<MutableList<String>?>()
+    var followerList: LiveData<MutableList<String>?> = _followerList
 
     init{
-        //loadProfileFromFirebase()
+        // loadProfileFromFirebase()
         loadProfileFromCoroutine()
     }
-    fun testSetData(post2: Post) {
-        profileRepository
-    }
 
-    private fun loadProfileFromCoroutine() {
+    fun loadProfileFromCoroutine() {
         viewModelScope.launch {
             val profile = profileRepository.getProfileData(userUid)
             _profile.value = profile
 
             val followerList = profileRepository.getFollowingList(userUid).body()
-            _followList.value = followerList
+            _followerList.value = followerList
+            Log.d("knock", "viewModel")
 
 //            val posts = profileRepository.getPosts(userUid)
 //            _profilePosts.value = posts

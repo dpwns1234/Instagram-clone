@@ -11,6 +11,7 @@ import com.instagram.repository.profile.ProfileRemoteDataSource
 import com.instagram.repository.profile.ProfileRepository
 import com.instagram.ui.home.HomeViewModel
 import com.instagram.ui.profile.ProfileViewModel
+import com.instagram.ui.userprofile.UserProfileViewModel
 
 class ViewModelFactory(private val context: Context, private val userUid: String): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

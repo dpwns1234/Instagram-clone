@@ -10,5 +10,5 @@ interface ProfileDataSource {
 
     suspend fun getPreviewPosts(userUid: String): List<PreviewPost>
 
-    suspend fun getFollowingList(userUid: String): Response<List<String>>
+    suspend fun getFollowingList(userUid: String): Response<MutableList<String>>
 }

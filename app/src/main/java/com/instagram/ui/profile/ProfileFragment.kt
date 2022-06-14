@@ -40,9 +40,19 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // observe는 누를때마다 뜨는데 적용은 안됨
+        // 즉, viewModel이 처음 init할 때만 데이터가 들어감
+        // 해결 -> init뿐만 아니라 firebase의 데이터를 주기적으로 가져와야 함.
+        // 근데 이건 UI에서 할 게 아니라 viewModel에서 해야하거든?? 어떻게 해야할까?
+        // follow 할 때 viewModel이 이걸 알아차려야 하는데..
+        // 지금까지 viewModel은 데이터를 가져오기만 했지 수정한적은 없었는데
+        // 함 위에거 그대로 검색해보기 viewModel에서 수정하는 법
+        
         profileViewModel.profile.observe(viewLifecycleOwner) {
+            profileViewModel.loadProfileFromCoroutine()
             binding.profile = it
         }
+
         binding.lifecycleOwner = viewLifecycleOwner
         setViewpager(userUid)
         setEditProfileButton()
